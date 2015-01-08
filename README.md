@@ -23,6 +23,7 @@ making it up as we Go.lang di lang along.. ;-)
 Your conribute more than welcome..
 
 needs to works with SageLine 50 and UK based 
+This code is based on a prototype in sqlalchemy/bottle.py
 ```
 
 
