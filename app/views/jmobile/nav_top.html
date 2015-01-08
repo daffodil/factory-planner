@@ -1,0 +1,13 @@
+<div data-role="header" XXdata-position="fixed"  data-theme="b" class="xlogo">
+    <h1 >{{c.title}}</h1>
+    <a rel="external" href="/login" data-icon="lock" class="ui-btn-right" data-theme="c">Staff Login</a>
+
+
+    <div data-role="navbar" data-theme="b">
+        <ul>
+            {% for n in c.nav_staff.nav() %}
+            <li><a rel="external" href="/{{n.path}}" data-icon="{{n.icon}}" {% if  n.path == c.path %} class="ui-btn-active"{%endif%}>{{n.label}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>div>
+</div>

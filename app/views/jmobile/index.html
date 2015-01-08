@@ -1,0 +1,32 @@
+
+{{set . "title" "Home"}}
+
+{{template "jmobile/header.html" .}}
+
+<!-- Start of first page -->
+<div data-role="page" id="index">
+
+    {{template "jmobile/nav_top.html" .}}
+
+    <div data-role="content" class="ui-content">
+        <h1>Welcome to TRT Staff Website</h1>
+        <div data-role="fieldcontain">
+            <label for="curr_date">Curr Date:</label>
+            <input type="text" name="curr_date" id="curr_date" readonly="true" value="{{.now}}" placeholder="Date"/>
+            <label for="curr_week">Curr Week:</label>
+            <input type="text" name="curr_week" id="curr_week" readonly="true" value="{{.now}} : {{.now}}" placeholder="Week"/>
+        </div>
+
+
+        <p class="lead">To use this system or a windows desktop, sett the install the desktop tools.</p>
+        <a href="/desktop-install" class="btn-large btn-success">Desktop Install Instructions</a>
+    </div><!-- /content -->
+
+
+</div><!-- /page -->
+
+
+
+
+
+{{template "jmobile/footer.html" .}}
