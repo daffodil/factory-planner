@@ -1,13 +1,14 @@
 <div data-role="header" XXdata-position="fixed"  data-theme="b" class="xlogo">
-    <h1 >{{c.title}}</h1>
+    <h1 >{{.title}}</h1>
     <a rel="external" href="/login" data-icon="lock" class="ui-btn-right" data-theme="c">Staff Login</a>
 
 
     <div data-role="navbar" data-theme="b">
         <ul>
-            {% for n in c.nav_staff.nav() %}
-            <li><a rel="external" href="/{{n.path}}" data-icon="{{n.icon}}" {% if  n.path == c.path %} class="ui-btn-active"{%endif%}>{{n.label}}</a></li>
-            {% endfor %}
+            {{ range $n := .nav }}
+            <li><a rel="external" href="/{{$n.Path}}"
+                   data-icon="{{$n.Icon}}" {% if  $.path == $.path %} class="ui-btn-active"{%endif%}>{{$n.label}}</a></li>
+            {{ end }}
         </ul>
-    </div>div>
+    </div>
 </div>

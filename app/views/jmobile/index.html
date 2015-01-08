@@ -6,10 +6,25 @@
 <!-- Start of first page -->
 <div data-role="page" id="index">
 
-    {{template "jmobile/nav_top.html" .}}
+    <div data-role="header" XXdata-position="fixed"  data-theme="b" class="xlogo">
+        <h1 >{{.title}}</h1>
+        <a rel="external" href="/login" data-icon="lock" class="ui-btn-right" data-theme="c">Staff Login</a>
+
+
+        <div data-role="navbar" data-theme="b">
+            <ul>
+                {{ range $n := .nav }}
+                <li><a rel="external" href="/{{$n.Path}}"
+                        data-icon="{{$n.Icon}}"
+                        {{if $n.Path }} class="ui-btn-active"{{end}}
+                        >{{$n.Label}}</a></li>
+                {{ end }}
+            </ul>
+        </div>
+    </div>
 
     <div data-role="content" class="ui-content">
-        <h1>Welcome to TRT Staff Website</h1>
+        <h1>Welcome to Staff Website</h1>
         <div data-role="fieldcontain">
             <label for="curr_date">Curr Date:</label>
             <input type="text" name="curr_date" id="curr_date" readonly="true" value="{{.now}}" placeholder="Date"/>
