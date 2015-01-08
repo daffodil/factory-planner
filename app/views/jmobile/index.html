@@ -27,9 +27,9 @@
         <h1>Welcome to Staff Website</h1>
         <div data-role="fieldcontain">
             <label for="curr_date">Curr Date:</label>
-            <input type="text" name="curr_date" id="curr_date" readonly="true" value="{{.now}}" placeholder="Date"/>
+            <input type="text" name="curr_date" id="curr_date" readonly="true" value="{{date .now}}" placeholder="Date"/>
             <label for="curr_week">Curr Week:</label>
-            <input type="text" name="curr_week" id="curr_week" readonly="true" value="{{.now}} : {{.now}}" placeholder="Week"/>
+            <input type="text" name="curr_week" id="curr_week" readonly="true" value="{{week .now}} : {{year .now}}" placeholder="Week"/>
         </div>
 
 
