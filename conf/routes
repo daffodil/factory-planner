@@ -2,7 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-module:account = github.com/daffodil/factory-planner/mods/account
+#module:account = github.com/daffodil/factory-planner/mods/account
 
 module:testrunner
 
@@ -12,7 +12,7 @@ GET     /jmobile/:page                          JMobile.Pages
 
 ## Accounts = Now in MOd above
 # GET     /jmobile/accounts                       Account.JMobileIndex
-# GET     /ajax/accounts                          Account.JsonIndex
+GET     /ajax/accounts                          Account.JsonIndex
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
