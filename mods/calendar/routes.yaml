@@ -1,0 +1,9 @@
+mod: calendar
+url_prefix:
+    - cal: /
+    - calendar: /
+routes:
+    url: /week
+    handler:
+        ajax/: Cal.Week
+
