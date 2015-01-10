@@ -4,6 +4,31 @@ Ext.define("FP.accounts.AccountsPanel", {
 
 extend: "Ext.Panel",
 
+get_store: function(){
+	if(!this.xStore){
+		this.xStore = Ext.create("Ext.data.JsonStore", {
+			model: "Account",
+			proxy: {
+				type: "ajax",
+				url: '/ajax/accounts',
+				method: "GET",
+				reader: {
+					type: "json",
+					root: 'accounts'
+				}
+			},
+			autoLoad: true,
+
+			remoteSort: false,
+			sortInfo: {
+				field: "company",
+				direction: 'ASC'
+			}
+		});
+	}
+	return this.xStore;
+},
+
 initComponent: function() {
 	Ext.apply(this, {
 		iconCls: "icoAccounts",

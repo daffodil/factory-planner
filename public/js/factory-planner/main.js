@@ -18,3 +18,18 @@ var API_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
 Ext.QuickTips.init();
 Ext.Ajax.disableCaching = false;
+
+
+Ext.define('Account', {
+	extend: 'Ext.data.Model',
+	idProperty: 'account_id',
+	fields: [
+		{name: "account_id", type: 'int'},
+		{name: "ticker", type: 'string'},
+		{name: "company", type: 'string'},
+		{name: "acc_ref", type: 'string'},
+		{name: "is_supplier", type: 'bool'},
+		{name: "is_client", type: 'bool'},
+		{name: "acc_active", type: 'bool'}
+	]
+});
