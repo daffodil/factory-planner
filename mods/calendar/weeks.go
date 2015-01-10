@@ -104,15 +104,36 @@ func WeekFromView(view string) (*Week, error) {
 		return nil, errInvalidView
 	}
 
-	w := WeekFromTime(d)
+	w := WeekFromTime(d, true)
 	return w, nil
 }
 
 
-func WeekFromTime(d time.Time) *Week {
+func WeekFromTime(d time.Time, inc_prev_next_weeks bool) *Week {
 
 	w := new(Week)
 	w.Year, w.Week = d.ISOWeek()
-	w.Setup(true)
+	w.Setup(inc_prev_next_weeks)
 	return w
 }
+
+// Returns a list of week, previious next eg 1, 4 = include one before, and two after
+func WeeksView(year, week, prev, ahead int) ([]*Week, error) {
+
+	weeks := make([]*Week, 0)
+
+
+	now_date := Now()
+
+	for i := prev; i < ahead; i++ {
+		d := now_date.AddDate(0, 0, i * 7)
+		weeks = append(weeks, WeekFromTime(d, false))
+	}
+
+	return weeks, nil
+
+}
+
+
+
+

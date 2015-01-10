@@ -11,12 +11,13 @@ GET     /jmobile/:page                          JMobile.Pages
 
 ## Accounts = Now in MOd above
 # GET     /jmobile/accounts                       Account.JMobileIndex
+
 GET      /ajax/accounts                           Account.JsonIndex
 
 
 
 GET      /ajax/calendar/week/:view                Calendar.JsonWeek
-
+GET      /ajax/calendar/weeks                     Calendar.JsonWeeks
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
