@@ -3,6 +3,30 @@
 Ext.define("FP.accounts.AccountsGrid", {
 
 extend: "Ext.grid.GridPanel",
+get_store: function(){
+	if(!this.xStore){
+		this.xStore = Ext.create("Ext.data.JsonStore", {
+			model: "Account",
+			proxy: {
+				type: "ajax",
+				url: '/ajax/accounts',
+				method: "GET",
+				reader: {
+					type: "json",
+					root: 'accounts'
+				}
+			},
+			autoLoad: true,
+
+			remoteSort: false,
+			sortInfo: {
+				field: "company",
+				direction: 'ASC'
+			}
+		});
+	}
+	return this.xStore;
+},
 
 initComponent: function() {
 	Ext.apply(this, {
@@ -18,18 +42,29 @@ initComponent: function() {
 			},
 
 			stripeRows: true,
-			//store: this.get_airports_store(),
+			store: this.get_store(),
 			loadMask: true,
 			tbar: [
 				//this.action_new_tab()
 			],
 			columns: [
-				{header: 'Account', dataIndex:'company',
+				{header: 'Abbr', dataIndex:'ticker',
 					sortable: true, flex: 1, menuDisabled: true,
 					renderer: function(v, meta, rec){
-						return v //rec.get("ident") + ": " + rec.get("name");
+						return v;
 					}
-				}
+				},
+				{header: 'Account', dataIndex:'company',
+                    sortable: true, flex: 3, menuDisabled: true,
+                    renderer: function(v, meta, rec){
+                        return "<b>" + v + "</b>";
+                    }
+                },
+                {header: 'On Hold', dataIndex:'on_hold'},
+                {header: 'Client', dataIndex:'is_client'},
+                {header: 'Supplier', dataIndex:'is_supplier'},
+                {header: 'Acc Ref', dataIndex:'acc_ref'},
+                {header: "Active", dataIndex: 'acc_active'}
 			]
 
     });
