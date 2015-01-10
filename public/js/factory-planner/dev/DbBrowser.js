@@ -13,14 +13,15 @@ grid_tables: function(){
 		this.gridTables = Ext.create("Ext.grid.Panel", {
 			region: 'center',
 			title: "Tables &amp; Views",
-			width: 200,
+			width: 240,
 			frame: false,
 			store:  new Ext.data.JsonStore({
 				fields: [	
 					{name: "table_name", type:"string"},
 					{name: "is_view", type:"bool"},
-					{name: "row_count", type:"bool"},
-					{name: "engine", type:"string"},
+					{name: "row_count", type:"int", useNull: true},
+					{name: "next_id", type:"int", useNull: true},
+					{name: "engine", type:"string", useNull: true}
 				],
 				idProperty: "table_name",
 				
@@ -41,7 +42,7 @@ grid_tables: function(){
 			columns: [ 
 				{header: "Type", dataIndex: "is_view", flex:1, menuDisabled: true,
 					renderer: function(val, meta, record, idx){
-						sty =  "font-weight: bold; font-family: monospace;"
+						sty =  "font-family: monospace;"
 						if( val ){
 							sty += "color: #009900;";
 						}else{
@@ -51,7 +52,7 @@ grid_tables: function(){
 						return val == true ? "View" : "Table";
 					}
 				},
-				{header: "Table", dataIndex: "table_name", flex:5, menuDisabled: true,
+				{header: "Table", dataIndex: "table_name", flex:4, menuDisabled: true,
 					renderer: function(val, meta, record, idx){
 						sty =  "font-weight: bold; font-family: monospace;";
 						if( record.get("is_view") ){
@@ -63,8 +64,32 @@ grid_tables: function(){
 						
 						return val;
 					}
-				}
-				//{header: "rows", dataIndex: "rows"}
+				},
+                {header: "Engine", dataIndex: "engine", flex: 2,
+                    renderer: function(v, meta, record, idx) {
+                        if (v) {
+                            return v
+                        }
+                        return ""
+                    }
+                },
+                {header: "Next ID", dataIndex: "next_id", align: "right", width: 50,
+                    renderer: function(v, meta, record, idx) {
+                        if (v === 0 || v > 0) {
+                            return v
+                        }
+                        return ""
+                    }
+                },
+                {header: "Rows", dataIndex: "row_count", align: "right", width: 50,
+                    renderer: function(v, meta, record, idx) {
+
+                        if (v === 0 || v > 0) {
+                            return v
+                        }
+                        return ""
+                    }
+                }
 			],
 			listeners:{
 				scope: this,
