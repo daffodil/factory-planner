@@ -11,9 +11,6 @@ type Account struct {
 	*revel.Controller
 }
 
-func (c Account) DEADJMobileIndex() revel.Result {
-	return c.Render()
-}
 
 type AccountsPayload struct {
 	Success bool `json:"success"`
@@ -22,16 +19,16 @@ type AccountsPayload struct {
 
 func (c Account) JsonIndex() revel.Result {
 
-	var e error
+	//var e error
 	payload := new(AccountsPayload)
 	payload.Success = true
 	//payload := make(map[string]interface{})
 
 	//payload.Accounts, e = accounts.AccountsIndex(app.Db)
 
-	if e != nil {
+	//if e != nil {
 		// throw tantrum
-	}
+	//}
 	return c.RenderJson(payload)
 }
 
