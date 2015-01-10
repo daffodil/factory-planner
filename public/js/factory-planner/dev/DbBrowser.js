@@ -19,12 +19,14 @@ grid_tables: function(){
 				fields: [	
 					{name: "table_name", type:"string"},
 					{name: "is_view", type:"bool"},
+					{name: "row_count", type:"bool"},
+					{name: "engine", type:"string"},
 				],
-				idProperty: "table",
+				idProperty: "table_name",
 				
 				proxy: {
 					type: "ajax",
-					url:  AJAX_SERVER + "/dev/db/info",
+					url:  AJAX_SERVER + "/dev/db/tables",
 					method: 'GET',
 					reader: {
 						type: "json",
@@ -157,14 +159,14 @@ grid_columns: function(){
 
 
 on_select_view: function(butt, checked){
-	return
+	//return
 	if(checked){
 		this.curr_database = butt.text;
 		
 		
 		this.grid_columns().getStore().removeAll();
 		
-		this.grid_tables().getStore().getProxy().url = "/ajax/dev/database/" + this.curr_database + "/tables";
+		this.grid_tables().getStore().getProxy().url = "/ajax/dev/db/tables";
 		this.grid_tables().getStore().load();
 	}
 	butt.setIconCls( checked ? "icoOn" : "icoOff");

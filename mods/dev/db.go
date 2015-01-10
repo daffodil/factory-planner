@@ -140,10 +140,11 @@ type DB_Table struct {
 	IsView bool `json:"is_view"`
 	Engine *string `json:"engine"`
 	Columns []DB_Column  `json:"columns,omitempty"`
-	ColCount int `json:"col_count"`
+	//ColCount *int64 `json:"col_count"`
 	RowCount *int64 `json:"row_count"`
 	NextId *int64  `json:"next_id"`
 }
+
 func DB_GetTables(DB *sql.DB)([]DB_Table,  error) {
 
 
@@ -162,10 +163,8 @@ func DB_GetTables(DB *sql.DB)([]DB_Table,  error) {
 	for rows.Next(){
 		t := DB_Table{}
 		var ttype sql.NullString
-		var engine sql.NullString
-		var row_count sql.NullInt64
-		var next_id sql.NullInt64
-		err := rows.Scan( &t.Name, &ttype, &t.Engine, &row_count, &next_id)
+
+		err := rows.Scan( &t.Name, &ttype, &t.Engine, &t.RowCount, &t.NextId)
 
 		if err != nil {
 			revel.ERROR.Println(err)
@@ -173,13 +172,6 @@ func DB_GetTables(DB *sql.DB)([]DB_Table,  error) {
 			if ttype.Valid && ttype.String == "VIEW" {
 				t.IsView = true
 			}
-			if row_count.Valid {
-				t.RowCount = &row_count.Int64
-			}
-			if next_id.Valid {
-				t.NextId = &next_id.Int64
-			}
-
 			lst = append(lst, t)
 		}
 	}
