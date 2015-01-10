@@ -36,10 +36,26 @@ func init() {
 var Db gorm.DB
 
 func InitDB(){
-	connect_str, found := revel.Config.String("db.connect")
+	var db_user, db_password, db_database, db_options string
+	var found bool
+	db_user, found = revel.Config.String("db.user")
 	if !found {
-		revel.ERROR.Printf("no db.conenct")
+		revel.ERROR.Printf("no db.user")
 	}
+	db_password, found = revel.Config.String("db.password")
+	if !found {
+		revel.ERROR.Printf("no db.password")
+	}
+	db_database, found = revel.Config.String("db.database")
+	if !found {
+		revel.ERROR.Printf("no db.database")
+	}
+	db_options, found = revel.Config.String("db.options")
+	if !found {
+		revel.ERROR.Printf("no db.options")
+	}
+	connect_str := db_user + ":" + db_password + "@/" + db_database + "?" + db_options
+	revel.INFO.Printf("attempting connect with", connect_str)
 	var err error
 	Db, err = gorm.Open("mysql", connect_str)
 	if err != nil {

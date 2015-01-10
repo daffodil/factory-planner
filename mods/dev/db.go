@@ -7,8 +7,6 @@ import (
 	//"io/ioutil"
 	"fmt"
 	"github.com/revel/revel"
-	//"github.com/revel/revel/cache"
-	//_ "github.com/lib/pq"
 	"database/sql"
 )
 
@@ -50,15 +48,7 @@ func NewTablePayload() DB_TablePayload {
 }
 
 
-// Table details
-type DB_Table struct {
-	Definition string `db:"definition" json:"definition,omitempty"`
-	Name string `db:"table_name" json:"table_name"`
-	IsView bool `json:"is_view"`
-	Columns []DB_Column  `json:"columns,omitempty"`
-	ColCount int `json:"col_count"`
-	RowCount int `json:"row_count"`
-}
+
 
 
 // returns views and tables
@@ -114,7 +104,8 @@ func DB_GetViews(DB *sql.DB) ([]DB_Table,  error) {
 
 	lst :=  make( []DB_Table, 0)
 
-	sql := "select table_name from INFORMATION_SCHEMA.views WHERE table_schema = ANY (current_schemas(false))"
+	sql := "select table_namem table_type, engine, table_rows, auto_increment  "
+	sql += " from INFORMATION_SCHEMA.views WHERE table_schema = ?"
 	rows, err := DB.Query(sql)
 	if err != nil {
 		revel.ERROR.Println(err)
@@ -135,13 +126,33 @@ func DB_GetViews(DB *sql.DB) ([]DB_Table,  error) {
 	return lst, nil
 }
 
+func GetDatabaseName() string {
+	name, found := revel.Config.String("db.database")
+	if found {
+		return name
+	}
+	return ""
+}
+// Table details
+type DB_Table struct {
+	Definition string `db:"definition" json:"definition,omitempty"`
+	Name string `db:"table_name" json:"table_name"`
+	IsView bool `json:"is_view"`
+	Engine *string `json:"engine"`
+	Columns []DB_Column  `json:"columns,omitempty"`
+	ColCount int `json:"col_count"`
+	RowCount *int64 `json:"row_count"`
+	NextId *int64  `json:"next_id"`
+}
 func DB_GetTables(DB *sql.DB)([]DB_Table,  error) {
+
 
 	lst :=  make( []DB_Table, 0)
 
 	//sql := "SELECT table_name FROM  INFORMATION_SCHEMA.tables WHERE  TABLE_SCHEMA = 'trt-staff-test' and table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema');"
-	sql := "show tables"
-	rows, err := DB.Query(sql)
+	q := "select TABLE_NAME as table_name, TABLE_TYPE as table_type, ENGINE as engine, TABLE_ROWS as row_count, AUTO_INCREMENT as next_id  "
+	q += " from INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?"
+	rows, err := DB.Query(q, GetDatabaseName() )
 	if err != nil {
 		revel.ERROR.Println(err)
 		return nil,  err
@@ -150,10 +161,25 @@ func DB_GetTables(DB *sql.DB)([]DB_Table,  error) {
 
 	for rows.Next(){
 		t := DB_Table{}
-		err := rows.Scan( &t.Name )
+		var ttype sql.NullString
+		var engine sql.NullString
+		var row_count sql.NullInt64
+		var next_id sql.NullInt64
+		err := rows.Scan( &t.Name, &ttype, &t.Engine, &row_count, &next_id)
+
 		if err != nil {
 			revel.ERROR.Println(err)
 		} else {
+			if ttype.Valid && ttype.String == "VIEW" {
+				t.IsView = true
+			}
+			if row_count.Valid {
+				t.RowCount = &row_count.Int64
+			}
+			if next_id.Valid {
+				t.NextId = &next_id.Int64
+			}
+
 			lst = append(lst, t)
 		}
 	}

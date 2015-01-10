@@ -14,8 +14,9 @@ initComponent: function() {
 		width: "100%",
 		height: WIDGET_HEIGHT,
 		items: [
-            Ext.create("FP.dev.RoutesBrowser", {}),
-            Ext.create("FP.dev.DbBrowser", {})
+            Ext.create("FP.dev.DbBrowser", {}),
+            Ext.create("FP.dev.RoutesBrowser", {})
+
 		]
 	});
 	this.callParent();
