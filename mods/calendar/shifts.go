@@ -1,9 +1,9 @@
+package calendar
 
-package cal
 
 import (
-	"time"
-	"github.com/revel/revel"
+	//"time"
+	//"github.com/revel/revel"
 
 )
 
@@ -14,12 +14,14 @@ import (
 
 
 type Shift struct {
-	Start hour
-	End hour
+	Start int
+	End int
 }
 
+/*
 var shifts = make(map[string]Shift)
 shifts["morning"] = Shift(6, 14)
 shifts["evening"] = Shift(14, 20)
 shifts["night"] = Shift(20, 6)
 
+*/

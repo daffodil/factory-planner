@@ -13,6 +13,11 @@ GET     /jmobile/:page                          JMobile.Pages
 # GET     /jmobile/accounts                       Account.JMobileIndex
 GET      /ajax/accounts                           Account.JsonIndex
 
+
+
+GET      /ajax/calendar/week/:view                Calendar.JsonWeek
+
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

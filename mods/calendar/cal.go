@@ -1,5 +1,6 @@
 
-package cal
+package calendar
+
 
 import (
 	"time"
@@ -16,7 +17,7 @@ import (
 // need to fire off events for sending wake up messages to crew
 type Ticker struct {
 	// current time
-	UTC time
+	UTC string
 
 }
 
@@ -49,17 +50,17 @@ type Calendar struct {
 }
 
 
-var MasterClock = *Ticker
+var MasterClock *Ticker
 
 func StartMasterClock() {
 
 	// add ticker and start clock
 	MasterClock = new(Ticker)
-	MasterClock.Start()
+	//MasterClock.Start()
 
 	// load holidays and days not work
-	Calendar := new(Calendar)
-	Calendar.SetShist()
+	//Calendar := new(Calendar)
+	//Calendar.SetShist()
 
 	// load now and find current state from log
 
@@ -71,13 +72,10 @@ func StartMasterClock() {
 }
 
 
-func Now() {
-	return time.Now.UTC()
+func Now() time.Time {
+	return time.Now().UTC()
 }
 
-func Week() int {
-	return 3
-}
 
 func init(){
 	// need to init things
