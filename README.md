@@ -29,7 +29,7 @@ This code is based on a prototype in sqlalchemy/bottle.py
 
 
 Using the
-- revel framework - revel.github.io
+- revel framework - https://revel.github.io
 - gorm - https://github.com/jinzhu/gorm
 - jquery mobile client
 

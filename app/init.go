@@ -1,6 +1,11 @@
 package app
 
 import (
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
+	_ "github.com/go-sql-driver/mysql"
+
 	"github.com/revel/revel"
 )
 
@@ -21,11 +26,22 @@ func init() {
 		revel.ActionInvoker,           // Invoke the action.
 	}
 	revel.OnAppStart( SetupTemplates )
-
+	InitDB()
 	// register startup functions with OnAppStart
 	// ( order dependent )
 	// revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
+}
+
+var Db gorm.DB
+
+func InitDB(){
+	var err error
+	Db, err = gorm.Open("mysql", "user:password@/dbname?charset=utf8&parseTime=True")
+	if err != nil {
+		//todo throw tantrum
+	}
+	Db.DB().Ping()
 }
 
 // TODO turn this into revel.HeaderFilter

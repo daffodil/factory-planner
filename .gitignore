@@ -2,5 +2,7 @@ test-results/
 tmp/
 routes/
 
+conf/app.conf
+
 factory-planner.iml
 .idea/

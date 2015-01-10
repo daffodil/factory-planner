@@ -1,6 +1,7 @@
 package accounts
 
 import (
+	"github.com/jinzhu/gorm"
 	//"github.com/revel/revel"
 )
 
@@ -45,8 +46,11 @@ type Account struct {
 }
 
 
-func AccountsIndex() ([]Accounts, )error) {
+func AccountsIndex(db gorm.DB) ([]Account, error) {
 
+	var accs []Account
+	db.Where("acc_active = ", 1).Find(accs)
 
+	return accs, nil
 
 }
