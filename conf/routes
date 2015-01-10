@@ -5,7 +5,7 @@
 
 module:testrunner
 
-#GET     /                                       App.Index
+# GET     /                                       App.Index
 GET     /jmobile                                JMobile.Index
 GET     /jmobile/:page                          JMobile.Pages
 
