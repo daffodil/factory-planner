@@ -26,21 +26,26 @@ func init() {
 		revel.ActionInvoker,           // Invoke the action.
 	}
 	revel.OnAppStart( SetupTemplates )
-	InitDB()
+	//InitDB()
 	// register startup functions with OnAppStart
 	// ( order dependent )
-	// revel.OnAppStart(InitDB)
+	revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
 }
 
 var Db gorm.DB
 
 func InitDB(){
+	connect_str, found := revel.Config.String("db.connect")
+	if !found {
+		revel.ERROR.Printf("no db.conenct")
+	}
 	var err error
-	Db, err = gorm.Open("mysql", "user:password@/dbname?charset=utf8&parseTime=True")
+	Db, err = gorm.Open("mysql", connect_str)
 	if err != nil {
 		//todo throw tantrum
 	}
+	Db.LogMode(true)
 	Db.DB().Ping()
 }
 

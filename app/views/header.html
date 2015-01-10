@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +18,19 @@
     {{range .moreScripts}}
       <script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
     {{end}}
+
+    {{if .use_ext }}
+        {{set . "ext_ver" "ext-4.2.1.883"}}
+        <script src="/public/{{.ext_ver}}/ext-all.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="/public/{{.ext_ver}}/resources/css/ext-all.css" />
+        <script src="/public/js/factory-planner/main.js" type="text/javascript" charset="utf-8"></script>
+        <style>
+            #ext_widget{
+                border: 0 auto;
+            }
+        </style>
+    {{end}}
+
   </head>
   <body>
   <nav class="navbar navbar-inverse navbar-top">
@@ -40,6 +54,6 @@
                   </div>
                   <button type="submit" class="btn btn-success">Sign in  - TODO</button>
               </form>
-          </div><!--/.navbar-collapse -->
+          </div>
       </div>
   </nav>
