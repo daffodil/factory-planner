@@ -3,7 +3,7 @@ package calendar
 
 
 import (
-	"time"
+	//"time"
 	"github.com/revel/revel"
 
 )
@@ -72,9 +72,6 @@ func StartMasterClock() {
 }
 
 
-func Now() time.Time {
-	return time.Now().UTC()
-}
 
 
 func init(){
