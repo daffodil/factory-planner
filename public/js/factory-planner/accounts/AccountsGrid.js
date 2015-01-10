@@ -45,7 +45,7 @@ initComponent: function() {
 			store: this.get_store(),
 			loadMask: true,
 			tbar: [
-				//this.action_new_tab()
+				{text: "New"},{text: "View"},
 			],
 			columns: [
 				{header: 'Abbr', dataIndex:'ticker',

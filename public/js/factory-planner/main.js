@@ -1,4 +1,6 @@
 
+var AJAX_SERVER = "/ajax";
+
 //var WIDGET_WIDTH = window.innerWidth - 20;
 var WIDGET_HEIGHT = window.innerHeight - 200;
 

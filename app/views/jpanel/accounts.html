@@ -1,0 +1,24 @@
+{{set . "page" "widget"}}
+{{set . "title" "Accounts"}}
+{{set . "use_ext" true}}
+{{template "header.html" .}}
+
+<script>
+var VP
+</script>
+
+<div id="ext_widget" ></div>
+<script>
+
+
+Ext.onReady(function(){
+	Ext.Msg.wait("Loading, caching and initializing");
+	VP = Ext.create("FP.accounts.AccountsPanel", {renderTo: "ext_widget"});
+	//VP.initialize();
+	Ext.Msg.hide();
+});
+</script>
+
+
+
+{{template "footer.html" .}}

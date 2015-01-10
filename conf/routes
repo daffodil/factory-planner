@@ -13,6 +13,11 @@ GET     /jmobile/:page                              JMobile.Pages
 #GET     /jmobile/accounts                         Accounts.JMobileIndex
 GET      /jpanel/accounts                          Accounts.JPanelAccounts
 
+
+GET      /jpanel/dev                                Dev.DevPage
+GET      /ajax/dev/routes                           Dev.JsonRoutes
+GET      /ajax/dev/db/tables                        Dev.DB_TablesJson
+
 GET     /ajax/account/:acc_id                     Accounts.JsonAccount
 GET     /ajax/accounts                            Accounts.JsonAccounts
 
