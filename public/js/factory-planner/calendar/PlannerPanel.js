@@ -1,6 +1,6 @@
 /*global Ext: false, console: false, FP: false */
 
-Ext.define("FP.dev.DevPanel", {
+Ext.define("FP.calendar.PlannerPanel", {
 
 extend: "Ext.tab.Panel",
 
@@ -14,8 +14,8 @@ initComponent: function() {
 		width: "100%",
 		height: WIDGET_HEIGHT,
 		items: [
-            Ext.create("FP.dev.DbBrowser", {}),
-            Ext.create("FP.dev.RoutesBrowser", {})
+            //Ext.create("FP.dev.DbBrowser", {}),
+            //Ext.create("FP.dev.RoutesBrowser", {})
 
 		]
 	});

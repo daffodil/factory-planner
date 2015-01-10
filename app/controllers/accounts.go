@@ -48,8 +48,7 @@ func (c Accounts) JsonAccount() revel.Result {
 	return c.RenderJson(payload)
 }
 
+// Render extjs panel
 func (c Accounts) JPanelAccounts() revel.Result {
-
-
 	return c.RenderTemplate("jpanel/accounts.html")
 }

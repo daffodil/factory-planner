@@ -10,9 +10,9 @@ GET     /jmobile                                    JMobile.Index
 GET     /jmobile/:page                              JMobile.Pages
 
 
-#GET     /jmobile/accounts                         Accounts.JMobileIndex
-GET      /jpanel/accounts                          Accounts.JPanelAccounts
-
+#GET     /jmobile/accounts                          Accounts.JMobileIndex
+GET      /jpanel/accounts                           Accounts.JPanelAccounts
+GET      /jpanel/planner                            Calendar.JPanelPlanner
 
 GET      /jpanel/dev                                Dev.DevPage
 GET      /ajax/dev/routes                           Dev.JsonRoutes

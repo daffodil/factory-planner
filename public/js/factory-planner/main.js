@@ -2,7 +2,7 @@
 var AJAX_SERVER = "/ajax";
 
 //var WIDGET_WIDTH = window.innerWidth - 20;
-var WIDGET_HEIGHT = window.innerHeight - 200;
+var WIDGET_HEIGHT = window.innerHeight - 50;
 
 
 var API_DATE_FORMAT = 'Y-m-d';

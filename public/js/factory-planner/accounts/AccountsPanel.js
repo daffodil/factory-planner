@@ -1,4 +1,4 @@
-/*global Ext: false, console: false, FGx: false */
+/*global Ext: false, console: false, FP: false */
 
 Ext.define("FP.accounts.AccountsPanel", {
 
@@ -20,17 +20,17 @@ initComponent: function() {
 		],
 		tbar: [
 			{xtype: 'buttongroup',
-				title: 'Find Ident',
+				title: 'Ticker',
 				columns: 2,
 				items: [
 					{iconCls: "icoClr",	scope: this, tooltip: "Clear text box",
 						handler: function(){
-							var widget = this.down("textfield[name=search_apt_ident]");
+							var widget = this.down("textfield[name=search_ticker]");
 							widget.setValue("");
 							widget.focus();
 						}
 					},
-					{xtype: "textfield",  name: "search_apt_ident",
+					{xtype: "textfield",  name: "search_ticker",
 						width: this.txt_width,
 						enableKeyEvents: true,
 						listeners: {
@@ -39,10 +39,8 @@ initComponent: function() {
 								txtFld.setValue( txtFld.getValue().trim() );
 								var s = txtFld.getValue();
 								if(s.length > 1){
-									this.get_airports_store().load({params: {
-										ident: s,
-										//apt_type: this.get_apt_types(),
-										//apt_size: this.get_apt_sizes()
+									this.get_store().load({params: {
+										ticker: s
 									}});
 								}
 							}
@@ -56,12 +54,12 @@ initComponent: function() {
 				items: [
 					{iconCls: "icoClr",	scope: this, tooltip: "Clear text box",
 						handler: function(){
-							var widget = this.down("textfield[name=search_apt_text]");
+							var widget = this.down("textfield[name=search_account]");
 							widget.setValue("");
 							widget.focus();
 						}
 					},
-					{xtype: "textfield",  name: "search_apt_text",
+					{xtype: "textfield",  name: "search_account",
 						width: this.txt_width,
 						enableKeyEvents: true,
 						listeners: {
@@ -70,7 +68,7 @@ initComponent: function() {
 								if(txtFld.getValue().length > 3){
 									var s = txtFld.getValue().trim();
 									if(s.length > 3){
-										this.get_airports_store().load({params: {search: s}});
+										this.get_store().load({params: {search: s}});
 									}
 								}
 							}

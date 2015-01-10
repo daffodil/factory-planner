@@ -60,3 +60,9 @@ func (c Calendar) JsonWeeks() revel.Result {
 
 	return c.RenderJson(payload)
 }
+
+// render planner
+func (c Calendar) JPanelPlanner() revel.Result {
+	return c.RenderTemplate("jpanel/planner.html")
+}
+

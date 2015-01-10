@@ -1,4 +1,4 @@
-/*global Ext: false, console: false, FGx: false */
+/*global Ext: false, console: false, FP: false */
 
 Ext.define("FP.accounts.AccountsGrid", {
 
@@ -48,8 +48,8 @@ initComponent: function() {
 				{text: "New"},{text: "View"},
 			],
 			columns: [
-				{header: 'Abbr', dataIndex:'ticker',
-					sortable: true, flex: 1, menuDisabled: true,
+				{header: 'Ticker', dataIndex:'ticker',
+					sortable: true, width: 100, menuDisabled: true,
 					renderer: function(v, meta, rec){
 						return v;
 					}
