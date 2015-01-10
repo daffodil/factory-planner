@@ -17,7 +17,7 @@ type AccountsPayload struct {
 	//Accounts []accounts.Account `json:"accounts"`
 }
 
-func (c Account) JsonIndex() revel.Result {
+func (c Account) JsonAccountsIndex() revel.Result {
 
 	//var e error
 	payload := new(AccountsPayload)
@@ -32,3 +32,17 @@ func (c Account) JsonIndex() revel.Result {
 	return c.RenderJson(payload)
 }
 
+func (c Account) JsonAccount() revel.Result {
+
+	//var e error
+	payload := new(AccountsPayload)
+	payload.Success = true
+	//payload := make(map[string]interface{})
+
+	//payload.Accounts, e = accounts.AccountsIndex(app.Db)
+
+	//if e != nil {
+	// throw tantrum
+	//}
+	return c.RenderJson(payload)
+}
