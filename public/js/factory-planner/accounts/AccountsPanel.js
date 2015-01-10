@@ -10,8 +10,10 @@ initComponent: function() {
 		title: "Accounts",
 		layout: "border",
 		frame: false, plain: true, border: false,
+		width: WIDGET_WIDTH,
+		height: WIDGET_HEIGHT,
 		items: [
-            //this.get_accounts_grid(),
+            Ext.create("FP.accounts.AccountsGrid", {region: "center"})
             //this.get_runways_tree()
 		],
 		tbar: [
