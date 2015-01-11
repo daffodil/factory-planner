@@ -1,5 +1,0 @@
-
-GET     /ajax/accounts                          Account.AccountsAjaxIndex
-#GET     /accounts                               Account.AccountsIndex
-#GET     /account/id/:id                         JMobile.Index
-#GET     /jmobile/account/id/:id                 JMobile.Account

@@ -24,6 +24,6 @@ func DB_CreateTables(db gorm.DB) (interface{}, error) {
 	fmt.Println(s)
 	db.AutoMigrate( &accounts.Account{}, &accounts.Contact{} )
 
-	db.AutoMigrate( &parts.Part{} )
+	db.AutoMigrate( &parts.Part{}, &parts.Contact2Part{} )
 	return foo, nil
 }

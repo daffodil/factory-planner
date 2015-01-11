@@ -9,10 +9,10 @@ import (
 type Account struct {
 
 	// The primary key
-	AccId int ` deaddb:"account_id" json:"account_id" gorm:"column:account_id; primary_key:yes"`
+	AccountId int ` json:"account_id" gorm:"column:account_id; primary_key:yes"`
 
-	AccActive bool   ` json:"acc_active" sssgorm:"column:is_client" sql:"type:int(2);default:0" `
-	Root bool   ` ssjson:"acc_active" sssgorm:"column:is_client" sql:"type:int(2);default:0" `
+	AccActive bool   ` json:"acc_active"  sql:"type:int(2);default:0" `
+	Root bool   ` json:"root"  sql:"type:int(2);default:0" `
 
 	// Given name of the company eg Tesla Mirror Inc
 	Company string ` json:"company" `
