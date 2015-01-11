@@ -102,7 +102,7 @@ i18n.default_language = en
 #  `Static.ServeModule("modulename","public")`
 module.static=github.com/revel/revel/modules/static
 
-module.account = github.com/daffodil/factory-planner/mods/account
+
 
 ################################################################################
 # Section: dev
