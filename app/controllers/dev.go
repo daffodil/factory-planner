@@ -75,6 +75,16 @@ func (c Dev) DB_TablesJson() revel.Result {
 }
 
 
+// Create tables
+func (c Dev) DB_TablesCreateJson() revel.Result {
+	data, err := dev.DB_CreateTables(app.Db)
+	if err != nil {
+		revel.ERROR.Println(err)
+	}
+	return c.RenderJson(data)
+}
+
+
 // ====================================================================
 // Returns data on a table
 func (c Dev) DB_TableJson(table string) revel.Result {
