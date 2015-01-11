@@ -3,6 +3,7 @@ package orders
 type Order struct {
 
 	OrderId int `json:"order_id" gorm:"column:order_id; primary_key:yes"`
+	OrderTypeId int `json:"order_type_id" sql:"not null;`
 	AccountId int `json:"account_id" sql:"not null;`
 	PartId int `json:"part_id" sql:"not null;`
 
