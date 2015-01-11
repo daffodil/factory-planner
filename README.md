@@ -4,6 +4,14 @@ A simple factory planning system, written in go.
 
 Currently in dev and not to be taken seriously  yet!
 
+Demo
+========================
+This is under active dev, latest version at
+- [factory-planner dodgy test](http://factory-planner.daffodil.uk.com)
+
+
+Ambling
+==================
 ```
 The story do far...
 This project is under dev for a simple planning system

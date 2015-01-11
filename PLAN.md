@@ -25,6 +25,8 @@ IMMEDEATE PROBLEMS
 
 - where to create db definition..
 
+- create anonymous structs
+
 
  
 
