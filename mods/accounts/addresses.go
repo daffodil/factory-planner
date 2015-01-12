@@ -1,10 +1,14 @@
 package accounts
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 type Address struct {
 
-	AddressId int `json:"location_id" gorm:"column:location_id; primary_key:yes"`
+	AddressId int `json:"address_id" gorm:"column:address_id; primary_key:yes"`
 	AccountId int `json:"account_id" `
-	LocActive bool `json:"loc_active" sql:"type:int(2);not null;default:0" `
+	AddrActive bool `json:"addr_active" sql:"type:int(2);not null;default:0" `
 
 	Location string `json:"location" sql:"type:varchar(100);not null;default:''" `
 	Address string `json:"address" sql:"type:varchar(100);not null;default:''" `
@@ -15,12 +19,22 @@ type Address struct {
 
 	IsHq bool `json:"is_hq" sql:"type:int(2);not null;default:0" `
 	IsAddress bool `json:"is_address" sql:"type:int(2);not null;default:0" `
-	IsBulling bool `json:"is_billing" sql:"type:int(2);not null;default:0" `
+	IsBilling bool `json:"is_billing" sql:"type:int(2);not null;default:0" `
 
-	LocSearch string `json:"loc_search" sql:"type:varchar(100);not null;default:''" `
+	AddrSearch string `json:"addr_search" sql:"type:varchar(100);not null;default:''" `
 }
 
 func (me Address) TableName() string {
 	return "addresses"
 }
 
+func DB_IndexAddress(db gorm.DB) {
+
+	cols := []string{
+		"account_id", "location", "address", "postcode",
+		"addr_search"	, "addr_active", "is_hq", "is_address", "is_billing" }
+
+	for _, c := range cols {
+		db.Model(&Address{}).AddIndex("idx_" + c, c)
+	}
+}

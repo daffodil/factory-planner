@@ -20,18 +20,49 @@ import (
 )
 
 
-func DB_CreateTables(db gorm.DB) (interface{}, error) {
+func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 	foo := make( map[string]interface{} )
 
-	db.CreateTable( &accounts.Account{}, &accounts.Address{}, &accounts.Contact{} )
+	if drop_first {
+		db.DropTableIfExists(&fpsys.Security{})
+		db.DropTableIfExists(&fpsys.Setting{})
 
-	db.CreateTable( &accounts.Account{}, &accounts.Address{}, &accounts.Contact{} )
+		db.DropTableIfExists(&accounts.Account{})
+		db.DropTableIfExists(&accounts.Address{})
+		db.DropTableIfExists(&accounts.Contact{})
 
-	db.CreateTable( &orders.OrderType{}, &orders.Order{}, &orders.WorkOrder{})
+		db.DropTableIfExists(&orders.OrderType{})
+		db.DropTableIfExists(&orders.Order{})
+		db.DropTableIfExists(&orders.WorkOrder{})
 
-	db.CreateTable( &schedule.WorkSchedule{})
+		db.DropTableIfExists(&schedule.WorkSchedule{})
+		db.DropTableIfExists(&parts.Part{})
 
-	db.CreateTable( &parts.Part{}, &parts.Contact2Part{} )
+	}
+
+
+	db.AutoMigrate( &fpsys.Setting{} )
+	db.AutoMigrate( &fpsys.Security{} )
+	if true == true {
+		db.AutoMigrate(&accounts.Account{})
+		accounts.DB_IndexAccount(db)
+		db.AutoMigrate(&accounts.Address{})
+		accounts.DB_IndexAddress(db)
+		db.AutoMigrate(&accounts.Contact{})
+		accounts.DB_IndexContact(db)
+
+
+		db.AutoMigrate(&orders.OrderType{})
+		db.AutoMigrate(&orders.Order{})
+		db.AutoMigrate(&orders.WorkOrder{})
+		orders.DB_IndexOrderType(db)
+		orders.DB_IndexOrder(db)
+		orders.DB_IndexWorkOrder(db)
+
+		db.AutoMigrate(&schedule.WorkSchedule{})
+
+		db.AutoMigrate(&parts.Part{})
+	}
 	return foo, nil
 }

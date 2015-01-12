@@ -1,8 +1,8 @@
 package accounts
 
 import (
-	_ "github.com/jinzhu/gorm"
-	//"github.com/revel/revel"
+	"github.com/jinzhu/gorm"
+
 )
 
 type Contact struct {
@@ -10,7 +10,7 @@ type Contact struct {
 
 	ContactId int ` json:"contact_id"  gorm:"primary_key:yes" `
 	AccountId int ` json:"account_id" `
-	AddressId int ` json:"location_id" `
+	AddressId int ` json:"address_id" `
 
 
 	Contact string 	` json:"contact" sql:"type:varchar(100);" `
@@ -38,4 +38,15 @@ type Contact struct {
 }
 func (me Contact) TableName() string {
 	return "contacts"
+}
+
+func DB_IndexContact(db gorm.DB) {
+
+	cols := []string{
+		"account_id", "address_id", "contact", "title",
+		"email"	, "security_id", "syslogin", "con_active", "can_login", "con_search", "www_page"}
+
+	for _, c := range cols {
+		db.Model(&Contact{}).AddIndex("idx_" + c, c)
+	}
 }
