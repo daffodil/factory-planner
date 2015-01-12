@@ -1,5 +1,8 @@
 
 package fpsys
+import (
+	"github.com/jinzhu/gorm"
+)
 
 type Security struct {
 	SecurityId int ` json:"security_id"   gorm:"column:security_id; primary_key:yes" `
@@ -8,4 +11,13 @@ type Security struct {
 }
 func (me Security) TableName() string {
 	return "security"
+}
+func DB_IndexSecurity(db gorm.DB) {
+
+	cols := []string{
+		"security", "security_key"}
+
+	for _, c := range cols {
+		db.Model(&Security{}).AddIndex("idx_" + c, c)
+	}
 }

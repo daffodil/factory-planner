@@ -18,5 +18,5 @@ type Contact2Part struct {
 
 
 func (me Contact2Part) TableName() string {
-	return "contacts_2_parts"
+	return "contact_2_part"
 }

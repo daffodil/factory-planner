@@ -18,11 +18,13 @@ GET      /jpanel/dev                                Dev.DevPage
 GET      /ajax/dev/routes                           Dev.JsonRoutes
 GET      /ajax/dev/db/tables/create                 Dev.DB_TablesCreateJson
 GET      /ajax/dev/db/tables                        Dev.DB_TablesJson
-
 GET      /ajax/dev/db/table/:table                  Dev.DB_TableJson
 
+GET      /ajax/dev/db/views/create                 Dev.DB_ViewsCreateJson
 
-GET     /ajax/account/:acc_id                     Accounts.JsonAccount
+GET     /ajax/account/:account_id                     Accounts.JsonAccount
+GET     /ajax/account/:account_id/orders              Orders.JsonAccountOrders
+GET     /ajax/account/:account_id/work_orders         Orders.JsonAccountWorkOrders
 GET     /ajax/accounts                            Accounts.JsonAccounts
 
 

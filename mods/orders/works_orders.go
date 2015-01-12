@@ -31,3 +31,12 @@ func DB_IndexWorkOrder(db gorm.DB) {
 		db.Model(&WorkOrder{}).AddIndex("idx_" + c, c)
 	}
 }
+
+
+func GetAccountWorkOrders(db gorm.DB, account_id int) ([]WorkOrder, error) {
+
+	var worders []WorkOrder
+	//db.Find(&worders, WorkOrder{AccountId: account_id})
+
+	return worders, nil
+}

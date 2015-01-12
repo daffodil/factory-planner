@@ -38,12 +38,17 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 		db.DropTableIfExists(&schedule.WorkSchedule{})
 		db.DropTableIfExists(&parts.Part{})
+		db.DropTableIfExists(&parts.Contact2Part{})
 
 	}
 
 
 	db.AutoMigrate( &fpsys.Setting{} )
+	fpsys.DB_IndexSetting(db)
 	db.AutoMigrate( &fpsys.Security{} )
+	fpsys.DB_IndexSecurity(db)
+	db.AutoMigrate( &fpsys.SysLog{} )
+	fpsys.DB_IndexSysLog(db)
 	if true == true {
 		db.AutoMigrate(&accounts.Account{})
 		accounts.DB_IndexAccount(db)
@@ -62,7 +67,9 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 		db.AutoMigrate(&schedule.WorkSchedule{})
 
-		db.AutoMigrate(&parts.Part{})
+		db.AutoMigrate(&parts.Part{}, &parts.Contact2Part{})
 	}
 	return foo, nil
 }
+
+

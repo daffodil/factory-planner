@@ -1,5 +1,8 @@
 
 package fpsys
+import (
+	"github.com/jinzhu/gorm"
+)
 
 type Setting struct {
 
@@ -12,4 +15,13 @@ type Setting struct {
 }
 func (me Setting) TableName() string {
 	return "settings"
+}
+func DB_IndexSetting(db gorm.DB) {
+
+	cols := []string{
+		"key", "value"}
+
+	for _, c := range cols {
+		db.Model(&Setting{}).AddIndex("idx_" + c, c)
+	}
 }
