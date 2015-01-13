@@ -96,6 +96,11 @@ load: function(){
             var headers = [];
             //console.log(data)
             var weeks = data.weeks;
+
+            var week_width = Math.round( (window.innerWidth - 30) / weeks.length );
+            var day_width = week_width / 7;
+            console.log("weeks=", weeks.length, week_width, day_width);
+
             for(var i in weeks){
                 var w = weeks[i];
                 var yw = "wk_" + w.year + "_" + w.week
@@ -105,17 +110,21 @@ load: function(){
                 });
 
                 var day_cols = [];
-                var day_labels = ["Mn", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+                var day_labels = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
                 for(var d =0; d < 7; d++){
-                    day_cols.push(
-                        {text: day_labels[d], day: d, width: 20}
-                    );
+                    day_cols.push({
+                        text:  day_labels[d],
+                        day: d,
+                        menuDisabled: true,
+                        width: day_width
+                    });
                 }
                 headers.push({
                     deaddataIndex: yw,
                     week: w,
                     header: "<b>" + w.week + "</b> <small> - " + w.year + "</small>",
-
+                    // DEAflex: 1,
+                    width: week_width,
                     menuDisabled: true,
                     columns: day_cols
                 });
