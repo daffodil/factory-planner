@@ -49,6 +49,8 @@ func (c Accounts) JsonAccount() revel.Result {
 }
 
 // Render extjs panel
-func (c Accounts) JPanelAccounts() revel.Result {
-	return c.RenderTemplate("jpanel/accounts.html")
+func (c Accounts) StaffAccountsPage() revel.Result {
+	c.RenderArgs["CurrPath"] = "/staff/accounts"
+	c.RenderArgs["MainNav"] = StaffNav()
+	return c.RenderTemplate("staff/accounts.html")
 }

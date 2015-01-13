@@ -11,8 +11,8 @@ GET     /jmobile/:page                              JMobile.Pages
 
 
 #GET     /jmobile/accounts                          Accounts.JMobileIndex
-GET      /staff/accounts                           Accounts.JPanelAccounts
-GET      /staff/planner                            Calendar.JPanelPlanner
+GET      /staff/accounts                           Accounts.StaffAccountsPage
+GET      /staff/planner                            Calendar.StaffPlannerPage
 
 GET      /staff/dev                                Dev.DevPage
 GET      /ajax/dev/routes                           Dev.JsonRoutes

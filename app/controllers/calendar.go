@@ -62,7 +62,9 @@ func (c Calendar) JsonWeeks() revel.Result {
 }
 
 // render planner
-func (c Calendar) JPanelPlanner() revel.Result {
-	return c.RenderTemplate("jpanel/planner.html")
+func (c Calendar) StaffPlannerPage() revel.Result {
+	c.RenderArgs["CurrPath"] = "/staff/planner"
+	c.RenderArgs["MainNav"] = StaffNav()
+	return c.RenderTemplate("staff/planner.html")
 }
 

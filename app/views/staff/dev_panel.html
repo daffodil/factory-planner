@@ -1,10 +1,9 @@
-{{set . "page" "widget"}}
-{{set . "title" "Accounts"}}
+{{set . "title" "Developer Panel"}}
 {{set . "use_ext" true}}
 {{template "header.html" .}}
 
 <script>
-var VP
+var widget
 </script>
 
 <div id="ext_widget" ></div>
@@ -13,8 +12,7 @@ var VP
 
 Ext.onReady(function(){
 	Ext.Msg.wait("Loading, caching and initializing");
-	VP = Ext.create("FP.accounts.AccountsPanel", {renderTo: "ext_widget"});
-	//VP.initialize();
+	widget = Ext.create("FP.dev.DevPanel", {renderTo: "ext_widget"});
 	Ext.Msg.hide();
 });
 </script>

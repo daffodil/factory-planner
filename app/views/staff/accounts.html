@@ -4,7 +4,7 @@
 {{template "header.html" .}}
 
 <script>
-var VP
+var widget
 </script>
 
 <div id="ext_widget" ></div>
@@ -13,8 +13,7 @@ var VP
 
 Ext.onReady(function(){
 	Ext.Msg.wait("Loading, caching and initializing");
-	VP = Ext.create("FP.calendar.PlannerPanel", {renderTo: "ext_widget"});
-	//VP.initialize();
+	widget = Ext.create("FP.accounts.AccountsPanel", {renderTo: "ext_widget"});
 	Ext.Msg.hide();
 });
 </script>
