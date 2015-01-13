@@ -14,7 +14,7 @@ var API_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
         enabled : true,
         paths   : {
 			Ext: "/public/ext-4.2.1-gpl",
-			FP : '/public/js/factory-planner'
+			FP : '/public/factory-planner'
         }
 });
 
@@ -33,6 +33,7 @@ Ext.define('Account', {
 		{name: "is_supplier", type: 'bool'},
 		{name: "on_hold", type: 'bool'},
 		{name: "is_client", type: 'bool'},
-		{name: "acc_active", type: 'bool'}
+		{name: "acc_active", type: 'bool'},
+		{name: "root", type: 'bool'},
 	]
 });

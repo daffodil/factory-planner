@@ -18,6 +18,9 @@ type AccountsPayload struct {
 	Accounts []accounts.Account `json:"accounts"`
 }
 
+
+
+// handles /ajax/accounts
 func (c Accounts) JsonAccounts() revel.Result {
 
 	var e error
@@ -25,13 +28,17 @@ func (c Accounts) JsonAccounts() revel.Result {
 	payload.Success = true
 	//payload := make(map[string]interface{})
 
-	payload.Accounts, e = accounts.AccountsIndex(app.Db)
+	search := GetSearch( c )
+
+	payload.Accounts, e = accounts.AccountsIndex(app.Db, search)
 
 	if e != nil {
 		payload.Error = e.Error()
 	}
 	return c.RenderJson(payload)
 }
+
+
 
 func (c Accounts) JsonAccount() revel.Result {
 
@@ -50,6 +57,7 @@ func (c Accounts) JsonAccount() revel.Result {
 
 // Render extjs panel
 func (c Accounts) StaffAccountsPage() revel.Result {
+
 	c.RenderArgs["CurrPath"] = "/staff/accounts"
 	c.RenderArgs["MainNav"] = StaffNav()
 	return c.RenderTemplate("staff/accounts.html")

@@ -4,20 +4,33 @@ Ext.define("FP.accounts.AccountsPanel", {
 
 extend: "Ext.Panel",
 
+get_accounts_grid: function(){
+	if(!this.xAccountsGrid){
+		this.xAccountsGrid = Ext.create("FP.accounts.AccountsGrid", {region: "west", flex: 1});
+    }
+    return this.xAccountsGrid;
+},
 
+get_account_panel: function(){
+	if(!this.xAccountPanel){
+		this.xAccountPanel = Ext.create("FP.accounts.AccountPanel", {region: "center", flex: 1});
+    }
+    return this.xAccountPanel;
+},
 
 initComponent: function() {
 	Ext.apply(this, {
 		iconCls: "icoAccounts",
-		title: "Accounts",
+		title: "Accounts Portal",
 		layout: "border",
 		frame: false, plain: true, border: false,
 		width: "100%",
 		height: WIDGET_HEIGHT,
 		items: [
-            Ext.create("FP.accounts.AccountsGrid", {region: "center"})
-            //this.get_runways_tree()
+            this.get_accounts_grid(),
+            this.get_account_panel()
 		],
+		/*
 		tbar: [
 			{xtype: 'buttongroup',
 				title: 'Ticker',
@@ -77,6 +90,7 @@ initComponent: function() {
 				]
 			}
 		]
+		*/
 
 	});
 	this.callParent();
