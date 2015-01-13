@@ -11,11 +11,11 @@ import (
 	//"database/sql"
 	"github.com/jinzhu/gorm"
 
-	"github.com/daffodil/factory-planner/mods/fpsys"
-	"github.com/daffodil/factory-planner/mods/accounts"
-	"github.com/daffodil/factory-planner/mods/orders"
-	"github.com/daffodil/factory-planner/mods/parts"
-	"github.com/daffodil/factory-planner/mods/schedule"
+	"github.com/daffodil/factory-planner/app/fp/fpsys"
+	"github.com/daffodil/factory-planner/app/fp/accounts"
+	"github.com/daffodil/factory-planner/app/fp/orders"
+	"github.com/daffodil/factory-planner/app/fp/parts"
+	"github.com/daffodil/factory-planner/app/fp/schedule"
 
 )
 

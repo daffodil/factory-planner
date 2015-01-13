@@ -4,7 +4,7 @@ import (
 	"github.com/revel/revel"
 
 	//"github.com/daffodil/factory-planner/app"
-	"github.com/daffodil/factory-planner/mods/calendar"
+	"github.com/daffodil/factory-planner/app/fp/calendar"
 )
 
 type Calendar struct {

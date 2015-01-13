@@ -4,7 +4,7 @@ import (
 	"github.com/revel/revel"
 
 	"github.com/daffodil/factory-planner/app"
-	"github.com/daffodil/factory-planner/mods/dev"
+	"github.com/daffodil/factory-planner/app/fp/dev"
 
 )
 
