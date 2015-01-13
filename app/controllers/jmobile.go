@@ -5,7 +5,7 @@ import (
 	"github.com/revel/revel"
 )
 
-type Nav struct {
+type NavMobile struct {
 	Path string
 	Label string
 	Title string
@@ -13,12 +13,12 @@ type Nav struct {
 }
 
 
-func StaffMobileNav() []Nav {
-	nav := make([]Nav, 0)
-	nav = append(nav, Nav{"/index", "Index", "Staff Index", "home"})
-	nav = append(nav, Nav{"/accounts", "Accounts", "Accounts Index", "info"})
-	nav = append(nav, Nav{"/parts", "Parts", "Parts Index", "grid"})
-	nav = append(nav, Nav{"/orders", "Orders", "Orders Index", "grid"})
+func StaffMobileNav() []NavMobile {
+	nav := make([]NavMobile, 0)
+	nav = append(nav, NavMobile{"/index", "Index", "Staff Index", "home"})
+	nav = append(nav, NavMobile{"/accounts", "Accounts", "Accounts Index", "info"})
+	nav = append(nav, NavMobile{"/parts", "Parts", "Parts Index", "grid"})
+	nav = append(nav, NavMobile{"/orders", "Orders", "Orders Index", "grid"})
 	return nav
 }
 

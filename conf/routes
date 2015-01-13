@@ -11,10 +11,10 @@ GET     /jmobile/:page                              JMobile.Pages
 
 
 #GET     /jmobile/accounts                          Accounts.JMobileIndex
-GET      /jpanel/accounts                           Accounts.JPanelAccounts
-GET      /jpanel/planner                            Calendar.JPanelPlanner
+GET      /staff/accounts                           Accounts.JPanelAccounts
+GET      /staff/planner                            Calendar.JPanelPlanner
 
-GET      /jpanel/dev                                Dev.DevPage
+GET      /staff/dev                                Dev.DevPage
 GET      /ajax/dev/routes                           Dev.JsonRoutes
 GET      /ajax/dev/db/tables/create                 Dev.DB_TablesCreateJson
 GET      /ajax/dev/db/tables                        Dev.DB_TablesJson

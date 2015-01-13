@@ -14,6 +14,9 @@ type Dev struct {
 
 
 func (c Dev) DevPage() revel.Result {
+	c.RenderArgs["CurrPath"] = "/staff/dev"
+	c.RenderArgs["MainNav"] = StaffNav()
+
 	return c.RenderTemplate("jpanel/dev_panel.html")
 }
 

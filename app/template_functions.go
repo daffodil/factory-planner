@@ -4,6 +4,8 @@ import (
 	"github.com/revel/revel"
 )
 
+
+
 func SetupTemplates() {
 
 	// returns the iso week number {{week .xdate}}
@@ -15,5 +17,8 @@ func SetupTemplates() {
 	revel.TemplateFuncs["year"] = func(a, b interface{}) string {
 		return "55"
 	}
+
+
+
 
 }

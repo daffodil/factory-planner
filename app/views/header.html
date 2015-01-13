@@ -47,10 +47,10 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                  <li class="active"><a href="/">Home</a></li>
-                  <li><a href="/jpanel/accounts">Accounts</a></li>
-                  <li><a href="/jpanel/planner">Planner</a></li>
-                  <li><a href="/jpanel/dev">Developer CP</a></li>
+                  {{with and ($cp := .CurrPath) ($mn :=.MainNav)}}
+                  {{range $n := $.MainNav}}
+                    <li {{if eq $n.Path $.CurrPath}}class="active"{{end}}><a href="{{$n.Path}}" title="{{$n.Title}}">{{$n.Label}}</a></li>
+                  {{end}}{{end}}
               </ul>
               <form class="navbar-form navbar-right">
                   <button type="submit" class="btn btn-success">Sign in  - TODO</button>
