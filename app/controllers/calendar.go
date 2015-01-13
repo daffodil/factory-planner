@@ -53,7 +53,7 @@ func (c Calendar) JsonWeeks() revel.Result {
 	payload := new(WeeksPayload)
 	payload.Success = true
 
-	payload.Weeks, e = calendar.WeeksView(2015, 2, -1, 9)
+	payload.Weeks, e = calendar.WeeksView(2015, 2, -1, 5)
 	if e != nil {
 		payload.Error = e.Error()
 	}

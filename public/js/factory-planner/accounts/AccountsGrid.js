@@ -3,6 +3,7 @@
 Ext.define("FP.accounts.AccountsGrid", {
 
 extend: "Ext.grid.GridPanel",
+
 get_store: function(){
 	if(!this.xStore){
 		this.xStore = Ext.create("Ext.data.JsonStore", {
@@ -30,42 +31,43 @@ get_store: function(){
 
 initComponent: function() {
 	Ext.apply(this, {
-            frame: false, plain: true, border: false,
-			hideHeader: true,
-			autoScroll: true,
-			autoWidth: true,
-			enableHdMenu: false,
-			viewConfig: {
-				emptyText: 'No accounts in view',
-				deferEmptyText: false,
-				forceFit: true
-			},
+        frame: false, plain: true, border: false,
+        hideHeader: true,
+        autoScroll: true,
+        autoWidth: true,
+        enableHdMenu: false,
+        viewConfig: {
+            emptyText: 'No accounts in view',
+            deferEmptyText: false,
+            forceFit: true
+        },
+        stripeRows: true,
 
-			stripeRows: true,
-			store: this.get_store(),
-			loadMask: true,
-			tbar: [
-				{text: "New"},{text: "View"},
-			],
-			columns: [
-				{header: 'Ticker', dataIndex:'ticker',
-					sortable: true, width: 100, menuDisabled: true,
-					renderer: function(v, meta, rec){
-						return v;
-					}
-				},
-				{header: 'Account', dataIndex:'company',
-                    sortable: true, flex: 3, menuDisabled: true,
-                    renderer: function(v, meta, rec){
-                        return "<b>" + v + "</b>";
-                    }
-                },
-                {header: 'On Hold', dataIndex:'on_hold'},
-                {header: 'Client', dataIndex:'is_client'},
-                {header: 'Supplier', dataIndex:'is_supplier'},
-                {header: 'Acc Ref', dataIndex:'acc_ref'},
-                {header: "Active", dataIndex: 'acc_active'}
-			]
+        store: this.get_store(),
+        loadMask: true,
+
+        tbar: [
+            {text: "New"},{text: "View"},
+        ],
+        columns: [
+            {header: 'Ticker', dataIndex:'ticker',
+                sortable: true, width: 100, menuDisabled: true,
+                renderer: function(v, meta, rec){
+                    return v;
+                }
+            },
+            {header: 'Account', dataIndex:'company',
+                sortable: true, flex: 3, menuDisabled: true,
+                renderer: function(v, meta, rec){
+                    return "<b>" + v + "</b>";
+                }
+            },
+            {header: 'On Hold', dataIndex:'on_hold'},
+            {header: 'Client', dataIndex:'is_client'},
+            {header: 'Supplier', dataIndex:'is_supplier'},
+            {header: 'Acc Ref', dataIndex:'acc_ref'},
+            {header: "Active", dataIndex: 'acc_active'}
+        ]
 
     });
     this.callParent();
