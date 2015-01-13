@@ -13,7 +13,7 @@ type Nav struct {
 }
 
 
-func StaffNav() []Nav {
+func StaffMobileNav() []Nav {
 	nav := make([]Nav, 0)
 	nav = append(nav, Nav{"/index", "Index", "Staff Index", "home"})
 	nav = append(nav, Nav{"/accounts", "Accounts", "Accounts Index", "info"})
@@ -27,9 +27,10 @@ type JMobile struct {
 }
 
 // Populates Nav, sets current time etc
+// TODO - handle pages here
 func (c JMobile) Setup(path string) {
 	c.RenderArgs["path"] = path
-	c.RenderArgs["nav"] = StaffNav()
+	c.RenderArgs["nav"] = StaffMobileNav()
 
 	c.RenderArgs["now"] = time.Now()
 

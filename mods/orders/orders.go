@@ -23,9 +23,9 @@ func (t *FPDate) MarshalJSON() ([]byte, error) {
 type Order struct {
 
 	OrderId int `json:"order_id" gorm:"column:order_id; primary_key:yes"`
-	OrderTypeId *int `json:"order_type_id" sql:"not null;`
-	AccountId int `json:"account_id" sql:"not null;`
-	PartId *int `json:"part_id" sql:"not null;`
+	OrderTypeId *int `json:"order_type_id" sql:"type:int"`
+	AccountId int `json:"account_id" sql:"type:int"`
+	PartId *int `json:"part_id" sql:"type:int;"`
 
 
 	ClientOrderNo *string `json:"client_order_no" sql:"type:varchar(100);not null;default:''" `

@@ -3,6 +3,8 @@ package controllers
 import "github.com/revel/revel"
 
 
+
+
 type Pages struct {
 	*revel.Controller
 }
