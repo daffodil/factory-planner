@@ -22,12 +22,12 @@ initComponent: function() {
 	Ext.apply(this, {
 		iconCls: "icoAccounts",
 		title: "Accounts Portal",
-		layout: "border",
+		layout: "hbox",
 		frame: false, plain: true, border: false,
 		width: "100%",
 		height: WIDGET_HEIGHT,
 		items: [
-            this.get_accounts_grid(),
+            //this.get_accounts_grid(),
             this.get_account_panel()
 		],
 		/*

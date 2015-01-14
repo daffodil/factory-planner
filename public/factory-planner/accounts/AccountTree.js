@@ -1,7 +1,7 @@
 
 Ext.define('G2.accounts.AccountTree', {
 	
-extend: 'Ext.tree.TreePanel',
+extend: 'Ext.tree.Panel',
 requires: [
 	//'G2.lab_locations.LabLocationDialog'
 ],
@@ -11,7 +11,6 @@ initComponent: function(){
 	
 	Ext.apply(this, {
 		
-		//tbar: this.get_toolbar(),
 		useArrows: false,
 		autoScroll: true,
 		animate: false,
@@ -22,7 +21,7 @@ initComponent: function(){
 		layout: "fit",
 		
 		rootVisible: false,
-		store: this.get_store(),
+		//store: this.get_store(),
 		listeners: { 
 			scope: this,
 			//selectionchange: this.on_selection_change

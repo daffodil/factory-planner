@@ -19,7 +19,7 @@ initComponent: function() {
 		layout: "vbox",
 		frame: false, plain: true, border: false,
 		items: [
-            //this.get_account_tree()
+            this.get_account_tree()
            // this.get_account_panel()
 		],
 		tbar: [
