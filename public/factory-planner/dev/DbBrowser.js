@@ -240,7 +240,10 @@ load:  function(){
 	this.grid_tables().getStore().load();
 },
 
-do_request: function(endpoint, xparams){
+do_request: function(title, url, params){
+    var d = Ext.create("FP.dev.ActionDialog", {title: title, url: url, params: params});
+    d.run_show();
+    return
     Ext.Ajax.request({
         scope: this,
         url: AJAX_SERVER + endpoint,
@@ -253,7 +256,9 @@ do_request: function(endpoint, xparams){
                     msg: "Server replied",
                     value: result.responseText,
                     multiline: true,
-                    icon: Ext.MessageBox.INFO
+                    icon: Ext.MessageBox.INFO,
+                    width: window.innerWidth - 10,
+                    height: window.innerHeight - 10,
 
                 });
             }
@@ -263,12 +268,13 @@ do_request: function(endpoint, xparams){
     });
 },
 on_create_views: function(){
-    var data = this.do_request("/dev/db/views/create");
+    var data = this.do_request("Create SQL Views", "/dev/db/views/create", {});
+
 
 },
 
 on_update_searches: function(){
-
+    var data = this.do_request("Update Searches", "/dev/db/update_searches", {});
 }
 
-});  // end function cinstructor
+});

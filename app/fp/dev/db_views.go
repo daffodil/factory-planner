@@ -3,23 +3,17 @@
 package dev
 
 import (
-	//"os"
-	//"path/filepath"
-	//"io/ioutil"
-	"fmt"
-	//"github.com/revel/revel"
-	//"database/sql"
-	"github.com/jinzhu/gorm"
 
-	//"github.com/daffodil/factory-planner/mods/fpsys"
-	//"github.com/daffodil/factory-planner/mods/accounts"
-	//"github.com/daffodil/factory-planner/mods/orders"
-	//"github.com/daffodil/factory-planner/mods/parts"
-	//"github.com/daffodil/factory-planner/mods/schedule"
+	"fmt"
+
+	"github.com/revel/revel"
+
+	"github.com/jinzhu/gorm"
+	"database/sql"
 
 )
 
-
+// The sql  of views to create
 var views map[string]string
 
 func init() {
@@ -42,24 +36,78 @@ func init() {
 		order_ordered, order_required, client_order_no
 		from orders
 		inner join order_types on order_types.order_type_id = orders.order_type_id
-		inner join accounts on accounts.account_id = orders.account_id
+		sinner join accounts on accounts.account_id = orders.account_id
 
 		order by order_required asc
 	`
 }
 
-func DB_CreateViews(db gorm.DB) (interface{}, error) {
+type DB_View struct {
+	Name string ` json:"name" `
+	SQL string ` json:"sql;omitempty" `
+	Error string ` json:"error" `
+}
+
+func DB_CreateViews(db gorm.DB) (map[string]DB_View, error) {
 
 
-	foo := make( map[string]interface{} )
+	reply := make( map[string]DB_View )
 
 	for ki := range views {
-		fmt.Println(ki, views[ki])
-		db.Exec(views[ki])
+		view := DB_View{Name: ki}
+		fmt.Println("===", ki) //, views[ki])
+		foo := db.Exec(views[ki])
+		if foo.Error != nil {
+			view.Error = foo.Error.Error()
+		}
+		//fmt.Println("foo=", foo.Error)
+		reply[ki] = view
 	}
 
 
+	return reply, nil
 
-	return foo, nil
+}
+
+
+func DB_GetViews(DB *sql.DB) ([]DB_Table,  error) {
+
+	lst :=  make( []DB_Table, 0)
+
+	sql := "select table_name  "
+	sql += " from INFORMATION_SCHEMA.views WHERE table_schema = ?"
+	revel.INFO.Println( GetDatabaseName(), sql)
+	rows, err := DB.Query(sql, GetDatabaseName() )
+	if err != nil {
+		revel.ERROR.Println(err)
+		return nil,  err
+	}
+	defer rows.Close()
+
+	for rows.Next(){
+		t := DB_Table{}
+		err := rows.Scan( &t.Name )
+		if err != nil {
+			revel.ERROR.Println(err)
+		} else {
+			t.IsView = true
+			lst = append(lst, t)
+		}
+	}
+	return lst, nil
+}
+
+
+func DB_GetView(db gorm.DB, view string) (DB_View, error) {
+
+	viewObj := DB_View{}
+
+	view_def, found := views[view]
+	fmt.Println(found, view)
+
+	viewObj.Name = view
+	viewObj.SQL = view_def
+
+	return viewObj, nil
 
 }

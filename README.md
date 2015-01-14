@@ -4,6 +4,12 @@ A simple factory planning system, written in go.
 
 Currently in dev and not to be taken seriously  yet!
 
+Help Wanted
+========================
+- a quick revel developer and/or golang reviewer 
+- a jquery mobile coder
+- and extjs coder
+
 Demo
 ========================
 This is under active dev, latest version at (maybe down sometimes)
@@ -17,9 +23,10 @@ Using the
 - gorm - https://github.com/jinzhu/gorm
 - jquery mobile client - 
 
-Clients at the moment
-- simple jquery mobile
-- factory planner desktop which is a pyqt5 application
+=== Latest ===
+- check the Developer panel
+ 
+
 
 
 

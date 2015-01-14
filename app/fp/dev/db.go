@@ -60,7 +60,7 @@ func NewTableColPayload() DB_TableColPayload {
 
 
 // returns views and tables
-func DB_GetTablesAndViewsPayload(DB *sql.DB) (DB_TablesPayload,  error) {
+func z_later_GetTablesAndViewsPayload(DB *sql.DB) (DB_TablesPayload,  error) {
 
 	payload := NewTablesPayload()
 
@@ -79,7 +79,7 @@ func DB_GetTablesAndViewsPayload(DB *sql.DB) (DB_TablesPayload,  error) {
 	return payload, nil
 }
 // returns views
-func DB_GetViewsPayload(DB *sql.DB) (DB_TablesPayload,  error) {
+func z_later_DB_GetViewsPayload(DB *sql.DB) (DB_TablesPayload,  error) {
 
 	payload := NewTablesPayload()
 
@@ -108,32 +108,8 @@ func DB_GetTablesPayload(DB *sql.DB) (DB_TablesPayload,  error) {
 
 
 
-func DB_GetViews(DB *sql.DB) ([]DB_Table,  error) {
 
-	lst :=  make( []DB_Table, 0)
-
-	sql := "select table_namem table_type, engine, table_rows, auto_increment  "
-	sql += " from INFORMATION_SCHEMA.views WHERE table_schema = ?"
-	rows, err := DB.Query(sql)
-	if err != nil {
-		revel.ERROR.Println(err)
-		return nil,  err
-	}
-	defer rows.Close()
-
-	for rows.Next(){
-		t := DB_Table{}
-		err := rows.Scan( &t.Name )
-		if err != nil {
-			revel.ERROR.Println(err)
-		} else {
-			t.IsView = true
-			lst = append(lst, t)
-		}
-	}
-	return lst, nil
-}
-
+// The database base name in in the LOADED revel runtime config
 func GetDatabaseName() string {
 	name, found := revel.Config.String("db.database")
 	if found {

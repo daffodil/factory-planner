@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/revel/revel"
 
 	"github.com/daffodil/factory-planner/app"
@@ -11,8 +12,8 @@ import (
 type Dev struct {
 	*revel.Controller
 }
-
-
+// Show the extjs panel
+// TODO make dev  panel in it/ dept instead of staff
 func (c Dev) DevPage() revel.Result {
 	c.RenderArgs["CurrPath"] = "/staff/dev"
 	c.RenderArgs["MainNav"] = StaffNav()
@@ -22,19 +23,22 @@ func (c Dev) DevPage() revel.Result {
 
 
 
-// ====================================================================
+
+// Json struct for revel routes
 type RoutesInfoPayload struct {
 	Success bool `json:"success"`
 	Routes []RouteInfo `json:"routes"`
 }
+// revel route info
 type RouteInfo struct {
 	Url string `json:"url"`
 	Controller string `json:"controller"`
 	Action string `json:"action"`
 }
 
-// Handle the routes view - only return /json/* and /xml/* adn /kml/*
-func (c Dev) JsonRoutes(table string) revel.Result {
+// /ajax/dev/routes
+// routes view - get the loaded routes and encodes for json
+func (c Dev) RoutesJson(table string) revel.Result {
 
 	data := new(RoutesInfoPayload)
 	data.Success = true
@@ -48,7 +52,8 @@ func (c Dev) JsonRoutes(table string) revel.Result {
 }
 
 
-// Returns all db info
+// DEADReturns all db info
+/*
 func (c Dev) DB_InfoJson() revel.Result {
 
 	data, err := dev.DB_GetTablesAndViewsPayload(app.Db.DB())
@@ -57,16 +62,8 @@ func (c Dev) DB_InfoJson() revel.Result {
 	}
 	return c.RenderJson(data)
 }
+*/
 
-// Returns views
-func (c Dev) DB_ViewsJson() revel.Result {
-
-	data, err := dev.DB_GetViewsPayload(app.Db.DB())
-	if err != nil {
-		revel.ERROR.Println(err)
-	}
-	return c.RenderJson(data)
-}
 
 // Returns tables
 func (c Dev) DB_TablesJson() revel.Result {
@@ -89,17 +86,50 @@ func (c Dev) DB_TablesCreateJson() revel.Result {
 	}
 	return c.RenderJson(data)
 }
-
 //=============================================================================
-// Create tables
-func (c Dev) DB_ViewsCreateJson() revel.Result {
+// Views index
+func (c Dev) DB_ViewsJson() revel.Result {
 
-
-	data, err := dev.DB_CreateViews(app.Db)
+	var payload map[string]interface{} = make(map[string]interface{})
+	payload["success"] = true
+	var err error
+	payload["views"], err = dev.DB_GetViews(app.Db.DB())
 	if err != nil {
 		revel.ERROR.Println(err)
 	}
-	return c.RenderJson(data)
+
+	return c.RenderJson(payload)
+}
+
+
+//=============================================================================
+// Create the database Views
+func (c Dev) DB_ViewsCreateJson() revel.Result {
+
+	var payload map[string]interface{} = make(map[string]interface{})
+	payload["success"] = true
+	var err error
+	payload["views"], err = dev.DB_CreateViews(app.Db)
+	if err != nil {
+		revel.ERROR.Println(err)
+	}
+
+	return c.RenderJson(payload)
+}
+//=============================================================================
+// Show a database view
+func (c Dev) DB_ViewJson(view string) revel.Result {
+
+	var payload map[string]interface{} = make(map[string]interface{})
+	payload["success"] = true
+	var err error
+	fmt.Println("GOT+", view)
+	payload["view"], err = dev.DB_GetView(app.Db, view)
+	if err != nil {
+		revel.ERROR.Println(err)
+	}
+
+	return c.RenderJson(payload)
 }
 
 // ====================================================================
@@ -114,12 +144,3 @@ func (c Dev) DB_TableJson(table string) revel.Result {
 }
 
 
-// return data on a view
-func (c Dev) DB_ViewJson(table string) revel.Result {
-
-	data, err := dev.DB_GetViewPayload(app.Db.DB(), table)
-	if err != nil {
-		revel.ERROR.Println(err)
-	}
-	return c.RenderJson(data)
-}
