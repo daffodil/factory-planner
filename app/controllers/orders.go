@@ -19,7 +19,7 @@ type OrdersPayload struct {
 	Orders []orders.OrderView `json:"orders"`
 }
 
-func (c Orders) JsonAccountOrders(account_id int) revel.Result {
+func (c Orders) AccountOrdersJson(account_id int) revel.Result {
 
 	var e error
 	payload := new(OrdersPayload)
@@ -38,7 +38,7 @@ type WorkOrdersPayload struct {
 	Error string  `json:"error"`
 	WorkOrders []orders.WorkOrder `json:"work_orders"`
 }
-func (c Orders) JsonAccountWorkOrders(account_id int) revel.Result {
+func (c Orders) AccountWorkOrdersJson(account_id int) revel.Result {
 
 	var e error
 	payload := new(WorkOrdersPayload)

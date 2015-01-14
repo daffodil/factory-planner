@@ -23,3 +23,10 @@ func StaffNav() []SNav {
 	nav = append(nav, SNav{"/staff/dev", "Dev", "Developer CP", "grid"})
 	return nav
 }
+
+
+func MakePayload() map[string]interface{} {
+	payload := make(map[string]interface{})
+	payload["success"] = true
+	return payload
+}

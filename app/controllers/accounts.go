@@ -22,7 +22,7 @@ type AccountsPayload struct {
 
 
 // handles /ajax/accounts
-func (c Accounts) JsonAccounts() revel.Result {
+func (c Accounts) AccountsJson() revel.Result {
 
 	var e error
 	payload := new(AccountsPayload)
@@ -42,20 +42,30 @@ func (c Accounts) JsonAccounts() revel.Result {
 
 
 
-func (c Accounts) JsonAccount() revel.Result {
+func (c Accounts) AccountJson(account_id int) revel.Result {
 
-	//var e error
-	payload := new(AccountsPayload)
-	payload.Success = true
-	//payload := make(map[string]interface{})
-
-	//payload.Accounts, e = accounts.AccountsIndex(app.Db)
-
-	//if e != nil {
-	// throw tantrum
-	//}
+	var e error
+	payload := MakePayload()
+	payload["account"], e = accounts.GetAccount(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e.Error()
+	}
 	return c.RenderJson(payload)
 }
+
+func (c Accounts) RootAccountJson() revel.Result {
+
+	var e error
+	payload := MakePayload()
+	payload["account"], e = accounts.GetRootAccount(app.Db)
+	if e != nil {
+		payload["error"] = e.Error()
+	}
+
+
+	return c.RenderJson(payload)
+}
+
 
 // Render extjs panel
 func (c Accounts) StaffAccountsPage() revel.Result {

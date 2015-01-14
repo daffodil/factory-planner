@@ -7,6 +7,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/revel/revel"
+
+	"github.com/daffodil/factory-planner/app/fp/accounts"
 )
 
 func init() {
@@ -30,7 +32,7 @@ func init() {
 	// register startup functions with OnAppStart
 	// ( order dependent )
 	revel.OnAppStart(InitDB)
-	// revel.OnAppStart(FillCache)
+	revel.OnAppStart(InitFP)
 }
 
 var Db gorm.DB
@@ -64,6 +66,27 @@ func InitDB(){
 	Db.LogMode(true)
 	Db.DB().Ping()
 }
+
+
+func InitFP() {
+
+	accounts.InitRoot(Db)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // TODO turn this into revel.HeaderFilter
 // should probably also have a filter for CSRF

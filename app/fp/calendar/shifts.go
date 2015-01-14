@@ -58,10 +58,10 @@ func GetShifts() (map[string]*Shift, error) {
 // returns a list of shifts for given week
 func GetWeekShifts(year, week int) ([]*Shift, error) {
 
-	weekOb := WeekFromYearWeek(year, week)
+	//weekOb := WeekFromYearWeek(year, week)
 	//weekOb.Setup(false)
 
-	start_date := weekOb.DateFirst
+	//start_date := weekOb.DateFirst
 	shifts := make([]*Shift, 0)
 
 	for idx := 0; idx < 7; idx++ {

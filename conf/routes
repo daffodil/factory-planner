@@ -1,6 +1,5 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
-# ~~~~
 
 
 module:testrunner
@@ -11,11 +10,15 @@ GET     /jmobile/:page                              JMobile.Pages
 
 
 #GET     /jmobile/accounts                          Accounts.JMobileIndex
-GET      /staff/accounts                           Accounts.StaffAccountsPage
+
 GET      /staff/planner                            Calendar.StaffPlannerPage
 
+#======================================
+# Dev
+#======================================
 GET      /staff/dev                                 Dev.DevPage
 GET      /ajax/dev/routes                           Dev.RoutesJson
+
 GET      /ajax/dev/db/tables/create                 Dev.DB_TablesCreateJson
 GET      /ajax/dev/db/tables                        Dev.DB_TablesJson
 GET      /ajax/dev/db/table/:table                  Dev.DB_TableJson
@@ -24,26 +27,44 @@ GET      /ajax/dev/db/views/create                  Dev.DB_ViewsCreateJson
 GET      /ajax/dev/db/views                         Dev.DB_ViewsJson
 GET      /ajax/dev/db/view/:view                    Dev.DB_ViewJson
 
-GET     /ajax/account/:account_id                     Accounts.JsonAccount
-GET     /ajax/account/:account_id/orders              Orders.JsonAccountOrders
-GET     /ajax/account/:account_id/work_orders         Orders.JsonAccountWorkOrders
-GET     /ajax/accounts                            Accounts.JsonAccounts
+#======================================
+# Accounts
+#======================================
+GET     /ajax/accounts                              Accounts.AccountsJson
+
+GET     /staff/accounts                             Accounts.StaffAccountsPage
+
+#======================================
+# Account
+#======================================
+GET     /ajax/account/root                          Accounts.RootAccountJson
+GET     /ajax/account/:account_id                   Accounts.AccountJson
+GET     /ajax/account/:account_id/orders            Orders.AccountOrdersJson
+GET     /ajax/account/:account_id/work_orders       Orders.AccountWorkOrdersJson
 
 
 
-GET      /ajax/calendar/week/shifts/:year/:week   Calendar.WeekShiftsJson
-GET      /ajax/calendar/week/:view                Calendar.WeekJson
-GET      /ajax/calendar/weeks                     Calendar.WeeksJson
-GET      /ajax/calendar/shifts                     Calendar.ShiftsJson
+
+#======================================
+# Calendar
+#======================================
+GET      /ajax/calendar/week/shifts/:year/:week     Calendar.WeekShiftsJson
+GET      /ajax/calendar/week/:view                  Calendar.WeekJson
+GET      /ajax/calendar/weeks                       Calendar.WeeksJson
+GET      /ajax/calendar/shifts                      Calendar.ShiftsJson
 
 
+
+#======================================
+# Static
+#======================================
 # Ignore favicon requests
-GET     /favicon.ico                              404
+GET     /favicon.ico                                404
 
-# Map static resources from the /app/public folder to the /public path
 
-## TODO .. fix this fam fam bug
 GET     /css/icons.css                            Style.CssIcons
+
+## TODO .. fix this fam fam bug I want $GOPATH//github.com/markjames/famfamfam-silk-icons/icons
 GET     /icons/famfam/*filepath                   Static.Serve("/home/gogo/src/github.com/markjames/famfamfam-silk-icons/icons")
 GET     /public/*filepath                         Static.Serve("public")
 
