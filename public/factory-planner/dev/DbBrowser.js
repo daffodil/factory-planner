@@ -203,15 +203,15 @@ initComponent: function() {
 	Ext.apply(this, {
 		layout: 'border',
 		fgxType: "DbBrowser",
-		title: "DB Schema",
-		iconCls: "icoDatabase",
+		title: "Database",
+		iconCls: "icoDb",
 		activeTab: 1,
 		plain: true,
 		frame: false,
 		border: 0, bodyBorder: "",
 		tbar: [
-		    {text: "Create Views", handler: this.on_create_views, scope: this},
-		    {text: "Update Searches", handler: this.on_update_searches, scope: this},
+		    {text: "Create Views", iconCls: "icoDbAction",  handler: this.on_create_views, scope: this},
+		    {text: "Update Searches", iconCls: "icoDbAction", handler: this.on_update_searches, scope: this},
 		],
 		items: [
 			this.grid_tables(),

@@ -39,7 +39,9 @@ GET      /ajax/calendar/weeks                     Calendar.JsonWeeks
 GET     /favicon.ico                              404
 
 # Map static resources from the /app/public folder to the /public path
+
 ## TODO .. fix this fam fam bug
+GET     /css/icons.css                            Style.CssIcons
 GET     /icons/famfam/*filepath                   Static.Serve("/home/gogo/src/github.com/markjames/famfamfam-silk-icons/icons")
 GET     /public/*filepath                         Static.Serve("public")
 
