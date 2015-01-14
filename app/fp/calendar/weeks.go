@@ -21,8 +21,9 @@ var errInvalidView error = errors.New("Invalid View")
 
 
 // Get the date for first day of the week
-// ta http://stackoverflow.com/questions/18624177/go-unix-timestamp-for-first-day-of-the-week-from-iso-year-week
-func firstDayOfISOWeek(year int, week int) time.Time {
+// - thanks to
+// http://stackoverflow.com/questions/18624177/go-unix-timestamp-for-first-day-of-the-week-from-iso-year-week
+func FirstDayOfISOWeek(year int, week int) time.Time {
 	UTC, errloc := time.LoadLocation("UTC")
 	if errloc != nil {
 
@@ -56,7 +57,7 @@ type Week struct {
 
 func (me *Week) Setup(inc_weeks bool) {
 
-	first_date := firstDayOfISOWeek(me.Year, me.Week)
+	first_date := FirstDayOfISOWeek(me.Year, me.Week)
 	me.DateFirst = ToString(first_date)
 
 	last_date := first_date.AddDate(0, 0, 6)

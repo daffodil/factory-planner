@@ -32,8 +32,9 @@ GET     /ajax/accounts                            Accounts.JsonAccounts
 
 
 
-GET      /ajax/calendar/week/:view                Calendar.JsonWeek
-GET      /ajax/calendar/weeks                     Calendar.JsonWeeks
+GET      /ajax/calendar/week/:view                Calendar.WeekJson
+GET      /ajax/calendar/weeks                     Calendar.WeeksJson
+GET      /ajax/calendar/shifts                     Calendar.ShiftsJson
 
 # Ignore favicon requests
 GET     /favicon.ico                              404

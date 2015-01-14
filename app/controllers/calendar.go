@@ -20,7 +20,7 @@ type WeekPayload struct {
 }
 
 // /ajax/week/view/;view where view is next_week, this_week, etc
-func (c Calendar) JsonWeek(view string) revel.Result {
+func (c Calendar) WeekJson(view string) revel.Result {
 
 	var e error
 	payload := new(WeekPayload)
@@ -47,7 +47,7 @@ type WeeksPayload struct {
 }
 
 // /ajax/weeks where view is next_week, this_week, etc
-func (c Calendar) JsonWeeks() revel.Result {
+func (c Calendar) WeeksJson() revel.Result {
 
 	var e error
 	payload := new(WeeksPayload)
@@ -60,6 +60,24 @@ func (c Calendar) JsonWeeks() revel.Result {
 
 	return c.RenderJson(payload)
 }
+
+
+// /ajax/weeks where view is next_week, this_week, etc
+func (c Calendar) ShiftsJson() revel.Result {
+
+	var e error
+	payload := make( map[string]interface{} )
+	payload["success"] = true
+
+	payload["shifts"], e = calendar.GetShifts()
+	if e != nil {
+		payload["error"] = e.Error()
+	}
+
+	return c.RenderJson(payload)
+}
+
+
 
 // render planner
 func (c Calendar) StaffPlannerPage() revel.Result {
