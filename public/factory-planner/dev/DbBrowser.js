@@ -209,7 +209,10 @@ initComponent: function() {
 		plain: true,
 		frame: false,
 		border: 0, bodyBorder: "",
-		//height: window.innerHeight - 5,
+		tbar: [
+		    {text: "Create Views", handler: this.on_create_views, scope: this},
+		    {text: "Update Searches", handler: this.on_update_searches, scope: this},
+		],
 		items: [
 			this.grid_tables(),
 			Ext.create("Ext.tab.Panel", {
@@ -235,6 +238,37 @@ initComponent: function() {
 //this.tablesGrid.load_tables();
 load:  function(){
 	this.grid_tables().getStore().load();
+},
+
+do_request: function(endpoint, xparams){
+    Ext.Ajax.request({
+        scope: this,
+        url: AJAX_SERVER + endpoint,
+        params: xparams,
+        success: function(result){
+            var data = Ext.decode( result.responseText );
+            if(data){
+                Ext.Msg.show({
+                    title: "Create Views",
+                    msg: "Server replied",
+                    value: result.responseText,
+                    multiline: true,
+                    icon: Ext.MessageBox.INFO
+
+                });
+            }
+            return data
+
+        }
+    });
+},
+on_create_views: function(){
+    var data = this.do_request("/dev/db/views/create");
+
+},
+
+on_update_searches: function(){
+
 }
 
 });  // end function cinstructor

@@ -1,5 +1,5 @@
 
-package fpsys
+package fp
 
 import (
 	"github.com/jinzhu/gorm"

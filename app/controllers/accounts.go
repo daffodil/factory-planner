@@ -4,6 +4,7 @@ import (
 	"github.com/revel/revel"
 
 	"github.com/daffodil/factory-planner/app"
+	"github.com/daffodil/factory-planner/app/fp"
 	"github.com/daffodil/factory-planner/app/fp/accounts"
 )
 
@@ -15,7 +16,7 @@ type Accounts struct {
 type AccountsPayload struct {
 	Success bool `json:"success"`
 	Error string  `json:"error"`
-	Accounts []accounts.Account `json:"accounts"`
+	Accounts []accounts.AccountView `json:"accounts"`
 }
 
 
@@ -28,9 +29,10 @@ func (c Accounts) JsonAccounts() revel.Result {
 	payload.Success = true
 	//payload := make(map[string]interface{})
 
-	search := GetSearch( c )
+	//search := GetSearch( c )
+	search_vars := fp.GetSearchVars(c.Params.Query)
 
-	payload.Accounts, e = accounts.AccountsIndex(app.Db, search)
+	payload.Accounts, e = accounts.GetAccountsIndex(app.Db, search_vars)
 
 	if e != nil {
 		payload.Error = e.Error()

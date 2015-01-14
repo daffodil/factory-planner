@@ -11,7 +11,7 @@ import (
 	//"database/sql"
 	"github.com/jinzhu/gorm"
 
-	"github.com/daffodil/factory-planner/app/fp/fpsys"
+	"github.com/daffodil/factory-planner/app/fp"
 	"github.com/daffodil/factory-planner/app/fp/accounts"
 	"github.com/daffodil/factory-planner/app/fp/orders"
 	"github.com/daffodil/factory-planner/app/fp/parts"
@@ -25,8 +25,8 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 	foo := make( map[string]interface{} )
 
 	if drop_first {
-		db.DropTableIfExists(&fpsys.Security{})
-		db.DropTableIfExists(&fpsys.Setting{})
+		db.DropTableIfExists(&fp.Security{})
+		db.DropTableIfExists(&fp.Setting{})
 
 		db.DropTableIfExists(&accounts.Account{})
 		db.DropTableIfExists(&accounts.Address{})
@@ -43,12 +43,12 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 	}
 
 
-	db.AutoMigrate( &fpsys.Setting{} )
-	fpsys.DB_IndexSetting(db)
-	db.AutoMigrate( &fpsys.Security{} )
-	fpsys.DB_IndexSecurity(db)
-	db.AutoMigrate( &fpsys.SysLog{} )
-	fpsys.DB_IndexSysLog(db)
+	db.AutoMigrate( &fp.Setting{} )
+	fp.DB_IndexSetting(db)
+	db.AutoMigrate( &fp.Security{} )
+	fp.DB_IndexSecurity(db)
+	db.AutoMigrate( &fp.SysLog{} )
+	fp.DB_IndexSysLog(db)
 	if true == true {
 		db.AutoMigrate(&accounts.Account{})
 		accounts.DB_IndexAccount(db)

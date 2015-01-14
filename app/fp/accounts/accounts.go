@@ -1,7 +1,11 @@
 package accounts
 
 import (
+
+	"fmt"
 	"github.com/jinzhu/gorm"
+
+	"github.com/daffodil/factory-planner/app/fp"
 )
 
 
@@ -57,17 +61,24 @@ func DB_IndexAccount(db gorm.DB) {
 }
 
 
-
-func AccountsIndex(db gorm.DB) ([]Account, error) {
-
-	var accs []Account
-
-	var q *gorm.DB
-	q = db.Where("1 = 1")
-	//q = db.Where("acc_active = ?", 1)
-	q.Order("company asc").Find(&accs)
+type AccountView struct {
+	Account
+}
 
 
-	return accs, nil
+
+func GetAccountsIndex(db gorm.DB, search_vars fp.SearchVars) ([]AccountView, error) {
+
+	var accounts []AccountView
+	fmt.Println("getttttts=", search_vars)
+	//db.Find(&orders, OrderView{AccountId: account_id})
+	cols := "account_id, company, ticker, acc_ref, root, acc_active, "
+	cols += " on_hold, is_client, is_supplier "
+
+	where := search_vars.GetSQL("company", "acc_active")
+	fmt.Println("where=", where)
+	db.Table("v_accounts").Select(cols).Where(where).Scan(&accounts)
+
+	return accounts, nil
 
 }
