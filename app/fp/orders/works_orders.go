@@ -20,7 +20,7 @@ type WorkOrder struct {
 }
 
 func (me WorkOrder) TableName() string {
-	return "works_orders"
+	return "work_orders"
 }
 func DB_IndexWorkOrder(db gorm.DB) {
 

@@ -308,16 +308,6 @@ func RootPath() string {
 	path += "/src/github.com/daffodil/factory-planner"
 	return path
 }
-/*
-func GetSqlScript(table string)(string,  error) {
-
-	file_path := RootPath() + "/sql/" + table + ".sql"
-	fmt.Println(file_path)
-	contents, err := ioutil.ReadFile(file_path)
-	return string(contents), err
-}
-*/
-
 
 /*
 func DB_UpdateView(table string) error {

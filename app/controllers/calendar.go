@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/revel/revel"
 
-	//"github.com/daffodil/factory-planner/app"
+	"github.com/daffodil/factory-planner/app"
 	"github.com/daffodil/factory-planner/app/fp/calendar"
 )
 
@@ -53,7 +53,7 @@ func (c Calendar) WeeksJson() revel.Result {
 	payload := new(WeeksPayload)
 	payload.Success = true
 
-	payload.Weeks, e = calendar.WeeksView(2015, 2, -1, 5)
+	payload.Weeks, e = calendar.WeeksView(app.Db, 2015, 2, -2, 30)
 	if e != nil {
 		payload.Error = e.Error()
 	}

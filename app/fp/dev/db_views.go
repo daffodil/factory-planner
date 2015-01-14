@@ -41,6 +41,19 @@ func init() {
 
 		order by order_required asc
 	`
+	views["v_work_schedules"] = `
+		create or replace view v_work_schedules as
+		select
+		work_schedules.work_sched_id, work_schedules.work_order_id,
+		work_schedules.work_sched_required,
+		YEAR( work_schedules.work_sched_required ) as work_sched_year,
+		WEEKOFYEAR( work_schedules.work_sched_required ) as work_sched_week,
+		work_schedules.x_work_sched_year, work_schedules.x_work_sched_week,
+		work_orders.work_order_no
+		from work_schedules
+		inner join work_orders on work_orders.work_order_id = work_schedules.work_order_id
+		order by work_schedules.work_sched_required asc
+	`
 }
 
 type DB_View struct {

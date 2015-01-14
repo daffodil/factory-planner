@@ -5,10 +5,16 @@ Ext.define("FP.calendar.PlannerPanel", {
 extend: "Ext.tab.Panel",
 
 get_weeks_view: function(){
-	if(!this.WeeksView){
-		this.WeeksView = Ext.create("FP.calendar.WeeksViewGrid", {});
+	if(!this.xWeeksView){
+		this.xWeeksView = Ext.create("FP.calendar.WeeksViewGrid", {});
     }
-    return this.WeeksView;
+    return this.xWeeksView;
+},
+get_weeks_days_view: function(){
+	if(!this.xWeeksDaysView){
+		this.xWeeksDaysView = Ext.create("FP.calendar.WeeksDaysViewGrid", {});
+    }
+    return this.xWeeksDaysView;
 },
 
 initComponent: function() {
@@ -19,9 +25,8 @@ initComponent: function() {
 		width: "100%",
 		height: WIDGET_HEIGHT,
 		items: [
-            this.get_weeks_view()
-            //Ext.create("FP.dev.RoutesBrowser", {})
-
+            this.get_weeks_view(),
+            this.get_weeks_days_view()
 		]
 	});
 	this.callParent();

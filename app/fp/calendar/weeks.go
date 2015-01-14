@@ -3,9 +3,13 @@
 package calendar
 
 import (
-	//"fmt"
+	"fmt"
 	"time"
 	"errors"
+
+	"github.com/jinzhu/gorm"
+
+	"github.com/daffodil/factory-planner/app/fp/schedule"
 )
 
 const(
@@ -53,6 +57,7 @@ type Week struct {
 	DateLast string `json:"date_last,omitempty"`
 	WeekLast *Week `json:"week_last,omitempty"`
 	WeekNext *Week `json:"week_next,omitempty"`
+	WorkSchedules []*schedule.WorkScheduleView `json:"work_schedules,omsitempty"`
 }
 
 func (me *Week) Setup(inc_weeks bool) {
@@ -83,6 +88,7 @@ func NewWeek(year, week int) Week {
 	return w
 }
 
+// Create a week from named view, eg "this_week", "last_week"
 func WeekFromView(view string) (*Week, error) {
 	d := Now()
 	switch view {
@@ -100,7 +106,6 @@ func WeekFromView(view string) (*Week, error) {
 		d = d.AddDate(0, 0, 14)
 
 	case THIS_WEEK:
-
 	default:
 		return nil, errInvalidView
 	}
@@ -109,35 +114,70 @@ func WeekFromView(view string) (*Week, error) {
 	return w, nil
 }
 
-
+// create a week from given date, with option to include next/prev
 func WeekFromTime(d time.Time, inc_prev_next_weeks bool) *Week {
-
 	w := new(Week)
 	w.Year, w.Week = d.ISOWeek()
 	w.Setup(inc_prev_next_weeks)
 	return w
 }
+
+// Create week object from given year, week
 func WeekFromYearWeek(year, week int) *Week {
 
 	d := FirstDayOfISOWeek(year, week)
 	w := WeekFromTime(d, false)
-	//w.Year, w.Week = d.ISOWeek()
-	//w.Setup(inc_prev_next_weeks)
 	return w
 }
 
+
+type DEADWeekView struct {
+	Week
+	WorkSchedule []*schedule.WorkSchedule `json:"work_schedule,omsitempty"`
+}
+
+
 // Returns a list of week, previious next eg 1, 4 = include one before, and two after
-func WeeksView(year, week, prev, ahead int) ([]*Week, error) {
+func WeeksView(db gorm.DB, year, week, prev, ahead int) ([]*Week, error) {
 
 	weeks := make([]*Week, 0)
-
-
 	now_date := Now()
 
 	for i := prev; i < ahead; i++ {
 		d := now_date.AddDate(0, 0, i * 7)
 		weeks = append(weeks, WeekFromTime(d, false))
 	}
+
+	// fetch schedules
+	scheds, err := schedule.GetWorksSchedule(db, weeks[0].DateFirst, weeks[len(weeks)-1].DateLast)
+	if err != nil {
+		//TODO
+	}
+
+	// create nested [year][week] list
+	keyed := make(map[int]map[int][]*schedule.WorkScheduleView)
+	for _, sched := range scheds {
+
+		// make year map
+		_, yrok := keyed[sched.WorkSchedYear]
+		if !yrok {
+			keyed[sched.WorkSchedYear] = make(map[int][]*schedule.WorkScheduleView)
+		}
+		// make week map
+		_, wkok := keyed[sched.WorkSchedYear][sched.WorkSchedWeek]
+		if !wkok {
+			keyed[sched.WorkSchedYear][sched.WorkSchedWeek] = make([]*schedule.WorkScheduleView, 0)
+		}
+		// add sched to list
+		keyed[sched.WorkSchedYear][sched.WorkSchedWeek] = append(keyed[sched.WorkSchedYear][sched.WorkSchedWeek], sched)
+	}
+
+	// cycle weeks and add scheds
+	for _, wk := range weeks {
+		wk.WorkSchedules = keyed[wk.Year][wk.Week]
+	}
+
+	fmt.Println(scheds)
 
 	return weeks, nil
 

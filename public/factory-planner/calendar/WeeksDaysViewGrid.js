@@ -1,17 +1,16 @@
 /*global Ext: false, console: false, FP: false */
 
-Ext.define("FP.calendar.WeeksViewGrid", {
+Ext.define("FP.calendar.WeeksDaysViewGrid", {
 
 extend: "Ext.grid.GridPanel",
 
 get_store: function(){
 	if(!this.xStore){
 		this.xStore = Ext.create("Ext.data.Store", {
-			deadmodel: "Account",
 			proxy: {
 				type: "ajax",
-				url: '/ajax/accounts',
-				method: "GET",
+				durl: '/ajax/accounts',
+				ddmethod: "GET",
 				reader: {
 					type: "json",
 					root: 'accounts'
@@ -31,7 +30,7 @@ get_store: function(){
 
 initComponent: function() {
 	Ext.apply(this, {
-        title: "Weeks",
+        title: "Weeks/Days",
         frame: false, plain: true, border: false,
         hideHeader: true,
         autoScroll: true,
@@ -109,13 +108,24 @@ load: function(){
                     type: "string"
                 });
 
+                var day_cols = [];
+                var day_labels = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+                for(var d =0; d < 7; d++){
+                    day_cols.push({
+                        text:  day_labels[d],
+                        day: d,
+                        menuDisabled: true,
+                        width: day_width
+                    });
+                }
                 headers.push({
                     deaddataIndex: yw,
                     week: w,
-                    header: "<b>" + w.week + "</b><br><small>" + w.year + "</small>",
+                    header: "<b>" + w.week + "</b> <small> - " + w.year + "</small>",
                     // DEAflex: 1,
                     width: week_width,
                     menuDisabled: true,
+                    columns: day_cols
                 });
                 console.log(w)
             }
