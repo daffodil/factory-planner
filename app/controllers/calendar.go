@@ -76,6 +76,20 @@ func (c Calendar) ShiftsJson() revel.Result {
 
 	return c.RenderJson(payload)
 }
+// /ajax/week/shifts/;year/:week
+func (c Calendar) WeekShiftsJson() revel.Result {
+
+	var e error
+	payload := make( map[string]interface{} )
+	payload["success"] = true
+
+	payload["week_shifts"], e = calendar.GetWeekShifts(2015, 10)
+	if e != nil {
+		payload["error"] = e.Error()
+	}
+
+	return c.RenderJson(payload)
+}
 
 
 
