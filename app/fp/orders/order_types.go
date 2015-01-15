@@ -12,6 +12,7 @@ type OrderType struct {
 
 }
 
+
 func (me OrderType) TableName() string {
 	return "order_types"
 }
@@ -24,4 +25,23 @@ func DB_IndexOrderType(db gorm.DB) {
 	for _, c := range cols {
 		db.Model(&OrderType{}).AddIndex("idx_" + c, c)
 	}
+}
+func DB_CreateDefaultOrderTypes(db gorm.DB) error {
+
+	defaults := []OrderType {
+		OrderType{OrderTypeId: 100,  OrderType: "Not Specified", OrderColor: "#aaaaaa"},
+		OrderType{OrderTypeId: 200,  OrderType: "Concept", OrderColor: "#FFFF99"},
+		OrderType{OrderTypeId: 300,  OrderType: "Prototype", OrderColor: "#CCFFCC"},
+		OrderType{OrderTypeId: 400,  OrderType: "Pre Volume", OrderColor: "#CCFFFF"},
+		OrderType{OrderTypeId: 500,  OrderType: "Production", OrderColor: "#FF99CC"},
+	}
+
+	var count int
+	for _, rec := range defaults {
+		db.Model(OrderType{}).Where("order_type_id = ?", rec.OrderTypeId).Count(&count)
+		if count == 0 {
+			db.Create(rec)
+		}
+	}
+	return nil
 }

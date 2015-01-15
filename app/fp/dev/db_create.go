@@ -42,13 +42,19 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 	}
 
-
+	// Settings
 	db.AutoMigrate( &fp.Setting{} )
 	fp.DB_IndexSetting(db)
+
+	// Security
 	db.AutoMigrate( &fp.Security{} )
 	fp.DB_IndexSecurity(db)
+	fp.DB_CreateDefaultSecurityLevels(db)
+
+	// SysLog
 	db.AutoMigrate( &fp.SysLog{} )
 	fp.DB_IndexSysLog(db)
+
 	if true == true {
 		db.AutoMigrate(&accounts.Account{})
 		accounts.DB_IndexAccount(db)
@@ -61,9 +67,12 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		db.AutoMigrate(&orders.OrderType{})
 		db.AutoMigrate(&orders.Order{})
 		db.AutoMigrate(&orders.WorkOrder{})
+
 		orders.DB_IndexOrderType(db)
 		orders.DB_IndexOrder(db)
 		orders.DB_IndexWorkOrder(db)
+
+		orders.DB_CreateDefaultOrderTypes(db)
 
 		db.AutoMigrate(&schedule.WorkSchedule{})
 
