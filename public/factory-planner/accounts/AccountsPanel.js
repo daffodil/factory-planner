@@ -6,17 +6,26 @@ extend: "Ext.Panel",
 
 get_accounts_grid: function(){
 	if(!this.xAccountsGrid){
-		this.xAccountsGrid = Ext.create("FP.accounts.AccountsGrid", {region: "west", flex: 1});
+		this.xAccountsGrid = Ext.create("FP.accounts.AccountsGrid", {
+		    region: "center", flex: 1, height: WIDGET_HEIGHT
+        });
+		this.xAccountsGrid.on("account", this.load_account, this )
+		    //console.log("got_account", account)
+		//}, this)
+
     }
     return this.xAccountsGrid;
 },
 
 get_account_panel: function(){
 	if(!this.xAccountPanel){
-		this.xAccountPanel = Ext.create("FP.accounts.AccountPanel", {region: "center", flex: 1});
+		this.xAccountPanel = Ext.create("FP.accounts.AccountPanel", {
+		    region: "east", flex: 1
+		});
     }
     return this.xAccountPanel;
 },
+
 
 initComponent: function() {
 	Ext.apply(this, {
@@ -25,9 +34,9 @@ initComponent: function() {
 		layout: "hbox",
 		frame: false, plain: true, border: false,
 		width: "100%",
-		height: WIDGET_HEIGHT,
+
 		items: [
-            //this.get_accounts_grid(),
+            this.get_accounts_grid(),
             this.get_account_panel()
 		],
 		/*
@@ -96,5 +105,7 @@ initComponent: function() {
 	this.callParent();
 }, // initComponent
 
-
+load_account: function(acc) {
+    this.get_account_panel().load_account(acc)
+}
 });

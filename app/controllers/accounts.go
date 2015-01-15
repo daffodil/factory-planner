@@ -6,6 +6,7 @@ import (
 	"github.com/daffodil/factory-planner/app"
 	"github.com/daffodil/factory-planner/app/fp"
 	"github.com/daffodil/factory-planner/app/fp/accounts"
+	"github.com/daffodil/factory-planner/app/fp/orders"
 )
 
 type Accounts struct {
@@ -41,14 +42,21 @@ func (c Accounts) AccountsJson() revel.Result {
 }
 
 
-
+// handles account by id /ajax/account/;account_id
 func (c Accounts) AccountJson(account_id int) revel.Result {
 
 	var e error
 	payload := MakePayload()
 	payload["account"], e = accounts.GetAccount(app.Db, account_id)
 	if e != nil {
-		payload["error"] = e.Error()
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
+
+	payload["orders"], e = orders.GetAccountOrders(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
 	}
 	return c.RenderJson(payload)
 }

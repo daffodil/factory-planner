@@ -34,9 +34,10 @@ initComponent: function() {
 	Ext.apply(this, {
         frame: false, plain: true, border: false,
         hideHeader: true,
-        autoScroll: true,
+        autoScroll: false,
         autoWidth: true,
         enableHdMenu: false,
+        layout: "fit",
         viewConfig: {
             emptyText: 'No accounts in view',
             deferEmptyText: false,
@@ -84,6 +85,16 @@ initComponent: function() {
                     return v;
                 }
             },
+            {header: 'Orders', dataIndex:'orders_due',
+                width: ww, menuDisabled: true,  align: "center",
+                renderer: function(v, meta, rec){
+                    if(v > 0){
+                        meta.style = "font-weight: bold;"
+                        return v
+                    }
+                    return "-"
+                }
+            },
             {header: 'Account', dataIndex:'company',
                 sortable: true, flex: 3, menuDisabled: true,
                 renderer: function(v, meta, rec){
@@ -109,11 +120,40 @@ initComponent: function() {
             {header: 'Supplier', dataIndex:'is_supplier', width: ww, menuDisabled: true, renderer: this.render_yn, align: "center"},
             {header: 'Acc Ref', dataIndex:'acc_ref'},
             {header: "Active", dataIndex: 'acc_active', width: ww, menuDisabled: true, ssrenderer: this.render_yn, align: "center"}
-        ]
+        ],
+        bbar: Ext.create('Ext.PagingToolbar', {
+                store: this.get_store(),
+                displayInfo: true,
+                displayMsg: 'Displaying accounts {0} - {1} of {2}',
+                emptyMsg: "No accounts to display",
+                items:[
+                    '-',
+                    {
+                        text: 'Show Preview',
+                        //pressed: pluginExpanded,
+                        enableToggle: true
+                    }
+                ]
+        }),
+        listeners: {
+            scope: this,
+            //itemclick: this.on_grid_click,
+            //itemdblclick: this.on_grid_dblclick,
+            selectionchange: this.on_grid_selection_change
+        }
 
     });
     this.callParent();
 }, // initComponent
+
+on_grid_selection_change: function(view, selections, opts){
+    console.log(selections);
+    if (selections.length > 0 ){
+        this.fireEvent("account", selections[0].getData())
+    } else {
+        this.fireEvent("account", null)
+    }
+},
 
 render_yn: function(v){
     if (v){

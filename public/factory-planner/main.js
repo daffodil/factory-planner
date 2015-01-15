@@ -2,7 +2,7 @@
 var AJAX_SERVER = "/ajax";
 
 //var WIDGET_WIDTH = window.innerWidth - 20;
-var WIDGET_HEIGHT = window.innerHeight - 80;
+var WIDGET_HEIGHT = window.innerHeight - 200;
 
 
 var API_DATE_FORMAT = 'Y-m-d';
@@ -27,13 +27,15 @@ Ext.define('Account', {
 	idProperty: 'account_id',
 	fields: [
 		{name: "account_id", type: 'int'},
+		{name: "acc_active", type: 'bool'},
+		{name: "root", type: 'bool'},
 		{name: "ticker", type: 'string'},
 		{name: "company", type: 'string'},
 		{name: "acc_ref", type: 'string'},
 		{name: "is_supplier", type: 'bool'},
 		{name: "on_hold", type: 'bool'},
 		{name: "is_client", type: 'bool'},
-		{name: "acc_active", type: 'bool'},
-		{name: "root", type: 'bool'},
+		{name: "orders_due", type: 'int'},
+
 	]
 });

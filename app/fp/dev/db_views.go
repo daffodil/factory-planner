@@ -21,10 +21,12 @@ func init() {
 
 	views["v_accounts"] = `
 		create or replace view v_accounts as
-		select accounts.account_id, accounts.acc_active,
+		select accounts.account_id, accounts.root, accounts.acc_active,
 		company, ticker, online, is_supplier, is_client,
 		acc_ref,  on_hold,
-		root
+		(select count(*) from orders
+					where orders.account_id = accounts.account_id
+					) as orders_due
 		from accounts
 
 		order by company asc

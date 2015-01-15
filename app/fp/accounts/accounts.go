@@ -68,13 +68,13 @@ func DB_IndexAccount(db gorm.DB) {
 // Database view extends the Account with other stuff
 type AccountView struct {
 	Account
-	OrdersCount int ` json:"orders_count" `
+	OrdersDue int ` json:"orders_due" `
 }
 
-
+// Columns for select, messy I know if anyones got brighter ideas
 var view_cols string = `
 account_id, company, ticker, acc_ref, root, acc_active,
-on_hold, is_client, is_supplier
+on_hold, is_client, is_supplier, orders_due
 `
 
 // returns search and view results

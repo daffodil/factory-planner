@@ -99,7 +99,7 @@ load: function(){
 
             var week_width = Math.round( (window.innerWidth - 30) / weeks.length );
             var day_width = week_width / 7;
-            console.log("weeks=", weeks.length, week_width, day_width);
+            //console.log("weeks=", weeks.length, week_width, day_width);
 
             for(var i in weeks){
                 var w = weeks[i];
@@ -110,7 +110,7 @@ load: function(){
                 });
 
                 headers.push({
-                    deaddataIndex: yw,
+                    dataIndex: yw,
                     week: w,
                     header: "<b>" + w.week + "</b><br><small>" + w.year + "</small>",
                     // DEAflex: 1,
@@ -120,6 +120,8 @@ load: function(){
                 console.log(w)
             }
             this.reconfigure(sto, headers);
+
+
 
         }
 
