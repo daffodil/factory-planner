@@ -25,16 +25,17 @@ get_form: function(){
 				},
 
 			],
-			buttons:[
-			     {text: 'Cancel', iconCls: "icoBlack",
+			tbar:[
+			    this.save_button(),
+			     {text: 'Cancel', iconCls: "icoAccount", type: "button",
 					listeners: {
 						scope: this,
 						click: function(){
 								this.close();
 							}
 					}
-			     },
-				this.save_button()
+			     }
+
 			],
 			buttonAlign: 'right'
 		});

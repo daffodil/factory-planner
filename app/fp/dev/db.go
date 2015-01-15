@@ -2,7 +2,7 @@
 package dev
 
 import (
-	"os"
+	//"os"
 	//"path/filepath"
 	//"io/ioutil"
 	"fmt"
@@ -262,6 +262,7 @@ func DB_GetColumns(DB *sql.DB, table_name string)([]DB_Column,  error) {
 
 
 //=================================================================
+/*
 func DB_GetViewPayload(DB *sql.DB, table_name string) (DB_TableColPayload , error) {
 	t := NewTableColPayload()
 	var err error
@@ -301,34 +302,7 @@ func DB_GetViewDefinition(DB *sql.DB, table string)(string,  error) {
 	}
 	return s, nil
 }
-
-
-func RootPath() string {
-	path := os.Getenv("GOPATH")
-	path += "/src/github.com/daffodil/factory-planner"
-	return path
-}
-
-/*
-func DB_UpdateView(table string) error {
-
-	var err error
-	sqldrop := "drop view if exists $1"
-	_, errd := DB.Exec(sqldrop, table)
-	if  errd != nil {
-		return err
-	}
-
-	sql, err := GetSqlScript(table)
-
-	if  err != nil {
-		return err
-	}
-	fmt.Print(sql)
-	_, err = DB.Exec(sql)
-
-	return err
-}
-
 */
+
+
 

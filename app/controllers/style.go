@@ -9,7 +9,7 @@ import (
 var Icons map[string]string
 
 const (
-	FAMFAM_SERVER_URL = "http://localhost:8888/icons/famfam"
+	FAMFAM_SERVER_URL = "/icons/famfam"
 )
 
 func init(){
