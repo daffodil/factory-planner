@@ -1,0 +1,24 @@
+
+{{set . "title" "Orders"}}
+{{set . "use_ext" true}}
+
+{{template "header.html" .}}
+
+<script>
+var widget
+</script>
+
+<div id="ext_widget" ></div>
+<script>
+
+
+Ext.onReady(function(){
+	Ext.Msg.wait("Loading, caching and initializing");
+	widget = Ext.create("FP.orders.OrdersPanel", {renderTo: "ext_widget"});
+	Ext.Msg.hide();
+});
+</script>
+
+
+
+{{template "footer.html" .}}

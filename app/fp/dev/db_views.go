@@ -38,7 +38,7 @@ func init() {
 		orders.order_type_id, order_types.order_type, order_types.order_color,
 		order_ordered, order_required, client_order_no
 		from orders
-		inner join order_types on order_types.order_type_id = orders.order_type_id
+		left join order_types on order_types.order_type_id = orders.order_type_id
 		inner join accounts on accounts.account_id = orders.account_id
 
 		order by order_required asc

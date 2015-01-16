@@ -19,6 +19,20 @@ type OrdersPayload struct {
 	Orders []orders.OrderView `json:"orders"`
 }
 
+func (c Orders) OrdersJson() revel.Result {
+
+	var e error
+	payload := MakePayload()
+
+	payload["orders"], e = orders.GetOrders(app.Db)
+	if e != nil {
+		payload["error"] = e.Error()
+	}
+
+	return c.RenderJson(payload)
+}
+
+
 func (c Orders) AccountOrdersJson(account_id int) revel.Result {
 
 	var e error
@@ -50,4 +64,12 @@ func (c Orders) AccountWorkOrdersJson(account_id int) revel.Result {
 	}
 
 	return c.RenderJson(payload)
+}
+
+// Render extjs panel
+func (c Orders) StaffOrdersPage() revel.Result {
+
+	c.RenderArgs["CurrPath"] = "/staff/orders"
+	c.RenderArgs["MainNav"] = StaffNav()
+	return c.RenderTemplate("staff/orders.html")
 }

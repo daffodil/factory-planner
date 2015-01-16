@@ -18,7 +18,7 @@ func StaffNav() []SNav {
 	//nav = append(nav, SNav{"/staff/", "Staff Home", "Staff Home", "home"})
 	nav = append(nav, SNav{"/staff/accounts", "Accounts", "Accounts Index", "info"})
 	//nav = append(nav, SNav{"/staff/parts", "Parts", "Parts Index", "grid"})
-	//nav = append(nav, SNav{"/staff/orders", "Orders", "Orders Index", "grid"})
+	nav = append(nav, SNav{"/staff/orders", "Orders", "Orders Index", "grid"})
 	nav = append(nav, SNav{"/staff/planner", "Planner", "Orders Index", "grid"})
 	nav = append(nav, SNav{"/staff/dev", "Dev", "Developer CP", "grid"})
 	return nav

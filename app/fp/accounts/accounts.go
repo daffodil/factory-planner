@@ -72,7 +72,7 @@ type AccountView struct {
 }
 
 // Columns for select, messy I know if anyones got brighter ideas
-var view_cols string = `
+var account_view_cols string = `
 account_id, company, ticker, acc_ref, root, acc_active,
 on_hold, is_client, is_supplier, orders_due
 `
@@ -85,7 +85,7 @@ func GetAccountsIndex(db gorm.DB, search_vars fp.SearchVars) ([]AccountView, err
 
 	where := search_vars.GetSQL("company", "acc_active")
 	fmt.Println("where=", where)
-	db.Table("v_accounts").Select(view_cols).Where(where).Scan(&rows)
+	db.Table("v_accounts").Select(account_view_cols).Where(where).Scan(&rows)
 
 	return rows, nil
 
@@ -96,7 +96,7 @@ func GetAccount(db gorm.DB, account_id int)(*AccountView, error) {
 
 	fmt.Println("account_id=", account_id)
 	var row *AccountView = new(AccountView)
-	db.Table("v_accounts").Select(view_cols).Where("account_id = ?", account_id).Scan(row)
+	db.Table("v_accounts").Select(account_view_cols).Where("account_id = ?", account_id).Scan(row)
 
 	return row, nil
 }
@@ -113,7 +113,7 @@ func InitRoot(db gorm.DB) {
 func GetRootAccount(db gorm.DB)(*AccountView, error) {
 	if rootAccount == nil {
 		rootAccount = new(AccountView)
-		db.Table("v_accounts").Select(view_cols).Where("root = 1").Scan(rootAccount)
+		db.Table("v_accounts").Select(account_view_cols).Where("root = 1").Scan(rootAccount)
 	}
 	return rootAccount, nil
 }

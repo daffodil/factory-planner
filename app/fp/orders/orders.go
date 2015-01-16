@@ -22,18 +22,19 @@ func (t *FPDate) MarshalJSON() ([]byte, error) {
 
 type Order struct {
 
-	OrderId int `json:"order_id" gorm:"column:order_id; primary_key:yes"`
+	OrderId int ` json:"order_id" gorm:"column:order_id; primary_key:yes"`
+	LegerId int ` json:"leger_id" `
 	OrderTypeId *int `json:"order_type_id" sql:"type:int"`
 	AccountId int `json:"account_id" sql:"type:int"`
 	PartId *int `json:"part_id" sql:"type:int;"`
 
 
-	ClientOrderNo *string `json:"client_order_no" sql:"type:varchar(100);not null;default:''" `
+	PurchaseOrder *string `json:"purchase_order" sql:"type:varchar(100)" `
+	ClientExtraRef *string `json:"client_extra_ref" sql:"type:varchar(100)" `
 	OrderNotes *string `json:"order_notes" sql:"type:varchar(100);not null;default:''" `
 
 	OrderOrdered *time.Time `json:"order_ordered" sql:"type:date" `
 	OrderRequired *time.Time `json:"order_required" sql:"type:date" `
-
 }
 
 func (me Order) TableName() string {
@@ -50,22 +51,33 @@ func DB_IndexOrder(db gorm.DB) {
 }
 
 
+
+
 type OrderView struct {
 	Order
+	OrderType string ` json:"order_type" `
+	OrderColor string ` json:"order_color" `
 	Company string ` json:"company"  `
 	Ticker string ` json:"ticker"  `
 }
+var order_view_cols string = `
+order_id, order_type_id, order_type, order_color,
+client_order_no, account_id, company, ticker,
+order_ordered, order_required
+`
 
+func GetOrders(db gorm.DB) ([]OrderView, error) {
 
+	var orders []OrderView
+	db.Table("v_orders").Select(order_view_cols).Scan(&orders)
 
+	return orders, nil
+}
 
 func GetAccountOrders(db gorm.DB, account_id int) ([]OrderView, error) {
 
 	var orders []OrderView
-	//db.Find(&orders, OrderView{AccountId: account_id})
-	cols := "order_id, order_type_id, client_order_no, account_id, company, ticker, "
-	cols += " order_ordered, order_required "
-	db.Table("v_orders").Select(cols).Where("account_id=?", account_id).Scan(&orders)
+	db.Table("v_orders").Select(order_view_cols).Where("account_id=?", account_id).Scan(&orders)
 
 	return orders, nil
 }

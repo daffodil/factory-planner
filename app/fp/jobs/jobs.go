@@ -1,4 +1,4 @@
-package orders
+package jobs
 
 import (
 	"time"
@@ -10,7 +10,7 @@ import (
 type WorkOrder struct {
 
 	WorkOrderId int `json:"work_order_id" gorm:"column:work_order_id; primary_key:yes"`
-	OrderId int `json:"order_id" sql:"type:int(11);not null;" `
+	JobNo int `json:"order_id" sql:"type:int(11);not null;" `
 
 
 	WorkOrderNo string `json:"work_order_no" sql:"type:varchar(100);not null;default:''" `

@@ -19,13 +19,19 @@ GET      /staff/planner                            Calendar.StaffPlannerPage
 GET      /staff/dev                                 Dev.DevPage
 GET      /ajax/dev/routes                           Dev.RoutesJson
 
+#= tables
 GET      /ajax/dev/db/tables/create                 Dev.DB_TablesCreateJson
 GET      /ajax/dev/db/tables                        Dev.DB_TablesJson
 GET      /ajax/dev/db/table/:table                  Dev.DB_TableJson
 
+#= views
 GET      /ajax/dev/db/views/create                  Dev.DB_ViewsCreateJson
 GET      /ajax/dev/db/views                         Dev.DB_ViewsJson
 GET      /ajax/dev/db/view/:view                    Dev.DB_ViewJson
+
+#= db misc
+#GET      /ajax/dev/db/browse/:table                 Dev.DB_ViewsCreateJson
+
 
 #======================================
 # Accounts
@@ -53,6 +59,13 @@ GET      /ajax/calendar/week/:view                  Calendar.WeekJson
 GET      /ajax/calendar/weeks                       Calendar.WeeksJson
 GET      /ajax/calendar/shifts                      Calendar.ShiftsJson
 
+
+#======================================
+# Orders
+#======================================
+GET     /ajax/orders                               Orders.OrdersJson
+
+GET     /staff/orders                              Orders.StaffOrdersPage
 
 
 #======================================

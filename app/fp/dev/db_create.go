@@ -16,6 +16,7 @@ import (
 	"github.com/daffodil/factory-planner/app/fp/orders"
 	"github.com/daffodil/factory-planner/app/fp/parts"
 	"github.com/daffodil/factory-planner/app/fp/schedule"
+	"github.com/daffodil/factory-planner/app/fp/jobs"
 
 )
 
@@ -34,7 +35,7 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 		db.DropTableIfExists(&orders.OrderType{})
 		db.DropTableIfExists(&orders.Order{})
-		db.DropTableIfExists(&orders.WorkOrder{})
+		db.DropTableIfExists(&jobs.WorkOrder{})
 
 		db.DropTableIfExists(&schedule.WorkSchedule{})
 		db.DropTableIfExists(&parts.Part{})
@@ -64,13 +65,20 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		accounts.DB_IndexContact(db)
 
 
+		// orders
+		db.AutoMigrate(&orders.Leger{})
 		db.AutoMigrate(&orders.OrderType{})
 		db.AutoMigrate(&orders.Order{})
-		db.AutoMigrate(&orders.WorkOrder{})
+		db.AutoMigrate(&orders.OrderItem{})
 
+		orders.DB_IndexLegers(db)
 		orders.DB_IndexOrderType(db)
 		orders.DB_IndexOrder(db)
-		orders.DB_IndexWorkOrder(db)
+		orders.DB_IndexOrderItems(db)
+
+		// jobs
+		jobs.DB_IndexWorkOrder(db)
+		db.AutoMigrate(&jobs.WorkOrder{})
 
 		orders.DB_CreateDefaultOrderTypes(db)
 
