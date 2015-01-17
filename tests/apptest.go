@@ -2,6 +2,7 @@ package tests
 
 import (
 	"net/url"
+	"encoding/json"
 	"github.com/revel/revel"
 )
 
@@ -12,22 +13,34 @@ type AppTest struct {
 func (t *AppTest) Before() {
 	println("Set up")
 }
+func (t *AppTest) After() {
+	println("Tear down")
+}
 
-func (t *AppTest) TestThatIndexPageWorks() {
+func (t *AppTest) TestIndexPage() {
 	t.Get("/")
 	t.AssertOk()
 	t.AssertContentType("text/html; charset=utf-8")
 }
 
-func (t *AppTest) After() {
-	println("Tear down")
+func (t *AppTest) TestRootAccountAjax() {
+	t.Get("/ajax/account/root")
+	t.AssertOk()
+	t.AssertContentType("application/json; charset=utf-8")
 }
-
 
 func (t *AppTest) TestAccountsGetAjax() {
 	t.Get("/ajax/accounts")
 	t.AssertOk()
 	t.AssertContentType("application/json; charset=utf-8")
+	//t.AssertContentType("application/json")
+
+	var data map[string]interface{}
+	err := json.Unmarshal(t.ResponseBody, &data)
+	println( err, data["accounts"] )
+	for key := range data {
+		println(">", key)
+	}
 }
 
 
