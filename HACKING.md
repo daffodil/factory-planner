@@ -3,6 +3,41 @@ Hackers Notes
 
 pedro makes some notes, maybe inaccurate but pointers..
 
+The idea of this app in present active state is to
+make it work with sage accounts, and loads of spreasheets..
+
+Idea is to remove need for windows workstations,
+and replace with an active system and any interface..
+
+It needs to be a full on system, but one that is integrable with
+and this means importing stuff in a controlled way..
+as well as complaining about things..
+
+Upload a file and import it into the system, somehow
+- import the sales export leger..
+- and mark stuff and where it belongs..
+- and then a pretend import to see stuff
+
+This can be applied to any business..
+
+eg
+- spreadsheets cut and paste into a window
+- spreasheets uplaods -
+- odf and xls/xsex in go should be fun
+- CSV and tsv
+
+
+
+Overview
+-------------------------
+The system uses a relational db to stort key data
+inc dates and planning and stuff
+
+Uses and ORM for CRUD, but Database views for general queries..
+ie all the joins ans stuff done as database views
+
+
+
 
 Server Side
 -------------------------
@@ -31,18 +66,27 @@ app/controlers/
 app/fp/
 - the factory planner logic, models, structs etc
 
+app/views/
+- the main templates
+
+app/views/staff/
+- the backend templates when logged.in
+
+
 ===============
 Database
 ===============
 Database is initialised with the gorm..
-I know, but what chices we have, maybe sqlx is better..
+I know, but what choices we have, maybe sqlx is better.. 
+.. but later re orm and future once figure ot x/db issues
 
 Currently..
 -------------------------------
-- using mysql (soon postgres)
+- using mysql, soon postgres, sqlite but wanted is postgis/spatical
 - database is initialised in app/init.go and InitDB which it "gorm"
 - https://github.com/jinzhu/gorm
 - Get a "handle" to underlying go lang database with "gorm.DB.DB()" = golang native interface
+
 
 Initialisation and Connection:
 -------------------------------

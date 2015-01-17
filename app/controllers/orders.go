@@ -6,6 +6,7 @@ import (
 
 	"github.com/daffodil/factory-planner/app"
 	"github.com/daffodil/factory-planner/app/fp/orders"
+	"github.com/daffodil/factory-planner/app/fp/jobs"
 )
 
 
@@ -50,7 +51,7 @@ func (c Orders) AccountOrdersJson(account_id int) revel.Result {
 type WorkOrdersPayload struct {
 	Success bool `json:"success"`
 	Error string  `json:"error"`
-	WorkOrders []orders.WorkOrder `json:"work_orders"`
+	WorkOrders []jobs.WorkOrder `json:"work_orders"`
 }
 func (c Orders) AccountWorkOrdersJson(account_id int) revel.Result {
 
@@ -58,7 +59,7 @@ func (c Orders) AccountWorkOrdersJson(account_id int) revel.Result {
 	payload := new(WorkOrdersPayload)
 	payload.Success = true
 
-	payload.WorkOrders, e = orders.GetAccountWorkOrders(app.Db, account_id)
+	payload.WorkOrders, e = jobs.GetAccountWorkOrders(app.Db, account_id)
 	if e != nil {
 		payload.Error = e.Error()
 	}

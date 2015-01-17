@@ -49,7 +49,12 @@ GET     /ajax/account/:account_id/orders            Orders.AccountOrdersJson
 GET     /ajax/account/:account_id/work_orders       Orders.AccountWorkOrdersJson
 
 
-
+#======================================
+# Files
+#======================================
+GET     /ajax/files                                 Files.FilesIndexJson
+GET     /ajax/file/id/:file_id                      Files.FileJson
+#GET     /ajax/account/:account_id/files       Orders.AccountWorkOrdersJson
 
 #======================================
 # Calendar
