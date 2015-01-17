@@ -13,10 +13,12 @@ import (
 
 	"github.com/daffodil/factory-planner/app/fp"
 	"github.com/daffodil/factory-planner/app/fp/accounts"
+	"github.com/daffodil/factory-planner/app/fp/files"
+	"github.com/daffodil/factory-planner/app/fp/jobs"
 	"github.com/daffodil/factory-planner/app/fp/orders"
 	"github.com/daffodil/factory-planner/app/fp/parts"
 	"github.com/daffodil/factory-planner/app/fp/schedule"
-	"github.com/daffodil/factory-planner/app/fp/jobs"
+
 
 )
 
@@ -64,6 +66,9 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		db.AutoMigrate(&accounts.Contact{})
 		accounts.DB_IndexContact(db)
 
+		// files
+		db.AutoMigrate(&files.File{})
+		files.DB_IndexFiles(db)
 
 		// orders
 		db.AutoMigrate(&orders.Leger{})

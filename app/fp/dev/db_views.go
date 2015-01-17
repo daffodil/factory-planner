@@ -18,7 +18,7 @@ var views map[string]string
 
 func init() {
 	views = make(map[string]string)
-
+   
 	views["v_accounts"] = `
 		create or replace view v_accounts as
 		select accounts.account_id, accounts.root, accounts.acc_active,
@@ -32,6 +32,20 @@ func init() {
 		order by company asc
 	`
 
+	views["v_files"] = `
+		create or replace view v_files as
+		select files.file_id,
+		file_name, file_description, file_date, file_checksum, file_uid,
+		mime_type, revision,
+		files.account_id, accounts.company, accounts.ticker,
+		files.contact_id, contacts.contact
+		from files
+		inner join contacts on contacts.contact_id = files.contact_id
+		inner join accounts on accounts.account_id = contacts.account_id
+
+		order by file_date desc
+	`
+
 	views["v_orders"] = `
 		create or replace view v_orders as
 		select orders.order_id, orders.account_id, accounts.company, accounts.ticker,
@@ -43,6 +57,8 @@ func init() {
 
 		order by order_required asc
 	`
+
+
 	views["v_work_schedules"] = `
 		create or replace view v_work_schedules as
 		select

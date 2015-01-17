@@ -80,11 +80,22 @@ func (c Dev) DB_TablesCreateJson() revel.Result {
 
 	drop := c.Params.Get("drop") == "1"
 
-	data, err := dev.DB_CreateTables(app.Db, drop)
+	var err error
+	payload := MakePayload()
+
+	payload["tables"], err = dev.DB_CreateTables(app.Db, drop)
 	if err != nil {
+		payload["error"] = err.Error()
 		revel.ERROR.Println(err)
 	}
-	return c.RenderJson(data)
+
+	payload["views"], err = dev.DB_CreateViews(app.Db)
+	if err != nil {
+		payload["error"] = err.Error()
+		revel.ERROR.Println(err)
+	}
+
+	return c.RenderJson(payload)
 }
 //=============================================================================
 // Views index
