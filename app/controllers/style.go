@@ -9,7 +9,7 @@ import (
 var Icons map[string]string
 
 const (
-	FAMFAM_SERVER_URL = "/icons/famfam"
+	FAMFAM_SERVER_URL = "http://localhost:8888/icons/famfam"
 )
 
 func init(){
@@ -22,6 +22,8 @@ func init(){
 	Icons["Db"] = "database.png"
 	Icons["DbAction"] = "database_go.png"
 
+	Icons["Routes"] = "sitemap_color.png"
+
 }
 
 type Style struct {
@@ -32,9 +34,9 @@ func (c Style) CssIcons() revel.Result {
 
 	s := ""
 	for class, file_name := range Icons {
-		s += fmt.Sprintf(".ico%s{background-image: url(%s/%s) !important; background-repeat: no-repeat;}\n", class, FAMFAM_SERVER_URL, file_name)
+		s += fmt.Sprintf(".ico%s{background-image: url(\"%s/%s\") !important;}\n", class, FAMFAM_SERVER_URL, file_name)
 	}
-	//c.Response.ContentType = "test/css"
+	c.Response.ContentType = "text/css"
 	return c.RenderText(s)
 }
 

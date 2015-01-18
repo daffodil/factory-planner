@@ -82,9 +82,13 @@ GET     /favicon.ico                                404
 
 GET     /css/icons.css                            Style.CssIcons
 
-## TODO .. fix this fam fam bug I want $GOPATH//github.com/markjames/famfamfam-silk-icons/icons
-GET     /icons/famfam/*filepath                   Static.Serve("/home/gogo/src/github.com/markjames/famfamfam-silk-icons/icons")
 GET     /public/*filepath                         Static.Serve("public")
+
+##  go get github.com/markjames/famfamfam-silk-icons/icons
+##  ln -s github.com/markjames/famfamfam-silk-icons/icons/ ./public/famfam
+GET     /icons/famfam/*filepath                   Static.Serve("public/famfam")
+
+
 
 
 
