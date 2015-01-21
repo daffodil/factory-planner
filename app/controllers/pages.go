@@ -12,3 +12,8 @@ type Pages struct {
 func (c Pages) Index() revel.Result {
 	return c.Render()
 }
+
+
+func (c Pages) Login() revel.Result {
+	return c.Render()
+}

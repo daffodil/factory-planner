@@ -5,6 +5,8 @@
 module:testrunner
 
 GET     /                                           Pages.Index
+GET     /login                                      Pages.Login
+
 GET     /jmobile                                    JMobile.Index
 GET     /jmobile/:page                              JMobile.Pages
 
@@ -54,7 +56,7 @@ GET     /ajax/account/:account_id/work_orders       Orders.AccountWorkOrdersJson
 #======================================
 GET     /ajax/files                                 Files.FilesIndexJson
 GET     /ajax/file/id/:file_id                      Files.FileJson
-#GET     /ajax/account/:account_id/files       Orders.AccountWorkOrdersJson
+#GET     /ajax/account/:account_id/files            Orders.AccountWorkOrdersJson
 
 #======================================
 # Calendar

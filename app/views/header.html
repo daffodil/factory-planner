@@ -2,21 +2,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>{{.title}}</title>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/favicon.ico">
 
-    <title>{{.title}}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.3.3.1.min.css">
+    <link rel="icon" href="/favicon.ico">
     <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
-    <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
-    {{range .moreStyles}}
-      <link rel="stylesheet" type="text/css" href="/public/{{.}}">
-    {{end}}
-    {{range .moreScripts}}
-      <script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
+
+    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.3.3.1.min.css">
+
+    {{if .use_jquery }}
+        <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/public/js/jquery.validate-1.13.1.min.js" type="text/javascript" charset="utf-8"></script>
     {{end}}
 
     {{if .use_ext }}
@@ -27,7 +27,6 @@
         <style>
             #ext_widget{
                 border: 0 auto;
-
             }
         </style>
     {{end}}
