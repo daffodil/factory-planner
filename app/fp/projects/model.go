@@ -1,8 +1,12 @@
 
 package projects
 
-// The end product model , eg X360, Steiger5, FooBar4
+import (
+	"github.com/jinzhu/gorm"
+)
 
+
+// The end product model , eg X360, Steiger5, FooBar4
 type Model struct {
 	ModelId int ` json:"model_id" gorm:"column:model_id; primary_key:yes" `
 	BrandId int ` json:"brand_id" `
@@ -10,7 +14,7 @@ type Model struct {
 }
 
 func (me Model) TableName() string {
-	return "brands"
+	return "models"
 }
 
 func DB_IndexModels(db gorm.DB) {

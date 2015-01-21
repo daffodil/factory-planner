@@ -38,6 +38,8 @@ func init() {
 var Db gorm.DB
 
 func InitDB(){
+
+	// validate config options
 	var db_user, db_password, db_database, db_options string
 	var found bool
 	db_user, found = revel.Config.String("db.user")
@@ -56,6 +58,8 @@ func InitDB(){
 	if !found {
 		revel.ERROR.Printf("no db.options")
 	}
+
+	// Open Connection
 	connect_str := db_user + ":" + db_password + "@/" + db_database + "?" + db_options
 	revel.INFO.Printf("attempting connect with", connect_str)
 	var err error
@@ -64,10 +68,13 @@ func InitDB(){
 		//todo throw tantrum
 	}
 	Db.LogMode(true)
+	// TODO user revel log
+
 	Db.DB().Ping()
 }
 
-
+// Initialise the ???
+// TODO
 func InitFP() {
 
 	accounts.InitRoot(Db)

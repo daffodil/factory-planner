@@ -1,8 +1,12 @@
 
 package projects
 
-// The end product Brand , eg Volvo, Class, Jaguar
+import (
+	"github.com/jinzhu/gorm"
+)
 
+
+// The end product Brand , eg Volvo, Class, Jaguar
 type Brand struct {
 	BrandId int ` json:"brand_id" gorm:"column:brand_id; primary_key:yes" `
 	AccountId int ` json:"account_id" `

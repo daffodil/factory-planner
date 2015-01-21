@@ -2,8 +2,11 @@
 
 package projects
 
-// The Project, eg X2335 used in many parts
+import (
+	"github.com/jinzhu/gorm"
+)
 
+// The Project, eg X2335 used in many parts
 type Project struct {
 	ProjectId int ` json:"project_id" gorm:"column:project_id; primary_key:yes" `
 	AccountId int ` json:"account_id" `
@@ -11,7 +14,7 @@ type Project struct {
 }
 
 func (me Project) TableName() string {
-	return "brands"
+	return "projects"
 }
 
 func DB_IndexProjects(db gorm.DB) {
