@@ -78,6 +78,9 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		projects.DB_IndexModels(db)
 		db.AutoMigrate(&projects.Project{})
 		projects.DB_IndexProjects(db)
+		db.AutoMigrate(&projects.ProjectLinks{})
+		projects.DB_IndexProjectLinks(db)
+
 
 		// Orders
 		db.AutoMigrate(&orders.Leger{})

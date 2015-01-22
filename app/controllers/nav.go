@@ -2,6 +2,7 @@ package controllers
 
 import (
 	//"github.com/revel/revel"
+	//"reflect"
 )
 
 
@@ -25,8 +26,3 @@ func StaffNav() []SNav {
 }
 
 
-func MakePayload() map[string]interface{} {
-	payload := make(map[string]interface{})
-	payload["success"] = true
-	return payload
-}

@@ -32,6 +32,15 @@ func init() {
 		order by company asc
 	`
 
+	views["v_brands"] = `
+		create or replace view v_brands as
+		select brands.brand_id, brand,
+		brands.account_id, accounts.company, accounts.ticker,accounts.acc_ref
+		from brands
+		inner join accounts on brands.account_id = accounts.account_id
+		order by brand asc
+	`
+
 	views["v_files"] = `
 		create or replace view v_files as
 		select files.file_id,
@@ -44,6 +53,17 @@ func init() {
 		inner join accounts on accounts.account_id = contacts.account_id
 
 		order by file_date desc
+	`
+
+	views["v_models"] = `
+		create or replace view v_brands as
+		select models.model_id, models.model,
+		models.brand_id, brands.brand,
+		brands.account_id, accounts.company, accounts.ticker,accounts.acc_ref
+		from models
+		inner join brands on brands.brand_id = models.brand_id
+		inner join accounts on brands.account_id = accounts.account_id
+		order by model, brand
 	`
 
 	views["v_orders"] = `

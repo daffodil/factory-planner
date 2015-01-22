@@ -45,10 +45,13 @@ GET     /staff/accounts                             Accounts.StaffAccountsPage
 #======================================
 # Account
 #======================================
-GET     /ajax/account/root                          Accounts.RootAccountJson
-GET     /ajax/account/:account_id                   Accounts.AccountJson
-GET     /ajax/account/:account_id/orders            Orders.AccountOrdersJson
-GET     /ajax/account/:account_id/work_orders       Orders.AccountWorkOrdersJson
+GET     /ajax/account/root                           Accounts.RootAccountJson
+GET     /ajax/account/:account_id                    Accounts.AccountJson
+GET     /ajax/account/:account_id/orders             Orders.AccountOrdersJson
+GET     /ajax/account/:account_id/work_orders        Orders.AccountWorkOrdersJson
+
+GET     /ajax/account/:account_id/brands             Projects.AccountBrandsJson
+GET     /ajax/account/:account_id/model/id/:model_id Projects.ModelPostJson
 
 
 #======================================
