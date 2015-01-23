@@ -8,7 +8,7 @@ import (
 
 // The Project, eg X2335 used in many parts
 type ProjectModelLink struct {
-	ProjectLinkId int ` json:"project_model_id" gorm:"column:project_model_id; primary_key:yes" `
+	ProjectLinkId int ` json:"project_model_link_id" gorm:"column:project_model_link_id; primary_key:yes" `
 	ProjectId int ` json:"project_id" `
 	ModelId int ` json:"model_id" `
 }

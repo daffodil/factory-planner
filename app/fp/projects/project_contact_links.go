@@ -8,7 +8,7 @@ import (
 
 // links of a contact to a project
 type ProjectContactLink struct {
-	ProjectContactLinkId int ` json:"project_contact_lnk_id" gorm:"column:project_contact_lnk_id; primary_key:yes" `
+	ProjectContactLinkId int ` json:"project_contact_link_id" gorm:"column:project_contact_link_id; primary_key:yes" `
 	ProjectId int ` json:"project_id" `
 	ContactId int ` json:"contact_id" `
 }

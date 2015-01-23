@@ -10,9 +10,9 @@ import (
 type Project struct {
 	ProjectId int ` json:"project_id" gorm:"column:project_id; primary_key:yes" `
 	AccountId int ` json:"account_id" `
-	ProjectNo string   ` json:"project_ref" `
+	ProjectRef string   ` json:"project_ref" `
 	Project string   ` json:"project" sql:"type:varchar(100)" `
-	OurProjectNo string `json:"our_project_ref"  `
+	OurProjectRef string `json:"our_project_ref"  `
 	ProjectDescription string   ` json:"project_description" sql:"type:varchar(100)" `
 }
 
