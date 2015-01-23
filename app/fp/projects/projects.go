@@ -10,9 +10,10 @@ import (
 type Project struct {
 	ProjectId int ` json:"project_id" gorm:"column:project_id; primary_key:yes" `
 	AccountId int ` json:"account_id" `
-	ProjectNo string   ` json:"project_no" `
-	Project string   ` json:"project" `
-	OurProjectNo string `json:"our_project_no" sql:"type:varchar(100)" `
+	ProjectNo string   ` json:"project_ref" `
+	Project string   ` json:"project" sql:"type:varchar(100)" `
+	OurProjectNo string `json:"our_project_ref"  `
+	ProjectDescription string   ` json:"project_description" sql:"type:varchar(100)" `
 }
 
 func (me Project) TableName() string {
@@ -21,7 +22,7 @@ func (me Project) TableName() string {
 
 func DB_IndexProjects(db gorm.DB) {
 
-	cols := []string{"account_id", "project"}
+	cols := []string{"account_id", "project", "project_ref", "our_project_ref"}
 
 	for _, c := range cols {
 		db.Model(&Project{}).AddIndex("idx_" + c, c)

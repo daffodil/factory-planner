@@ -73,26 +73,33 @@ func (c Projects) ModelPostJson(account_id int, model_id string) revel.Result {
 func (c Projects) BrandModelImportJson(account_id int) revel.Result {
 
 	var e error
-	payload := MakePayload()
+	pay := MakePayload()
 
 	brand := GetS(c.Params, "brand")
 	model := GetS(c.Params, "model")
 	if brand == "" {
-		payload["error"] = "No `brand`"
-		return c.RenderJson(payload)
+		pay["error"] = "No `brand`"
+		return c.RenderJson(pay)
 	}
 	if model == "" {
-		payload["error"] = "No `model`"
-		return c.RenderJson(payload)
+		pay["error"] = "No `model`"
+		return c.RenderJson(pay)
 	}
 
-	payload["brand"], e = projects.GetBrandOrCreate(app.Db, account_id, brand)
+	brandOb, eerrb := projects.GetBrandOrCreate(app.Db, account_id, brand)
+	if eerrb != nil {
+		pay["error"] = eerrb.Error()
+		return c.RenderJson(pay)
+	}
+	//pay["brand"] = brandOb
+
+	pay["model"], e = projects.GetModelOrCreate(app.Db, brandOb.BrandId, model)
 	if e != nil {
-		payload["error"] = e.Error()
-		return c.RenderJson(payload)
+		pay["error"] = e.Error()
+		return c.RenderJson(pay)
 	}
 
 
-	return c.RenderJson(payload)
+	return c.RenderJson(pay)
 }
 

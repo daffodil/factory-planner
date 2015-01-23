@@ -2,7 +2,7 @@
 package projects
 
 import (
-	"fmt"
+	//"fmt"
 
 	"github.com/jinzhu/gorm"
 )
