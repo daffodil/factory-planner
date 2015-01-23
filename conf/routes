@@ -52,6 +52,7 @@ GET     /ajax/account/:account_id/work_orders        Orders.AccountWorkOrdersJso
 
 GET     /ajax/account/:account_id/brands             Projects.AccountBrandsJson
 GET     /ajax/account/:account_id/model/id/:model_id Projects.ModelPostJson
+GET     /ajax/account/:account_id/brand_model_import Projects.BrandModelImportJson
 
 
 #======================================

@@ -2,6 +2,8 @@
 package projects
 
 import (
+	"fmt"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -38,9 +40,9 @@ func InsertBrand(db gorm.DB, account_id int, brand string) (*BrandView, error) {
 // Database view extends the Account with other stuff
 type BrandView struct {
 	Brand
-	Ticker int ` json:"ticker" `
-	Company int ` json:"company" `
-	AccRef int ` json:"acc_ref" `
+	Ticker string ` json:"ticker" `
+	Company string ` json:"company" `
+	AccRef string ` json:"acc_ref" `
 }
 
 var BRAND_VIEW string = "v_brands"
@@ -65,14 +67,30 @@ func GetAccountBrands(db gorm.DB, account_id int) ([]*BrandView, error) {
 }
 
 func GetBrandById(db gorm.DB, brand_id int) (*BrandView, error) {
-	var row *BrandView = new(BrandView)
-	db.Table(BRAND_VIEW).Select(BRAND_VIEW_COLS).Where("brand_id = ?", brand_id).Scan(row)
-	return row, nil
+	var row BrandView
+	db.Table(BRAND_VIEW).Select(BRAND_VIEW_COLS).Where("brand_id = ?", brand_id).Scan(&row)
+	if row.BrandId == 0 {
+		return nil, nil
+	}
+	return &row, nil
 }
 
-func GetBrandByBrand(db gorm.DB, brand string) (*BrandView, error) {
-	var row *BrandView
-	db.Table(BRAND_VIEW).Select(BRAND_VIEW_COLS).Where("brand = ?", brand).Scan(&row)
-	return row, nil
+func GetBrandByBrand(db gorm.DB, account_id int, brand string) (*BrandView, error) {
+	var row BrandView
+	db.Table(BRAND_VIEW).Select(BRAND_VIEW_COLS).Where("account_id = ? and brand = ?", account_id, brand).Scan(&row)
+	if row.BrandId == 0 {
+		return nil, nil
+	}
+	return &row, nil
 }
 
+func GetBrandOrCreate(db gorm.DB, account_id int, brand string) (*BrandView, error) {
+	ob, err := GetBrandByBrand(db, account_id, brand)
+	if err != nil {
+		return nil, err
+	}
+	if ob != nil {
+		return ob, nil
+	}
+	return InsertBrand(db, account_id, brand)
+}

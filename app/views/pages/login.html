@@ -1,0 +1,81 @@
+{{set . "title" "Login"}}
+{{set . "use_jquery" true}}
+
+{{template "header.html" .}}
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2>Staff Login</h2>
+            <form class="form-horizontal" id="letmein-form">
+                <div class="form-group has-error">
+                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group has-error">
+                    <label for="inputPass" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="inputPass" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Remember me on this machine
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">&nbsp;&nbsp;Sign In&nbsp;&nbsp;</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#letmein-form').validate({
+                rules: {
+                    inputEmail: {
+                        minlength: 2,
+                        required: true,
+                        email: true
+                    },
+                    inputPass: {
+                        required: true,
+                        minLength: 4
+                    }
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('success').addClass('error');
+                },
+                success: function (element) {
+                    element.text('OK!').addClass('valid')
+                        .closest('.form-group').removeClass('error').addClass('success');
+                }
+            });
+
+        });
+    </script>
+
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                {{template "flash.html" .}}
+            </div>
+        </div>
+    </div>
+
+    {{template "footer.html" .}}

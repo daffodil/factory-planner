@@ -35,7 +35,7 @@ func init() {
 	views["v_brands"] = `
 		create or replace view v_brands as
 		select brands.brand_id, brand,
-		brands.account_id, accounts.company, accounts.ticker,accounts.acc_ref
+		brands.account_id, accounts.company, accounts.ticker, accounts.acc_ref
 		from brands
 		inner join accounts on brands.account_id = accounts.account_id
 		order by brand asc
@@ -56,7 +56,7 @@ func init() {
 	`
 
 	views["v_models"] = `
-		create or replace view v_brands as
+		create or replace view v_models as
 		select models.model_id, models.model,
 		models.brand_id, brands.brand,
 		brands.account_id, accounts.company, accounts.ticker,accounts.acc_ref
