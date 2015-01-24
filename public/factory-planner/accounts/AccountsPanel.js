@@ -20,7 +20,7 @@ get_accounts_grid: function(){
 get_account_panel: function(){
 	if(!this.xAccountPanel){
 		this.xAccountPanel = Ext.create("FP.accounts.AccountPanel", {
-		    region: "east", flex: 1
+		    region: "east", flex: 1, height: WIDGET_HEIGHT
 		});
     }
     return this.xAccountPanel;

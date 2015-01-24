@@ -1,12 +1,13 @@
 package accounts
 
 import (
+
+	"fmt"
 	"github.com/jinzhu/gorm"
 
 )
 
 type Contact struct {
-
 
 	ContactId int ` json:"contact_id"  gorm:"primary_key:yes" `
 	AccountId int ` json:"account_id" `
@@ -34,8 +35,8 @@ type Contact struct {
 
 	ConUid string 	` json:"con_uid" sql:"type:varchar(255);default:''" `
 	ConSearch string ` json:"con_search" sql:"type:varchar(255);default:''" `
-
 }
+
 func (me Contact) TableName() string {
 	return "contacts"
 }
@@ -50,3 +51,38 @@ func DB_IndexContact(db gorm.DB) {
 		db.Model(&Contact{}).AddIndex("idx_" + c, c)
 	}
 }
+
+
+// Database view extends the contact with other stuff
+type ContactView struct {
+	Contact
+	Company string ` json:"company" `
+	Ticker string ` json:"ticker" `
+}
+
+var CONTACT_VIEW = "v_contacts"
+var CONTACT_VIEW_COLS string = `
+account_id, company, ticker, acc_ref, root, acc_active,
+contact_id, contact, mobile, email, title, con_active,
+can_login, security_id, security
+`
+
+
+func GetAccountContacts(db gorm.DB, account_id int) ([]ContactView, error){
+
+	var rows []ContactView
+
+	//where := search_vars.GetSQL("company", "acc_active")
+	//fmt.Println("where=", where)
+	res := db.Table(CONTACT_VIEW).Select(CONTACT_VIEW_COLS).Where("account_id=?", account_id).Scan(&rows)
+	fmt.Println(res)
+
+	return rows, nil
+
+}
+
+func GetStaff(db gorm.DB)([]ContactView, error){
+
+	return GetAccountContacts(db, rootAccount.AccountId)
+}
+

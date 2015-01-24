@@ -49,7 +49,7 @@ type ModelView struct {
 
 var MODEL_VIEW string = "v_models"
 var MODEL_VIEW_COLS string = `
-model_id, brand_id, brand, account_id, company, ticker, acc_ref
+model_id, model, brand_id, brand, account_id, company, ticker, acc_ref
 `
 
 

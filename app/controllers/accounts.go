@@ -74,6 +74,34 @@ func (c Accounts) AccountJson(account_id int) revel.Result {
 	return c.RenderJson(payload)
 }
 
+
+// handles account by id /ajax/account/;account_id/contacts
+func (c Accounts) AccountContactsJson(account_id int) revel.Result {
+
+	var e error
+	payload := MakePayload()
+
+	// contacts
+	payload["contacts"], e = accounts.GetAccountContacts(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
+
+	return c.RenderJson(payload)
+}
+
+// Render extjs panel
+func (c Accounts) StaffAccountsPage() revel.Result {
+
+	c.RenderArgs["CurrPath"] = "/staff/accounts"
+	c.RenderArgs["MainNav"] = StaffNav()
+	return c.RenderTemplate("staff/accounts.html")
+}
+
+
+
+
 func (c Accounts) RootAccountJson() revel.Result {
 
 	var e error
@@ -88,10 +116,20 @@ func (c Accounts) RootAccountJson() revel.Result {
 }
 
 
-// Render extjs panel
-func (c Accounts) StaffAccountsPage() revel.Result {
+func (c Accounts) RootAccountStaffJson() revel.Result {
+	var e error
+	payload := MakePayload()
+	payload["account"], e = accounts.GetRootAccount(app.Db)
+	if e != nil {
+		payload["error"] = e.Error()
+	}
 
-	c.RenderArgs["CurrPath"] = "/staff/accounts"
-	c.RenderArgs["MainNav"] = StaffNav()
-	return c.RenderTemplate("staff/accounts.html")
+	payload["staff"], e = accounts.GetStaff(app.Db)
+	if e != nil {
+		payload["error"] = e.Error()
+	}
+
+	return c.RenderJson(payload)
+
+
 }

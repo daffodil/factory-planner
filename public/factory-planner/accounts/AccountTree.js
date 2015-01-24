@@ -1,11 +1,13 @@
 
-Ext.define('G2.accounts.AccountTree', {
+Ext.define('FP.accounts.AccountTree', {
 	
 extend: 'Ext.tree.Panel',
 requires: [
-	//'G2.lab_locations.LabLocationDialog'
+
 ],
 loading: false,
+
+
 
 initComponent: function(){
 	
@@ -21,7 +23,7 @@ initComponent: function(){
 		layout: "fit",
 		
 		rootVisible: false,
-		//store: this.get_store(),
+		store: this.get_store(),
 		listeners: { 
 			scope: this,
 			//selectionchange: this.on_selection_change
@@ -184,7 +186,7 @@ get_store: function(){
 					? {}
 					: {nodeType: 'async',
 						lab_location: 'Root',
-						ll_id: 0, draggable: false, expanded: true,	id: 0
+						ll_id: 0, draggable: false, expanded: false,	id: 0
 					}
 		
 		this.xTreeStore = Ext.create('Ext.data.TreeStore', {

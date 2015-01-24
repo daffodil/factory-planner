@@ -41,6 +41,18 @@ func init() {
 		order by brand asc
 	`
 
+	views["v_contacts"] = `
+		create or replace view v_contacts as
+		select
+		contacts.contact_id, contacts.contact, contacts.title,  contacts.con_active, contacts.pass_change,
+		contacts.email, contacts.mobile, contacts.can_login,
+		contacts.account_id, accounts.company, accounts.ticker, accounts.acc_ref, accounts.root, accounts.acc_active
+		from contacts
+		inner join accounts on contacts.account_id = accounts.account_id
+		order by contact asc
+	`
+
+
 	views["v_files"] = `
 		create or replace view v_files as
 		select files.file_id,

@@ -15,6 +15,7 @@ GET     /jmobile/:page                              JMobile.Pages
 
 GET      /staff/planner                            Calendar.StaffPlannerPage
 
+
 #======================================
 # Dev
 #======================================
@@ -36,17 +37,26 @@ GET      /ajax/dev/db/view/:view                    Dev.DB_ViewJson
 
 
 #======================================
+# Root Account
+#======================================
+GET     /ajax/root/account                           Accounts.RootAccountJson
+GET     /ajax/staff                             Accounts.RootAccountStaffJson
+
+#======================================
 # Accounts
 #======================================
 GET     /ajax/accounts                              Accounts.AccountsJson
 
 GET     /staff/accounts                             Accounts.StaffAccountsPage
 
+
+
 #======================================
 # Account
 #======================================
-GET     /ajax/account/root                           Accounts.RootAccountJson
+
 GET     /ajax/account/:account_id                    Accounts.AccountJson
+GET     /ajax/account/:account_id/contacts           Accounts.AccountContactsJson
 GET     /ajax/account/:account_id/orders             Orders.AccountOrdersJson
 GET     /ajax/account/:account_id/work_orders        Orders.AccountWorkOrdersJson
 

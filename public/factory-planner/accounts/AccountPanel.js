@@ -6,10 +6,10 @@ extend: "Ext.Panel",
 
 
 get_account_tree: function(){
-	if(!this.xAccountPanel){
-		this.xAccountPanel = Ext.create("FP.accounts.AccountTree", {});
+	if(!this.xAccountTree){
+		this.xAccountTree = Ext.create("FP.accounts.AccountTree", {height: 200});
     }
-    return this.xAccountPanel;
+    return this.xAccountTree;
 },
 
 initComponent: function() {
@@ -19,7 +19,7 @@ initComponent: function() {
 		layout: "vbox",
 		frame: false, plain: true, border: false,
 		items: [
-            //this.get_account_tree()
+            this.get_account_tree()
            // this.get_account_panel()
 		],
 		tbar: [
