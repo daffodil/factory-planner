@@ -59,3 +59,4 @@ func GetSearchVars(query url.Values) SearchVars {
 	fmt.Println(sv.Search)
 	return sv
 }
+

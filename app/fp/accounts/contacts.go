@@ -3,8 +3,9 @@ package accounts
 import (
 
 	"fmt"
-	"github.com/jinzhu/gorm"
 
+
+	"github.com/jinzhu/gorm"
 )
 
 type Contact struct {
@@ -19,19 +20,19 @@ type Contact struct {
 	Email string	 ` json:"email" sql:"type:varchar(100);default:''" `
 
 	SecurityId int 	` json:"security_id" sql:"type:int(2);not null" `
-	Syslogin string ` json:"syslogin" sql:"type:varchar(20);" `
-	Secret string 	` json:"secret" sql:"type:varchar(100)" `
-	ConActive bool	` json:"con_active" sql:"type:int(2)" `
-	CanLogin bool 	` json:"can_login" sql:"type:int(2)" `
-	PassChange bool ` json:"pass_change" sql:"type:int(2)" `
-	OnlineStatus int ` json:"online_status" sql:"type:int(2)" `
+	Syslogin *string ` json:"syslogin" sql:"type:varchar(20);" `
+	Secret *string 	` json:"secret" sql:"type:varchar(100)" `
+	ConActive *bool	` json:"con_active" sql:"type:int(2)" `
+	CanLogin *bool 	` json:"can_login" sql:"type:int(2)" `
+	PassChange *bool ` json:"pass_change" sql:"type:int(2)" `
+	OnlineStatus *int ` json:"online_status" sql:"type:int(2)" `
 
-	DirectLine string ` json:"direct_line" sql:"type:varchar(100);default:''" `
-	Mobile string 	 ` json:"mobile" sql:"type:varchar(100);default:''" `
+	DirectLine *string ` json:"direct_line" sql:"type:varchar(100);default:''" `
+	Mobile *string 	 ` json:"mobile" sql:"type:varchar(100);default:''" `
 
 
 	ConNotes string ` json:"con_notes" sql:"type:varchar(100);default:''" `
-	WwwPage bool    ` json:"www_page" sql:"type:int(2)" `
+	WwwPage *bool    ` json:"www_page" sql:"type:int(2)" `
 
 	ConUid string 	` json:"con_uid" sql:"type:varchar(255);default:''" `
 	ConSearch string ` json:"con_search" sql:"type:varchar(255);default:''" `
@@ -58,13 +59,14 @@ type ContactView struct {
 	Contact
 	Company string ` json:"company" `
 	Ticker string ` json:"ticker" `
+	AccActive string ` json:"acc_active" `
 }
 
 var CONTACT_VIEW = "v_contacts"
 var CONTACT_VIEW_COLS string = `
-account_id, company, ticker, acc_ref, root, acc_active,
-contact_id, contact, mobile, email, title, con_active,
-can_login, security_id, security
+account_id, company, ticker, acc_ref, root, acc_active, address_id,
+contact_id, contact, mobile, email, direct_line, title, con_active,
+can_login, security_id, security, syslogin, www_page
 `
 
 
@@ -82,6 +84,7 @@ func GetAccountContacts(db gorm.DB, account_id int) ([]ContactView, error){
 }
 
 func GetStaff(db gorm.DB)([]ContactView, error){
+
 
 	return GetAccountContacts(db, rootAccount.AccountId)
 }

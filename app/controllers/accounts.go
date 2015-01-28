@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"fmt"
+	"math/rand"
+	"time"
 	"github.com/revel/revel"
 
 	"github.com/daffodil/factory-planner/app"
@@ -125,8 +128,21 @@ func (c Accounts) RootAccountStaffJson() revel.Result {
 	}
 
 	payload["staff"], e = accounts.GetStaff(app.Db)
-	if e != nil {
+	if e == nil {
+
+	} else {
 		payload["error"] = e.Error()
+	}
+	payload["sys_info"] = fp.GetSysInfo(app.Db)
+
+	sleepy := rand.Intn(5)
+	erri := rand.Intn(5)
+	fmt.Println("sleep=", sleepy, "erri=", erri)
+	time.Sleep(time.Duration(sleepy) * time.Second)
+
+
+	if erri == 1 {
+		return c.RenderJson("fooovar")
 	}
 
 	return c.RenderJson(payload)

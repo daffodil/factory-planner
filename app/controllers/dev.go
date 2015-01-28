@@ -88,12 +88,12 @@ func (c Dev) DB_TablesCreateJson() revel.Result {
 		payload["error"] = err.Error()
 		revel.ERROR.Println(err)
 	}
-
+	/*
 	payload["views"], err = dev.DB_CreateViews(app.Db)
 	if err != nil {
 		payload["error"] = err.Error()
 		revel.ERROR.Println(err)
-	}
+	} */
 
 	return c.RenderJson(payload)
 }

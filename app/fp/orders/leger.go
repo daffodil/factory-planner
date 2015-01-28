@@ -10,7 +10,7 @@ as well as the DB queries etc
  */
 
 import (
-	//"fmt"
+	"fmt"
 	//"time"
 	"github.com/jinzhu/gorm"
 
@@ -19,7 +19,7 @@ import (
 
 type Leger struct {
 	LegerId int `json:"leger_id" gorm:"column:leger_id; primary_key:yes"`
-	Leger string `json:"leger" sql:"type:int"`
+	Leger string `json:"leger" sql:"type:varchar(30)"`
 }
 
 var SALES_LEGER *Leger
@@ -34,7 +34,7 @@ func init() {
 
 	PURCHASE_LEGER = new(Leger)
 	PURCHASE_LEGER.LegerId = 20
-	PURCHASE_LEGER.Leger = "Purcahse Leger"
+	PURCHASE_LEGER.Leger = "Purchase Leger"
 
 	QUOTE_LEGER = new(Leger)
 	QUOTE_LEGER.LegerId = 30
@@ -60,12 +60,16 @@ func DB_CreateDefaultLegers(db gorm.DB) error {
 
 
 	legers := make([]*Leger, 0)
+	legers = append(legers, QUOTE_LEGER)
+	legers = append(legers, SALES_LEGER)
+	legers = append(legers, PURCHASE_LEGER)
 
 	var count int
 	for _, rec := range legers {
 		db.Model(Leger{}).Where("leger_id = ?", rec.LegerId).Count(&count)
 		if count == 0 {
 			db.Create(rec)
+			fmt.Println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC===", rec)
 		}
 	}
 	return nil

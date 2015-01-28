@@ -6,7 +6,7 @@ import (
 	//"os"
 	//"path/filepath"
 	//"io/ioutil"
-	//"fmt"
+	"fmt"
 	//"github.com/revel/revel"
 	//"database/sql"
 	"github.com/jinzhu/gorm"
@@ -27,6 +27,8 @@ import (
 func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 	foo := make( map[string]interface{} )
+
+	db.LogMode(false)
 
 	if drop_first {
 		db.DropTableIfExists(&fp.Security{})
@@ -94,16 +96,23 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		orders.DB_IndexOrder(db)
 		orders.DB_IndexOrderItems(db)
 
+		orders.DB_CreateDefaultOrderTypes(db)
+
+
 		// jobs
 		jobs.DB_IndexWorkOrder(db)
 		db.AutoMigrate(&jobs.WorkOrder{})
 
-		orders.DB_CreateDefaultOrderTypes(db)
+
 
 		db.AutoMigrate(&schedule.WorkSchedule{})
 
 		db.AutoMigrate(&parts.Part{}, &parts.Contact2Part{})
 	}
+	db.LogMode(true)
+	fmt.Println("LLLLLLLLLLLLLLLLLLLLEEEEEEEEEEEEEG")
+	orders.DB_CreateDefaultLegers(db)
+	db.LogMode(false)
 	return foo, nil
 }
 

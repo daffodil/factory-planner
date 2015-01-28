@@ -44,11 +44,15 @@ func init() {
 	views["v_contacts"] = `
 		create or replace view v_contacts as
 		select
-		contacts.contact_id, contacts.contact, contacts.title,  contacts.con_active, contacts.pass_change,
-		contacts.email, contacts.mobile, contacts.can_login,
-		contacts.account_id, accounts.company, accounts.ticker, accounts.acc_ref, accounts.root, accounts.acc_active
+		contacts.contact_id, contacts.contact, contacts.title,  contacts.con_active,
+		contacts.email, contacts.mobile, contacts.direct_line,
+		contacts.account_id, accounts.company, accounts.ticker, accounts.acc_ref, accounts.root, accounts.acc_active,
+		contacts.can_login,  contacts.syslogin, contacts.pass_change, contacts.security_id, security.security,
+		contacts.www_page, contacts.address_id
 		from contacts
+		inner join security on contacts.security_id = security.security_id
 		inner join accounts on contacts.account_id = accounts.account_id
+
 		order by contact asc
 	`
 
@@ -58,7 +62,7 @@ func init() {
 		select files.file_id,
 		file_name, file_description, file_date, file_checksum, file_uid,
 		mime_type, revision,
-		files.account_id, accounts.company, accounts.ticker,
+		contacts.account_id, accounts.company, accounts.ticker,
 		files.contact_id, contacts.contact
 		from files
 		inner join contacts on contacts.contact_id = files.contact_id
@@ -82,7 +86,7 @@ func init() {
 		create or replace view v_orders as
 		select orders.order_id, orders.account_id, accounts.company, accounts.ticker,
 		orders.order_type_id, order_types.order_type, order_types.order_color,
-		order_ordered, order_required, client_order_no
+		order_ordered, order_required, client_extra_ref
 		from orders
 		left join order_types on order_types.order_type_id = orders.order_type_id
 		inner join accounts on accounts.account_id = orders.account_id
