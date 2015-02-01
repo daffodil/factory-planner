@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"fmt"
-	"math/rand"
-	"time"
+	//"fmt"
+	//"math/rand"
+	//"time"
+	//"net/http"
 	"github.com/revel/revel"
 
 	"github.com/daffodil/factory-planner/app"
@@ -28,6 +29,25 @@ type AccountsPayload struct {
 
 // handles /ajax/accounts
 func (c Accounts) AccountsJson() revel.Result {
+
+	var e error
+	payload := new(AccountsPayload)
+	payload.Success = true
+	//payload := make(map[string]interface{})
+
+	//search := GetSearch( c )
+	search_vars := fp.GetSearchVars(c.Params.Query)
+
+	payload.Accounts, e = accounts.GetAccountsIndex(app.Db, search_vars)
+
+	if e != nil {
+		payload.Error = e.Error()
+	}
+	return c.RenderJson(payload)
+}
+
+// handles /ajax/accounts/all
+func (c Accounts) AccountsAllJson() revel.Result {
 
 	var e error
 	payload := new(AccountsPayload)
@@ -135,7 +155,9 @@ func (c Accounts) RootAccountStaffJson() revel.Result {
 	}
 	payload["sys_info"] = fp.GetSysInfo(app.Db)
 
-	sleepy := rand.Intn(5)
+	/*
+	// Random erros and latency
+	sleepy := rand.Intn(7)
 	erri := rand.Intn(5)
 	fmt.Println("sleep=", sleepy, "erri=", erri)
 	time.Sleep(time.Duration(sleepy) * time.Second)
@@ -143,8 +165,18 @@ func (c Accounts) RootAccountStaffJson() revel.Result {
 
 	if erri == 1 {
 		return c.RenderJson("fooovar")
-	}
 
+	} else if erri == 2 {
+		c.Response.Status = http.StatusNotFound
+		return c.RenderText("404")
+
+	} else if erri == 3 {
+		c.Response.Status = http.StatusInternalServerError
+		return c.RenderText("500")
+	} else if erri == 4 {
+		return c.RenderText("das dsa {}")
+	}
+	*/
 	return c.RenderJson(payload)
 
 

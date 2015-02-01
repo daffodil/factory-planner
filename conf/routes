@@ -37,16 +37,18 @@ GET      /ajax/dev/db/view/:view                    Dev.DB_ViewJson
 
 
 #======================================
-# Root Account
+# Root Stuff
 #======================================
 GET     /ajax/root/account                           Accounts.RootAccountJson
-GET     /ajax/staff                             Accounts.RootAccountStaffJson
+GET     /ajax/staff                                  Accounts.RootAccountStaffJson
+GET     /ajax/auth/staff_login                       Auth.StaffLoginJson
+POST    /ajax/auth/staff_login                      Auth.StaffLoginJson
 
 #======================================
 # Accounts
 #======================================
 GET     /ajax/accounts                              Accounts.AccountsJson
-
+GET     /ajax/accounts/all                          Accounts.AccountsAllJson
 GET     /staff/accounts                             Accounts.StaffAccountsPage
 
 

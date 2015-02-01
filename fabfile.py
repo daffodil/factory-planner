@@ -6,7 +6,7 @@ import sys
 
 #import configparser
 
-from fabric.api import env, local, run, cd, sudo, prompt
+from fabric.api import env, local, lrun, run, cd, sudo, prompt
 from fabric import colors
 
 
@@ -22,3 +22,6 @@ def d_test():
 	local("git push origin --all")
 	with cd(TEST_ROOT):
 		run("git pull")
+
+def run():
+	lrun("revel run github.com/daffodil/factory-planner")
