@@ -48,23 +48,33 @@ func (c Orders) AccountOrdersJson(account_id int) revel.Result {
 	return c.RenderJson(payload)
 }
 
-type WorkOrdersPayload struct {
-	Success bool `json:"success"`
-	Error string  `json:"error"`
-	WorkOrders []jobs.WorkOrder `json:"work_orders"`
-}
+
 func (c Orders) AccountWorkOrdersJson(account_id int) revel.Result {
 
-	var e error
-	payload := new(WorkOrdersPayload)
-	payload.Success = true
-
-	payload.WorkOrders, e = jobs.GetAccountWorkOrders(app.Db, account_id)
+	//var e error
+	payload := MakePayload()
+	/*
+	payload["work_orders"], e = jobs.GetAccountWorkOrders(app.Db, account_id)
 	if e != nil {
-		payload.Error = e.Error()
+		payload["error"] = e.Error()
+	}
+	*/
+	return c.RenderJson(payload)
+}
+
+
+func (c Orders) AccountJobs(account_id int) revel.Result {
+
+	var e error
+	pl := MakePayload()
+
+
+	pl["jobs"], e = jobs.GetAccountJobs(app.Db, account_id)
+	if e != nil {
+		pl["error"] = e.Error()
 	}
 
-	return c.RenderJson(payload)
+	return c.RenderJson(pl)
 }
 
 // Render extjs panel

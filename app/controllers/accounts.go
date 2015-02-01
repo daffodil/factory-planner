@@ -28,7 +28,7 @@ type AccountsPayload struct {
 
 
 // handles /ajax/accounts
-func (c Accounts) AccountsJson() revel.Result {
+func (c Accounts) Accounts() revel.Result {
 
 	var e error
 	payload := new(AccountsPayload)
@@ -47,7 +47,7 @@ func (c Accounts) AccountsJson() revel.Result {
 }
 
 // handles /ajax/accounts/all
-func (c Accounts) AccountsAllJson() revel.Result {
+func (c Accounts) AccountsAll() revel.Result {
 
 	var e error
 	payload := new(AccountsPayload)
@@ -67,7 +67,7 @@ func (c Accounts) AccountsAllJson() revel.Result {
 
 
 // handles account by id /ajax/account/;account_id
-func (c Accounts) AccountJson(account_id int) revel.Result {
+func (c Accounts) Account(account_id int) revel.Result {
 
 	var e error
 	payload := MakePayload()
@@ -99,7 +99,7 @@ func (c Accounts) AccountJson(account_id int) revel.Result {
 
 
 // handles account by id /ajax/account/;account_id/contacts
-func (c Accounts) AccountContactsJson(account_id int) revel.Result {
+func (c Accounts) AccountContacts(account_id int) revel.Result {
 
 	var e error
 	payload := MakePayload()
@@ -125,7 +125,7 @@ func (c Accounts) StaffAccountsPage() revel.Result {
 
 
 
-func (c Accounts) RootAccountJson() revel.Result {
+func (c Accounts) RootAccount() revel.Result {
 
 	var e error
 	payload := MakePayload()
@@ -139,7 +139,7 @@ func (c Accounts) RootAccountJson() revel.Result {
 }
 
 
-func (c Accounts) RootAccountStaffJson() revel.Result {
+func (c Accounts) RootAccountStaff() revel.Result {
 	var e error
 	payload := MakePayload()
 	payload["account"], e = accounts.GetRootAccount(app.Db)
@@ -184,7 +184,7 @@ func (c Accounts) RootAccountStaffJson() revel.Result {
 
 
 // handles /ajax/contacts
-func (c Accounts) ContactsJson() revel.Result {
+func (c Accounts) Contacts() revel.Result {
 
 	var e error
 	pay := MakePayload()
@@ -203,15 +203,36 @@ func (c Accounts) ContactsJson() revel.Result {
 }
 
 // handles /ajax/contact/<id>
-func (c Accounts) ContactJson(contact_id int) revel.Result {
+func (c Accounts) Contact(contact_id int) revel.Result {
+
+	var e error
+	var con accounts.ContactView
+	pay := MakePayload()
+
+	con, e = accounts.GetContact(app.Db, contact_id)
+	pay["contact"] = con
+	if e != nil {
+		pay["error"] = e.Error()
+	}
+
+	if c.Params.Get("mode") == "edit" {
+		pay["addresses"], e = accounts.GetAccountAddresses(app.Db, con.AccountId)
+	}
+
+	return c.RenderJson(pay)
+}
+
+
+// handles /ajax/account/<id>/addresses
+func (c Accounts) AccountAddresses(account_id int) revel.Result {
 
 	var e error
 	pay := MakePayload()
 
-	pay["contact"], e = accounts.GetContact(app.Db, contact_id)
-
+	pay["addresses"], e = accounts.GetAccountAddresses(app.Db, account_id)
 	if e != nil {
 		pay["error"] = e.Error()
 	}
+
 	return c.RenderJson(pay)
 }

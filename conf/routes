@@ -39,8 +39,8 @@ GET      /ajax/dev/db/view/:view                    Dev.DB_ViewJson
 #======================================
 # Root Stuff
 #======================================
-GET     /ajax/root/account                           Accounts.RootAccountJson
-GET     /ajax/staff                                  Accounts.RootAccountStaffJson
+GET     /ajax/root/account                           Accounts.RootAccount
+GET     /ajax/staff                                  Accounts.RootAccountStaff
 GET     /ajax/auth/staff_login                       Auth.StaffLoginJson
 POST    /ajax/auth/staff_login                      Auth.StaffLoginJson
 
@@ -51,8 +51,8 @@ GET     /staff/accounts                             Accounts.StaffAccountsPage
 
 
 
-GET     /ajax/accounts                              Accounts.AccountsJson
-GET     /ajax/accounts/all                          Accounts.AccountsAllJson
+GET     /ajax/accounts                              Accounts.Accounts
+GET     /ajax/accounts/all                          Accounts.AccountsAll
 
 
 
@@ -60,7 +60,7 @@ GET     /ajax/accounts/all                          Accounts.AccountsAllJson
 ## Account
 
 
-GET     /ajax/account/:account_id                    Accounts.AccountJson
+GET     /ajax/account/:account_id                    Accounts.Account
 GET     /ajax/account/:account_id/orders             Orders.AccountOrdersJson
 GET     /ajax/account/:account_id/work_orders        Orders.AccountWorkOrdersJson
 
@@ -70,11 +70,14 @@ GET     /ajax/account/:account_id/brand_model_import Projects.BrandModelImportJs
 
 
 ## Contacts
-GET     /ajax/contacts                               Accounts.ContactsJson
-GET     /ajax/account/:account_id/contacts           Accounts.AccountContactsJson
+GET     /ajax/contacts                               Accounts.Contacts
+GET     /ajax/account/:account_id/contacts           Accounts.AccountContacts
 
 ## Contact
-GET     /ajax/contact/:contact_id                    Accounts.ContactJson
+GET     /ajax/contact/:contact_id                    Accounts.Contact
+
+## Addresses
+GET     /ajax/account/:account_id/addresses          Accounts.AccountAddresses
 
 
 #======================================

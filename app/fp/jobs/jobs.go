@@ -1,42 +1,41 @@
 package jobs
 
 import (
-	"time"
+	//"time"
 	"github.com/jinzhu/gorm"
 )
 
 
 
-type WorkOrder struct {
+type Job struct {
 
-	WorkOrderId int `json:"work_order_id" gorm:"column:work_order_id; primary_key:yes"`
-	JobNo int `json:"order_id" sql:"type:int(11);not null;" `
+	JobId int `json:"job_id" gorm:"column:job_id; primary_key:yes"`
+	//JobNo int `json:"job_no" sql:"type:varchar(200);not null;" `
 
 
-	WorkOrderNo string `json:"work_order_no" sql:"type:varchar(100);not null;default:''" `
-	WorkOrderNotes string `json:"work_order_notes" sql:"type:varchar(255);not null;default:''" `
+	OrderId int `json:"order_id"  `
+	JobImport string `json:"job_import" sql:"type:varchar(255);not null;default:''" `
 
-	WorkOrderRequired time.Time `json:"work_order_required" deadsql:"type:varchar(10);not null;default:''" `
+	//WorkOrderRequired time.Time `json:"work_order_required" deadsql:"type:varchar(10);not null;default:''" `
 }
 
-func (me WorkOrder) TableName() string {
-	return "work_orders"
+func (me Job) TableName() string {
+	return "jobs"
 }
-func DB_IndexWorkOrder(db gorm.DB) {
+func DB_IndexJob(db gorm.DB) {
 
-	cols := []string{
-		"order_id", "work_order_no", "work_order_required" }
+	cols := []string{"order_id" }
 
 	for _, c := range cols {
-		db.Model(&WorkOrder{}).AddIndex("idx_" + c, c)
+		db.Model(&Job{}).AddIndex("idx_" + c, c)
 	}
 }
 
 
-func GetAccountWorkOrders(db gorm.DB, account_id int) ([]WorkOrder, error) {
+func GetAccountJobs(db gorm.DB, account_id int) ([]Job, error) {
 
-	var worders []WorkOrder
+	recs := make([]Job, 0)
 	//db.Find(&worders, WorkOrder{AccountId: account_id})
 
-	return worders, nil
+	return recs, nil
 }

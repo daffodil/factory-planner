@@ -2,7 +2,7 @@ package accounts
 
 import (
 
-	"fmt"
+	//"fmt"
 
 	"github.com/jinzhu/gorm"
 
@@ -64,11 +64,12 @@ type ContactView struct {
 	Ticker string ` json:"ticker" `
 	AccActive string ` json:"acc_active" `
 	Root *bool ` json:"root" `
+	Online *bool ` json:"online" `
 }
 
 var CONTACT_VIEW = "v_contacts"
 var CONTACT_VIEW_COLS string = `
-account_id, company, ticker, acc_ref, root, acc_active, address_id,
+account_id, company, ticker, acc_ref, root, acc_active, online, address_id,
 contact_id, contact, mobile, email, direct_line, title, con_active,
 can_login, security_id, security, syslogin, www_page
 `
@@ -76,13 +77,14 @@ can_login, security_id, security, syslogin, www_page
 
 func SearchContacts(db gorm.DB, search_vars fp.SearchVars) ([]ContactView, error){
 
-	var rows []ContactView
+	rows := make([]ContactView, 0)
 
 	where := search_vars.GetSQL("contact", "acc_active")
-	fmt.Println("where=", where)
-	res := db.Table(CONTACT_VIEW).Select(CONTACT_VIEW_COLS).Where(where).Scan(&rows)
-	fmt.Println(res)
 
+	res := db.Table(CONTACT_VIEW).Select(CONTACT_VIEW_COLS).Where(where).Scan(&rows)
+	if res.Error != nil {
+		return rows, res.Error
+	}
 	return rows, nil
 
 }
@@ -90,13 +92,12 @@ func SearchContacts(db gorm.DB, search_vars fp.SearchVars) ([]ContactView, error
 
 func GetAccountContacts(db gorm.DB, account_id int) ([]ContactView, error){
 
-	var rows []ContactView
+	rows := make([]ContactView, 0)
 
-	//where := search_vars.GetSQL("company", "acc_active")
-	//fmt.Println("where=", where)
 	res := db.Table(CONTACT_VIEW).Select(CONTACT_VIEW_COLS).Where("account_id=?", account_id).Scan(&rows)
-	fmt.Println(res)
-
+	if res.Error != nil {
+		return rows, res.Error
+	}
 	return rows, nil
 
 }
@@ -111,10 +112,10 @@ func GetContact(db gorm.DB, contact_id int) (ContactView, error){
 
 	var row ContactView
 
-	//where := search_vars.GetSQL("company", "acc_active")
-	//fmt.Println("where=", where)
 	res := db.Table(CONTACT_VIEW).Select(CONTACT_VIEW_COLS).Where("contact_id=?", contact_id).Scan(&row)
-	fmt.Println(res)
+	if res.Error != nil {
+		return row, res.Error
+	}
 
 	return row, nil
 

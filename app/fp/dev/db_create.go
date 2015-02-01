@@ -40,7 +40,7 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 		db.DropTableIfExists(&orders.OrderType{})
 		db.DropTableIfExists(&orders.Order{})
-		db.DropTableIfExists(&jobs.WorkOrder{})
+		db.DropTableIfExists(&jobs.Job{})
 
 		db.DropTableIfExists(&schedule.WorkSchedule{})
 		db.DropTableIfExists(&parts.Part{})
@@ -100,8 +100,11 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 
 		// jobs
-		jobs.DB_IndexWorkOrder(db)
-		db.AutoMigrate(&jobs.WorkOrder{})
+		db.AutoMigrate(&jobs.Job{})
+		jobs.DB_IndexJob(db)
+		db.AutoMigrate(&jobs.JobItem{})
+		jobs.DB_IndexJobItems(db)
+
 
 
 

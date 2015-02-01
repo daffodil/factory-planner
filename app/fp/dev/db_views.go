@@ -32,6 +32,18 @@ func init() {
 		order by company asc
 	`
 
+	views["v_addresses"] = `
+		create or replace view v_addresses as
+		select
+		addresses.address_id, addresses.location, addresses.address,  addresses.postcode,
+		addresses.tel, addresses.fax, addresses.is_hq, addresses.is_billing, addresses.addr_active,
+		addresses.account_id, accounts.company
+		from addresses
+		inner join accounts on addresses.account_id = accounts.account_id
+		order by location asc
+	`
+
+
 	views["v_brands"] = `
 		create or replace view v_brands as
 		select brands.brand_id, brand,
@@ -46,7 +58,7 @@ func init() {
 		select
 		contacts.contact_id, contacts.contact, contacts.title,  contacts.con_active,
 		contacts.email, contacts.mobile, contacts.direct_line,
-		contacts.account_id, accounts.company, accounts.ticker, accounts.acc_ref, accounts.root, accounts.acc_active,
+		contacts.account_id, accounts.company, accounts.ticker, accounts.acc_ref, accounts.root, accounts.acc_active, accounts.online,
 		contacts.can_login,  contacts.syslogin, contacts.pass_change, contacts.security_id, security.security,
 		contacts.www_page, contacts.address_id
 		from contacts
