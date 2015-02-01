@@ -4,8 +4,9 @@ import (
 
 	"fmt"
 
-
 	"github.com/jinzhu/gorm"
+
+	"github.com/daffodil/factory-planner/app/fp"
 )
 
 type Contact struct {
@@ -62,6 +63,7 @@ type ContactView struct {
 	Company string ` json:"company" `
 	Ticker string ` json:"ticker" `
 	AccActive string ` json:"acc_active" `
+	Root *bool ` json:"root" `
 }
 
 var CONTACT_VIEW = "v_contacts"
@@ -70,6 +72,21 @@ account_id, company, ticker, acc_ref, root, acc_active, address_id,
 contact_id, contact, mobile, email, direct_line, title, con_active,
 can_login, security_id, security, syslogin, www_page
 `
+
+
+func SearchContacts(db gorm.DB, search_vars fp.SearchVars) ([]ContactView, error){
+
+	var rows []ContactView
+
+	where := search_vars.GetSQL("contact", "acc_active")
+	fmt.Println("where=", where)
+	res := db.Table(CONTACT_VIEW).Select(CONTACT_VIEW_COLS).Where(where).Scan(&rows)
+	fmt.Println(res)
+
+	return rows, nil
+
+}
+
 
 func GetAccountContacts(db gorm.DB, account_id int) ([]ContactView, error){
 

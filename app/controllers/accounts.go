@@ -181,3 +181,37 @@ func (c Accounts) RootAccountStaffJson() revel.Result {
 
 
 }
+
+
+// handles /ajax/contacts
+func (c Accounts) ContactsJson() revel.Result {
+
+	var e error
+	pay := MakePayload()
+
+	//payload := make(map[string]interface{})
+
+	//search := GetSearch( c )
+	search_vars := fp.GetSearchVars(c.Params.Query)
+
+	pay["contacts"], e = accounts.SearchContacts(app.Db, search_vars)
+
+	if e != nil {
+		pay["error"] = e.Error()
+	}
+	return c.RenderJson(pay)
+}
+
+// handles /ajax/contact/<id>
+func (c Accounts) ContactJson(contact_id int) revel.Result {
+
+	var e error
+	pay := MakePayload()
+
+	pay["contact"], e = accounts.GetContact(app.Db, contact_id)
+
+	if e != nil {
+		pay["error"] = e.Error()
+	}
+	return c.RenderJson(pay)
+}

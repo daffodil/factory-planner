@@ -47,24 +47,34 @@ POST    /ajax/auth/staff_login                      Auth.StaffLoginJson
 #======================================
 # Accounts
 #======================================
-GET     /ajax/accounts                              Accounts.AccountsJson
-GET     /ajax/accounts/all                          Accounts.AccountsAllJson
 GET     /staff/accounts                             Accounts.StaffAccountsPage
 
 
 
-#======================================
-# Account
-#======================================
+GET     /ajax/accounts                              Accounts.AccountsJson
+GET     /ajax/accounts/all                          Accounts.AccountsAllJson
+
+
+
+
+## Account
+
 
 GET     /ajax/account/:account_id                    Accounts.AccountJson
-GET     /ajax/account/:account_id/contacts           Accounts.AccountContactsJson
 GET     /ajax/account/:account_id/orders             Orders.AccountOrdersJson
 GET     /ajax/account/:account_id/work_orders        Orders.AccountWorkOrdersJson
 
 GET     /ajax/account/:account_id/brands             Projects.AccountBrandsJson
 GET     /ajax/account/:account_id/model/id/:model_id Projects.ModelPostJson
 GET     /ajax/account/:account_id/brand_model_import Projects.BrandModelImportJson
+
+
+## Contacts
+GET     /ajax/contacts                               Accounts.ContactsJson
+GET     /ajax/account/:account_id/contacts           Accounts.AccountContactsJson
+
+## Contact
+GET     /ajax/contact/:contact_id                    Accounts.ContactJson
 
 
 #======================================

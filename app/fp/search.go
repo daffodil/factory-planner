@@ -17,6 +17,7 @@ const (
 // ?active = all - return active, inactive or all, also 0, 1, 2 respectively
 type SearchVars struct {
 	Search []string
+	Column string
 	FilterActive string
 	//Enabled bool
 }
@@ -56,6 +57,8 @@ func GetSearchVars(query url.Values) SearchVars {
 	if search != "" {
 		sv.Search = SplitString(search)
 	}
+	sv.Column = strings.TrimSpace( query.Get("search_col") )
+
 	fmt.Println(sv.Search)
 	return sv
 }
