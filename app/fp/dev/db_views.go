@@ -83,6 +83,19 @@ func init() {
 		order by file_date desc
 	`
 
+	views["v_jobs"] = `
+		create or replace view v_jobs as
+		select
+		jobs.job_id, jobs.order_id,
+		orders.purchase_order, orders.client_extra_ref,
+		orders.account_id, accounts.company, accounts.ticker
+		from jobs
+		inner join orders on jobs.order_id = orders.order_id
+		inner join accounts on orders.account_id = accounts.account_id
+		order by job_id desc
+	`
+
+
 	views["v_models"] = `
 		create or replace view v_models as
 		select models.model_id, models.model,

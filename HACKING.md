@@ -4,7 +4,7 @@ Hackers Notes
 pedro makes some notes, maybe inaccurate but pointers..
 
 The idea of this app in present active state is to
-make it work with sage accounts, and loads of spreasheets..
+make it work with sage accounts, and loads of spreadheets..
 
 Idea is to remove need for windows workstations,
 and replace with an active system and any interface..
@@ -127,4 +127,13 @@ There are generally two objects for each "table", eg Account and AccountView
  
  Most queries use a view and in this example
  
+ 
+ BEST Rules for now..
+ 
+ I know we all want short ovjects..
+ eg
+ Contact.Active or Account.Active
+ Therese clash on a view on contacts and accounts....
+ therfore.. its ContactConActive and Account.AccActive
+ as seperate Fields..
  

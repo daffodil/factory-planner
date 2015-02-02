@@ -62,7 +62,7 @@ type OrderView struct {
 }
 var order_view_cols string = `
 order_id, order_type_id, order_type, order_color,
-client_order_no, account_id, company, ticker,
+purchase_order, account_id, company, ticker,
 order_ordered, order_required
 `
 

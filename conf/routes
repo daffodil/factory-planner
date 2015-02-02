@@ -61,6 +61,7 @@ GET     /ajax/accounts/all                          Accounts.AccountsAll
 
 
 GET     /ajax/account/:account_id                    Accounts.Account
+GET     /ajax/account/:account_id/all                Accounts.AccountAll
 GET     /ajax/account/:account_id/orders             Orders.AccountOrdersJson
 GET     /ajax/account/:account_id/work_orders        Orders.AccountWorkOrdersJson
 
@@ -78,6 +79,11 @@ GET     /ajax/contact/:contact_id                    Accounts.Contact
 
 ## Addresses
 GET     /ajax/account/:account_id/addresses          Accounts.AccountAddresses
+
+
+## Jobs
+GET     /ajax/jobs/:view                             Jobs.JobsIndex
+GET     /ajax/jobs                                   Jobs.JobsIndex
 
 
 #======================================

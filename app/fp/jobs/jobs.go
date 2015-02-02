@@ -31,6 +31,34 @@ func DB_IndexJob(db gorm.DB) {
 	}
 }
 
+// Database view extends the `Job` with stuff
+type JobView struct {
+	Job
+	JobItemsCount int ` json:"job_items_count" `
+	PurchaseOrder string  ` json:"purchase_order" `
+	AccountId int ` json:"account_id" `
+	Company string ` json:"company" `
+	Ticker string ` json:"ticker" `
+
+}
+
+
+var JOB_VIEW = "v_jobs"
+var JOB_VIEW_COLS =  `
+job_id, order_id, purchase_order, account_id, company, ticker
+`
+
+
+func GetJobs(db gorm.DB, view string) ([]JobView, error) {
+
+	rows := make([]JobView, 0)
+	res := db.Table(JOB_VIEW).Select(JOB_VIEW_COLS).Scan(&rows)
+	if res.Error != nil {
+		return rows, res.Error
+	}
+	return rows, nil
+}
+
 
 func GetAccountJobs(db gorm.DB, account_id int) ([]Job, error) {
 

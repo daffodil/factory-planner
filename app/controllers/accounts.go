@@ -97,6 +97,36 @@ func (c Accounts) Account(account_id int) revel.Result {
 	return c.RenderJson(payload)
 }
 
+// handles account by id /ajax/account/;account_id/all
+func (c Accounts) AccountAll(account_id int) revel.Result {
+
+	var e error
+	payload := MakePayload()
+
+	// account
+	payload["account"], e = accounts.GetAccount(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
+
+	// orders
+	payload["orders"], e = orders.GetAccountOrders(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
+
+	// models
+	payload["models"], e = projects.GetAccountModels(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
+
+
+	return c.RenderJson(payload)
+}
 
 // handles account by id /ajax/account/;account_id/contacts
 func (c Accounts) AccountContacts(account_id int) revel.Result {
