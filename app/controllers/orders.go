@@ -34,7 +34,7 @@ func (c Orders) OrdersJson() revel.Result {
 }
 
 
-func (c Orders) AccountOrdersJson(account_id int) revel.Result {
+func (c Orders) AccountOrders(account_id int) revel.Result {
 
 	var e error
 	payload := new(OrdersPayload)
@@ -49,7 +49,7 @@ func (c Orders) AccountOrdersJson(account_id int) revel.Result {
 }
 
 
-func (c Orders) AccountWorkOrdersJson(account_id int) revel.Result {
+func (c Orders) AccountWorkOrders(account_id int) revel.Result {
 
 	//var e error
 	payload := MakePayload()

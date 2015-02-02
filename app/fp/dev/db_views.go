@@ -87,7 +87,7 @@ func init() {
 		create or replace view v_jobs as
 		select
 		jobs.job_id, jobs.order_id,
-		orders.purchase_order, orders.client_extra_ref,
+		orders.purchase_order, orders.client_extra_ref, order_ordered, order_required,
 		orders.account_id, accounts.company, accounts.ticker
 		from jobs
 		inner join orders on jobs.order_id = orders.order_id

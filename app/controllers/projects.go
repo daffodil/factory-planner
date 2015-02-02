@@ -15,7 +15,7 @@ type Projects struct {
 	*revel.Controller
 }
 
-func (c Projects) AccountBrandsJson(account_id int) revel.Result {
+func (c Projects) AccountBrands(account_id int) revel.Result {
 	var err error
 	payload := MakePayload()
 	payload["account_id"] = account_id
@@ -28,7 +28,7 @@ func (c Projects) AccountBrandsJson(account_id int) revel.Result {
 	return c.RenderJson(payload)
 }
 
-func (c Projects) ModelPostJson(account_id int, model_id string) revel.Result {
+func (c Projects) ModelPost(account_id int, model_id string) revel.Result {
 
 	var err error
 	payload := MakePayload()
@@ -70,7 +70,7 @@ func (c Projects) ModelPostJson(account_id int, model_id string) revel.Result {
 
 
 // POST vars = brand and model insert if not exitst, and returned as Model record
-func (c Projects) BrandModelImportJson(account_id int) revel.Result {
+func (c Projects) BrandModelImport(account_id int) revel.Result {
 
 	var e error
 	pay := MakePayload()

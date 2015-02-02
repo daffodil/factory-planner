@@ -1,7 +1,8 @@
 package jobs
 
 import (
-	//"time"
+
+	"time"
 	"github.com/jinzhu/gorm"
 )
 
@@ -39,13 +40,16 @@ type JobView struct {
 	AccountId int ` json:"account_id" `
 	Company string ` json:"company" `
 	Ticker string ` json:"ticker" `
+	OrderOrdered time.Time ` json:"order_ordered" `
+	OrderRequired *time.Time ` json:"order_required" `
 
 }
 
 
 var JOB_VIEW = "v_jobs"
 var JOB_VIEW_COLS =  `
-job_id, order_id, purchase_order, account_id, company, ticker
+job_id, order_id, purchase_order, account_id, company, ticker,
+order_ordered, order_required
 `
 
 

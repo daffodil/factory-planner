@@ -15,7 +15,7 @@ type Auth struct {
 
 
 // handles /ajax/staff
-func (c Auth) StaffLoginJson() revel.Result {
+func (c Auth) StaffLogin() revel.Result {
 
 	var e error
 	pay := MakePayload()
