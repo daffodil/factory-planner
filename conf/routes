@@ -86,6 +86,7 @@ GET     /ajax/account/:account_id/addresses          Accounts.AccountAddresses
 GET     /ajax/jobs/:view                             Jobs.JobsIndex
 GET     /ajax/jobs                                   Jobs.JobsIndex
 
+GET     /ajax/job/:job_id                            Jobs.Job
 
 #======================================
 # Files

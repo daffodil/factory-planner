@@ -12,7 +12,7 @@ type JobItem struct {
 	JobItemId int `json:"job_item_id" gorm:"column:job_item_id; primary_key:yes"`
 	//JobNo int `json:"job_no" sql:"type:varchar(200);not null;" `
 	JobId int `json:"job_id"  `
-	ProjectId int `json:"project_id"  `
+	ProjectId *int `json:"project_id"  `
 	ItemDescription string `json:"item_description"  `
 	JobItemImport string `json:"job_item_import"  `
 	Qty int ` json:"item_qty" `
@@ -34,11 +34,18 @@ func DB_IndexJobItems(db gorm.DB) {
 	}
 }
 
+var JOB_ITEM_VIEW string = "v_job_items"
+var JOB_ITEM_VIEW_COLS =  `
+job_item_id, job_id, project_id, item_description, item_qty
+`
 
 func GetJobItems(db gorm.DB, job_id int) ([]JobItem, error) {
 
-	recs := make([]JobItem, 0)
-	//db.Find(&worders, WorkOrder{AccountId: account_id})
+	rows := make([]JobItem, 0)
+	res := db.Table(JOB_ITEM_VIEW).Select(JOB_ITEM_VIEW_COLS).Where("job_id=?", job_id).Scan(&rows)
+	if res.Error != nil {
+		return rows, res.Error
+	}
 
-	return recs, nil
+	return rows, nil
 }

@@ -88,13 +88,25 @@ func init() {
 		select
 		jobs.job_id, jobs.order_id,
 		orders.purchase_order, orders.client_extra_ref, order_ordered, order_required,
-		orders.account_id, accounts.company, accounts.ticker
+		orders.account_id, accounts.company, accounts.ticker,
+		(select count(*) from job_items
+			where jobs.job_id = job_items.job_id
+		) as job_items_count
 		from jobs
 		inner join orders on jobs.order_id = orders.order_id
 		inner join accounts on orders.account_id = accounts.account_id
 		order by job_id desc
 	`
 
+	views["v_job_items"] = `
+		create or replace view v_job_items as
+		select
+		job_items.job_item_id, job_items.job_id, job_items.project_id,
+		job_items.item_description, job_items.qty as item_qty
+		from job_items
+		inner join jobs on jobs.job_id = job_items.job_id
+		order by job_item_id asc
+	`
 
 	views["v_models"] = `
 		create or replace view v_models as

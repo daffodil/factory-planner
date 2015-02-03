@@ -34,7 +34,7 @@ func (c Jobs) JobsIndex() revel.Result {
 }
 
 
-// handles file by id /ajax/file/is/;file_id
+// /ajax/account/;account_id/jobs
 func (c Jobs) AccountJobs(account_id int) revel.Result {
 
 	var e error
@@ -50,3 +50,23 @@ func (c Jobs) AccountJobs(account_id int) revel.Result {
 }
 
 
+// /ajax/job/:job_id
+func (c Jobs) Job(job_id int) revel.Result {
+
+	var e error
+	payload := MakePayload()
+
+	payload["job"], e = jobs.GetJob(app.Db, job_id)
+	if e != nil {
+		payload["error"] = e.Error()
+	}
+
+	payload["job_items"], e = jobs.GetJobItems(app.Db, job_id)
+	if e != nil {
+		payload["error"] = e.Error()
+	}
+
+
+
+	return c.RenderJson(payload)
+}
