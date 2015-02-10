@@ -10,6 +10,7 @@ import (
 	"github.com/daffodil/factory-planner/app"
 	"github.com/daffodil/factory-planner/app/fp"
 	"github.com/daffodil/factory-planner/app/fp/accounts"
+	"github.com/daffodil/factory-planner/app/fp/jobs"
 	"github.com/daffodil/factory-planner/app/fp/orders"
 	"github.com/daffodil/factory-planner/app/fp/projects"
 )
@@ -103,28 +104,57 @@ func (c Accounts) AccountAll(account_id int) revel.Result {
 	var e error
 	payload := MakePayload()
 
-	// account
+	// Account
 	payload["account"], e = accounts.GetAccount(app.Db, account_id)
 	if e != nil {
 		payload["error"] = e
 		return c.RenderJson(payload)
 	}
 
-	// orders
-	payload["orders"], e = orders.GetAccountOrders(app.Db, account_id)
+	// Addresses
+	payload["addresses"], e = accounts.GetAccountAddresses(app.Db, account_id)
 	if e != nil {
 		payload["error"] = e
 		return c.RenderJson(payload)
 	}
 
-	// models
+
+	// Contacts
+	payload["contacts"], e = accounts.GetAccountContacts(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
+
+	// Jobs
+	payload["jobs"], e = jobs.GetAccountJobs(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
+
+	// Models
 	payload["models"], e = projects.GetAccountModels(app.Db, account_id)
 	if e != nil {
 		payload["error"] = e
 		return c.RenderJson(payload)
 	}
 
+	// Orders
+	payload["orders"], e = orders.GetAccountOrders(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
 
+
+
+	// Projects
+	payload["projects"], e = projects.GetAccountProjects(app.Db, account_id)
+	if e != nil {
+		payload["error"] = e
+		return c.RenderJson(payload)
+	}
 	return c.RenderJson(payload)
 }
 

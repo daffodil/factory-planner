@@ -88,6 +88,9 @@ GET     /ajax/jobs                                   Jobs.JobsIndex
 
 GET     /ajax/job/:job_id                            Jobs.Job
 
+GET     /ajax/work_schedules                         Jobs.WorkSchedules
+GET     /ajax/work_schedules/tree                    Jobs.WorkSchedulesTree
+
 #======================================
 # Files
 #======================================
@@ -111,6 +114,20 @@ GET     /ajax/orders                               Orders.OrdersJson
 
 GET     /staff/orders                              Orders.StaffOrdersPage
 
+
+#======================================
+# Projects
+#======================================
+GET     /ajax/projects                             Projects.Projects
+GET     /ajax/project/:project_id                  Projects.Project
+
+#GET     /ajax/account/:account_id/projects         Projects.AccountProjects
+
+
+
+Models
+======================================
+GET     /ajax/models                              Projects.Models
 
 #======================================
 # Static

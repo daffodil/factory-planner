@@ -1,5 +1,8 @@
 package orders
 
+/*
+NOW Project Types
+
 import (
 	"github.com/jinzhu/gorm"
 )
@@ -45,3 +48,4 @@ func DB_CreateDefaultOrderTypes(db gorm.DB) error {
 	}
 	return nil
 }
+*/

@@ -9,7 +9,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 
-	"github.com/daffodil/factory-planner/app/fp/schedule"
+	"github.com/daffodil/factory-planner/app/fp/schedules"
 )
 
 const(
@@ -57,7 +57,7 @@ type Week struct {
 	DateLast string `json:"date_last,omitempty"`
 	WeekLast *Week `json:"week_last,omitempty"`
 	WeekNext *Week `json:"week_next,omitempty"`
-	WorkSchedules []*schedule.WorkScheduleView `json:"work_schedules,omsitempty"`
+	WorkSchedules []*schedules.WorkScheduleView `json:"work_schedules,omsitempty"`
 }
 
 func (me *Week) Setup(inc_weeks bool) {
@@ -133,7 +133,7 @@ func WeekFromYearWeek(year, week int) *Week {
 
 type DEADWeekView struct {
 	Week
-	WorkSchedule []*schedule.WorkSchedule `json:"work_schedule,omsitempty"`
+	WorkSchedule []*schedules.WorkSchedule `json:"work_schedule,omsitempty"`
 }
 
 
@@ -149,24 +149,24 @@ func WeeksView(db gorm.DB, year, week, prev, ahead int) ([]*Week, error) {
 	}
 
 	// fetch schedules
-	scheds, err := schedule.GetWorksSchedule(db, weeks[0].DateFirst, weeks[len(weeks)-1].DateLast)
+	scheds, err := schedules.GetWorkSchedulesByDateRange(db, weeks[0].DateFirst, weeks[len(weeks)-1].DateLast)
 	if err != nil {
 		//TODO
 	}
 
 	// create nested [year][week] list
-	keyed := make(map[int]map[int][]*schedule.WorkScheduleView)
+	keyed := make(map[int]map[int][]*schedules.WorkScheduleView)
 	for _, sched := range scheds {
 
 		// make year map
 		_, yrok := keyed[sched.WorkSchedYear]
 		if !yrok {
-			keyed[sched.WorkSchedYear] = make(map[int][]*schedule.WorkScheduleView)
+			keyed[sched.WorkSchedYear] = make(map[int][]*schedules.WorkScheduleView)
 		}
 		// make week map
 		_, wkok := keyed[sched.WorkSchedYear][sched.WorkSchedWeek]
 		if !wkok {
-			keyed[sched.WorkSchedYear][sched.WorkSchedWeek] = make([]*schedule.WorkScheduleView, 0)
+			keyed[sched.WorkSchedYear][sched.WorkSchedWeek] = make([]*schedules.WorkScheduleView, 0)
 		}
 		// add sched to list
 		keyed[sched.WorkSchedYear][sched.WorkSchedWeek] = append(keyed[sched.WorkSchedYear][sched.WorkSchedWeek], sched)

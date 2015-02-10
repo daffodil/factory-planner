@@ -18,7 +18,7 @@ import (
 	"github.com/daffodil/factory-planner/app/fp/orders"
 	"github.com/daffodil/factory-planner/app/fp/parts"
 	"github.com/daffodil/factory-planner/app/fp/projects"
-	"github.com/daffodil/factory-planner/app/fp/schedule"
+	"github.com/daffodil/factory-planner/app/fp/schedules"
 
 
 )
@@ -38,11 +38,12 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		db.DropTableIfExists(&accounts.Address{})
 		db.DropTableIfExists(&accounts.Contact{})
 
-		db.DropTableIfExists(&orders.OrderType{})
+		db.DropTableIfExists(&projects.ProjectType{})
 		db.DropTableIfExists(&orders.Order{})
 		db.DropTableIfExists(&jobs.Job{})
+		//db.DropTableIfExists(&jobs.JobType{})
 
-		db.DropTableIfExists(&schedule.WorkSchedule{})
+		db.DropTableIfExists(&schedules.WorkSchedule{})
 		db.DropTableIfExists(&parts.Part{})
 		db.DropTableIfExists(&parts.Contact2Part{})
 
@@ -78,28 +79,39 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		projects.DB_IndexBrands(db)
 		db.AutoMigrate(&projects.Model{})
 		projects.DB_IndexModels(db)
+
+		db.AutoMigrate(&projects.ProjectType{})
+		projects.DB_CreateDefaultProjectTypes(db)
+		projects.DB_CreateDefaultProjectTypes(db)
+
 		db.AutoMigrate(&projects.Project{})
 		projects.DB_IndexProjects(db)
+
 		db.AutoMigrate(&projects.ProjectModelLink{})
 		projects.DB_IndexProjectModelLinks(db)
+
 		db.AutoMigrate(&projects.ProjectContactLink{})
 		projects.DB_IndexProjectContactLinks(db)
 
 		// Orders
 		db.AutoMigrate(&orders.Leger{})
-		db.AutoMigrate(&orders.OrderType{})
+		//db.AutoMigrate(&orders.OrderType{})
 		db.AutoMigrate(&orders.Order{})
 		db.AutoMigrate(&orders.OrderItem{})
 
 		orders.DB_IndexLegers(db)
-		orders.DB_IndexOrderType(db)
+		//orders.DB_IndexOrderType(db)
 		orders.DB_IndexOrder(db)
 		orders.DB_IndexOrderItems(db)
 
-		orders.DB_CreateDefaultOrderTypes(db)
+
 
 
 		// jobs
+		//db.AutoMigrate(&jobs.JobType{})
+		//jobs.DB_IndexJobType(db)
+
+
 		db.AutoMigrate(&jobs.Job{})
 		jobs.DB_IndexJob(db)
 		db.AutoMigrate(&jobs.JobItem{})
@@ -108,7 +120,7 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 
 
-		db.AutoMigrate(&schedule.WorkSchedule{})
+		db.AutoMigrate(&schedules.WorkSchedule{})
 
 		db.AutoMigrate(&parts.Part{}, &parts.Contact2Part{})
 	}

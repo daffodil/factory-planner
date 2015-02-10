@@ -27,6 +27,24 @@ eg
 - CSV and tsv
 
 
+===============================
+Hack it a different way
+===============================
+
+most line formatted input allowd for a name an etc..
+- so me are to demolish this concept by making the 
+- the person..
+
+- most companies have staff, and lo and behold a percious staff menmer
+- end up a a customer,
+- or vice versa.
+
+So the idea is to make this a bit of a "contact" system over time..
+- indeed person at end of line can change..
+eg 
+- ammanda - original reception
+- brenda - her older syster
+
 
 Overview
 -------------------------
@@ -137,3 +155,16 @@ There are generally two objects for each "table", eg Account and AccountView
  therfore.. its ContactConActive and Account.AccActive
  as seperate Fields..
  
+
+
+gorm:"column:job_id; primary_key:yes; foreignkey:job_id; foreigntype:User; associationforeignkey:user_id;many2many:user_jobs;polymorphic:Owner;"`
+
+column: db name of this field
+primary_key: use this field as primary key
+foreignkey: used as foreign key for relations
+foreigntype/polymorphic: used for polymorphic relations https://github.com/jinzhu/gorm#polymorphism
+associationforeignkey: used as association foreign key for relations
+many2many: define many to many join table
+
+
+

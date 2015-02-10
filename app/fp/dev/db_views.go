@@ -102,7 +102,7 @@ func init() {
 		create or replace view v_job_items as
 		select
 		job_items.job_item_id, job_items.job_id, job_items.project_id,
-		job_items.item_description, job_items.qty as item_qty
+		job_items.item_description, job_items.item_qty
 		from job_items
 		inner join jobs on jobs.job_id = job_items.job_id
 		order by job_item_id asc
@@ -112,7 +112,10 @@ func init() {
 		create or replace view v_models as
 		select models.model_id, models.model,
 		models.brand_id, brands.brand,
-		brands.account_id, accounts.company, accounts.ticker,accounts.acc_ref
+		brands.account_id, accounts.company, accounts.ticker,accounts.acc_ref,
+		(select count(project_id) from project_model_links
+			where models.model_id = project_model_links.project_id
+		) as projects_count
 		from models
 		inner join brands on brands.brand_id = models.brand_id
 		inner join accounts on brands.account_id = accounts.account_id
@@ -121,28 +124,60 @@ func init() {
 
 	views["v_orders"] = `
 		create or replace view v_orders as
-		select orders.order_id, orders.account_id, accounts.company, accounts.ticker,
-		orders.order_type_id, order_types.order_type, order_types.order_color,
+		select orders.order_id, orders.purchase_order,
+		orders.account_id, accounts.company, accounts.ticker,
 		order_ordered, order_required, client_extra_ref
 		from orders
-		left join order_types on order_types.order_type_id = orders.order_type_id
 		inner join accounts on accounts.account_id = orders.account_id
 
 		order by order_required asc
 	`
 
+	views["v_projects"] = `
+		create or replace view v_projects as
+		select
+		projects.project_id, projects.project_ref, projects.project_description,
+		projects.account_id, accounts.ticker, accounts.company,
+		(select count(model_id) from project_model_links
+			where project_model_links.project_id = projects.project_id
+		) as models_count
+		from projects
+		inner join accounts on accounts.account_id = projects.account_id
+		order by project_ref asc
+	`
+	views["v_project_models"] = `
+		create or replace view v_project_models as
+		select
+		project_model_links.project_id, projects.project_ref, projects.project_description,
+		accounts.account_id, accounts.ticker, accounts.company,
+		models.model_id, models.model, brands.brand_id, brands.brand
+		from project_model_links
+		inner join projects on project_model_links.project_id = projects.project_id
+		inner join models on project_model_links.model_id = models.model_id
+		inner join brands on models.brand_id = brands.brand_id
+		inner join accounts on brands.account_id = accounts.account_id
+	`
 
 	views["v_work_schedules"] = `
 		create or replace view v_work_schedules as
 		select
-		work_schedules.work_sched_id, work_schedules.work_order_id,
+		work_schedules.work_sched_id, work_schedules.job_item_id,
+		job_items.order_type_id, order_types.order_type,
 		work_schedules.work_sched_required,
 		YEAR( work_schedules.work_sched_required ) as work_sched_year,
 		WEEKOFYEAR( work_schedules.work_sched_required ) as work_sched_week,
 		work_schedules.x_work_sched_year, work_schedules.x_work_sched_week,
-		work_orders.work_order_no
+		work_sched_qty_required,
+		job_items.job_id, jobs.order_id,  orders.purchase_order,
+		accounts.account_id, accounts.ticker, accounts.company,
+		job_items.project_id, projects.project_ref
 		from work_schedules
-		inner join work_orders on work_orders.work_order_id = work_schedules.work_order_id
+		inner join job_items on job_items.job_item_id = work_schedules.job_item_id
+		inner join projects on job_items.project_id = projects.project_id
+		inner join order_types on job_items.order_type_id = order_types.order_type_id
+		inner join jobs on jobs.job_id = job_items.job_id
+		inner join orders on jobs.order_id = orders.order_id
+		inner join accounts on accounts.account_id = orders.account_id
 		order by work_schedules.work_sched_required asc
 	`
 }

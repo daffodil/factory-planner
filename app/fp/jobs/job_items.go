@@ -12,10 +12,11 @@ type JobItem struct {
 	JobItemId int `json:"job_item_id" gorm:"column:job_item_id; primary_key:yes"`
 	//JobNo int `json:"job_no" sql:"type:varchar(200);not null;" `
 	JobId int `json:"job_id"  `
-	ProjectId *int `json:"project_id"  `
+	OrderTypeId int `json:"order_type_id"  `
+	ProjectId int `json:"project_id"  `
 	ItemDescription string `json:"item_description"  `
 	JobItemImport string `json:"job_item_import"  `
-	Qty int ` json:"item_qty" `
+	ItemQty int ` json:"item_qty" `
 	//OrderId int `json:"order_id"  `
 	//JobImport string `json:"job_import" sql:"type:varchar(255);not null;default:''" `
 

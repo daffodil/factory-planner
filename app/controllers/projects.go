@@ -103,3 +103,58 @@ func (c Projects) BrandModelImport(account_id int) revel.Result {
 	return c.RenderJson(pay)
 }
 
+// /projects
+func (c Projects) Projects() revel.Result {
+
+	var e error
+	pay := MakePayload()
+
+	pay["projects"], e = projects.GetProjects(app.Db)
+	if e != nil {
+		pay["error"] = e.Error()
+		return c.RenderJson(pay)
+	}
+
+
+	return c.RenderJson(pay)
+}
+
+
+// /project/project_id
+func (c Projects) Project(project_id int) revel.Result {
+
+	var e error
+	pay := MakePayload()
+
+	pay["project"], e = projects.GetProject(app.Db, project_id)
+	if e != nil {
+		pay["error"] = e.Error()
+		return c.RenderJson(pay)
+	}
+
+	pay["models"], e = projects.GetProjectModels(app.Db, project_id)
+	if e != nil {
+		pay["error"] = e.Error()
+		return c.RenderJson(pay)
+	}
+
+
+	return c.RenderJson(pay)
+}
+
+
+// /ajax/models
+func (c Projects) Models() revel.Result {
+
+	var e error
+	pay := MakePayload()
+
+	pay["models"], e = projects.GetModels(app.Db)
+	if e != nil {
+		pay["error"] = e.Error()
+		return c.RenderJson(pay)
+	}
+
+
+	return c.RenderJson(pay)
+}

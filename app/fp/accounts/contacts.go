@@ -21,12 +21,12 @@ type Contact struct {
 
 	SecurityId int 	` json:"security_id" sql:"type:int(2);not null;" `
 	Syslogin *string ` json:"syslogin" sql:"type:varchar(20);" `
-	Secret *string 	` json:"secret" sql:"type:varchar(100);not null;" `
+	Secret *string 	` json:"secret" sql:"type:varchar(100)" `
 
-	ConActive *bool	` json:"con_active" sql:"type:int(2);not null;" `
-	CanLogin *bool 	` json:"can_login" sql:"type:int(2);not null;" `
-	PassChange *bool ` json:"pass_change" sql:"type:int(2);not null;" `
-	OnlineStatus *int ` json:"online_status" sql:"type:int(2);not null;" `
+	ConActive *bool	` json:"con_active" sql:"type:int(2);" `
+	CanLogin *bool 	` json:"can_login" sql:"type:int(2);" `
+	PassChange *bool ` json:"pass_change" sql:"type:int(2);" `
+	OnlineStatus *int ` json:"online_status" sql:"type:int(2);" `
 
 	DirectLine *string ` json:"direct_line" sql:"type:varchar(100);not null;default:''" `
 	Mobile *string 	 ` json:"mobile" sql:"type:varchar(100);not null;default:''" `

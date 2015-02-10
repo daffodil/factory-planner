@@ -44,26 +44,30 @@ type ModelView struct {
 	Brand string  ` json:"brand" `
 	Ticker string ` json:"ticker" `
 	Company string ` json:"company" `
-	AccRef string ` json:"acc_ref" `
+	AccountId int ` json:"account_id" `
+
+	ProjectsCount int ` json:"projects_count" `
 }
 
 var MODEL_VIEW string = "v_models"
 var MODEL_VIEW_COLS string = `
-model_id, model, brand_id, brand, account_id, company, ticker, acc_ref
+model_id, model, brand_id, brand,
+account_id, company, ticker, acc_ref,
+projects_count
 `
 
 
-// All brands
+// All Models
 // TODO redirect brands and expired brands
-func GetAllModels(db gorm.DB) ([]*ModelView, error) {
+func GetModels(db gorm.DB) ([]*ModelView, error) {
 	var rows []*ModelView
 	db.Table(MODEL_VIEW).Select(MODEL_VIEW_COLS).Scan(&rows)
 	return rows, nil
 }
 
-// Brands for the account
+// Models for the account
 func GetAccountModels(db gorm.DB, account_id int) ([]*ModelView, error) {
-	var rows []*ModelView
+	rows := make([]*ModelView, 0)
 	db.Table(MODEL_VIEW).Select(MODEL_VIEW_COLS).Where("account_id = ?", account_id).Scan(&rows)
 	return rows, nil
 }

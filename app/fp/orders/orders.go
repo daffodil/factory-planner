@@ -24,17 +24,18 @@ type Order struct {
 
 	OrderId int ` json:"order_id" gorm:"column:order_id; primary_key:yes"`
 	LegerId int ` json:"leger_id" `
-	OrderTypeId *int `json:"order_type_id" sql:"type:int"`
+	//OrderTypeId *int `json:"order_type_id" sql:"type:int"`
 	AccountId int `json:"account_id" sql:"type:int"`
-	PartId *int `json:"part_id" sql:"type:int;"`
+	//PartId *int `json:"part_id" sql:"type:int;"`
 
 
-	PurchaseOrder *string `json:"purchase_order" sql:"type:varchar(100)" `
-	ClientExtraRef *string `json:"client_extra_ref" sql:"type:varchar(100)" `
-	OrderNotes *string `json:"order_notes" sql:"type:varchar(100);not null;default:''" `
+	PurchaseOrder string `json:"purchase_order" sql:"type:varchar(100)" `
+	ClientExtraRef string `json:"client_extra_ref" sql:"type:varchar(100)" `
+	OrderNotes string `json:"order_notes" sql:"type:varchar(100);not null;default:''" `
 
-	OrderOrdered *time.Time `json:"order_ordered" sql:"type:date" `
-	OrderRequired *time.Time `json:"order_required" sql:"type:date" `
+	OrderImport string `json:"order_import" sql:"type:varchar(100);not null;default:''" `
+	OrderOrdered time.Time `json:"order_ordered" sql:"type:date" `
+	OrderRequired time.Time `json:"order_required" sql:"type:date" `
 }
 
 func (me Order) TableName() string {
@@ -60,24 +61,27 @@ type OrderView struct {
 	Company string ` json:"company"  `
 	Ticker string ` json:"ticker"  `
 }
-var order_view_cols string = `
+
+var ORDER_VIEW string = "v_orders"
+var ORDER_VIEW_COLS string = `
 order_id, order_type_id, order_type, order_color,
 purchase_order, account_id, company, ticker,
 order_ordered, order_required
 `
 
+
 func GetOrders(db gorm.DB) ([]OrderView, error) {
 
-	var orders []OrderView
-	db.Table("v_orders").Select(order_view_cols).Scan(&orders)
+	orders :=make([]OrderView, 0)
+	db.Table(ORDER_VIEW).Select(ORDER_VIEW_COLS).Scan(&orders)
 
 	return orders, nil
 }
 
 func GetAccountOrders(db gorm.DB, account_id int) ([]OrderView, error) {
 
-	var orders []OrderView
-	db.Table("v_orders").Select(order_view_cols).Where("account_id=?", account_id).Scan(&orders)
+	orders :=make([]OrderView, 0)
+	db.Table(ORDER_VIEW).Select(ORDER_VIEW_COLS).Where("account_id=?", account_id).Scan(&orders)
 
 	return orders, nil
 }
