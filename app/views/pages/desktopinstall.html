@@ -1,0 +1,97 @@
+
+{{set . "title" "Home"}}
+
+{{template "jmobile/header.html" .}}
+
+<div data-role="page" id="desktop-install" data-transition="pop">
+
+    <div data-role="header" XXdata-position="fixed"  data-theme="b" class="xlogo">
+        <h1 >{{.root.Company}}</h1>
+    </div>
+
+
+    <div data-role="content" data-role="collapsible-set">
+
+
+        <div id="desktop-install-overview" data-role="collapsible"  data-collapsed="false" data-theme="b" data-content-theme="a">
+            <h3>Install the TRT desktop</h3>
+            <h2>Overview</h2>
+            <p>Getting up and running on a desktop requires the following steps:</p>
+            <ol>
+                <li><b>Install Python</b> - this interperator runs the source code</li>
+                <li><b>Install PyQt</b> - makes the windows and widgets</li>
+                <li><b>Install Git</b> - for downloading and updating the source code</li>
+                <li><b>TRT Code Checkout</b> - download the trt application code</li>
+                <li><b>Run and Login</b> - launch the TRT application</li>
+            </ol>
+
+        </div>
+
+
+        <div id="install-python3" data-role="collapsible"   data-collapsed="true" data-theme="b" data-content-theme="a">
+
+            <h3>1: Install Python3</h3>
+            <ul>
+                <li>Required is the latest in the <b>Python 3</b>+series </li>
+                <li>Download and run the Windows MSI Installer</li>
+                <li>Accept all the defaults. A new directory c:\python34 will be created</li>
+                <li><a href="https://www.python.org/download/" target="_blank">https://www.python.org/download/</a></li>
+            </ul>
+        </div>
+
+        <div id="install-pyqt5" data-role="collapsible"    data-collapsed="true" data-theme="b" data-content-theme="c">
+            <h3>2: Install PyQt5</h3>
+            <ul>
+                <li>Required is the  <b>PyQt5 - Binary package</b> </li>
+                <li>Download and run the <b>Windows Installer</b></li>
+                <li>Accept all the defaults. fyi will install into c:\python34</li>
+                <li><a href="http://www.riverbankcomputing.com/software/pyqt/download5" target="_blank">http://www.riverbankcomputing.com/software/pyqt/download5</a></li>
+            </ul>
+        </div>
+
+        <div id="install-git" data-role="collapsible"   data-collapsed="true"  data-theme="b" data-content-theme="d">
+            <h3>3: Install Git</h3>
+            <ul>
+                <li>Required is the latest <b>msysgit</b> - git for windows </li>
+                <li>Download and run the Windows MSI Installer</li>
+                <li>On the "Adjusting PATH environment", select "Use Git from Windows Command Prompt", otherwise accept defaults. fyi will install into c:\ProgramFiles\*</li>
+                <li><a href="http://msysgit.github.io/" target="_blank">http://msysgit.github.io/</a></li>
+            </ul>
+
+        </div>
+
+        <div id="trt-desktop-clone" data-role="collapsible"   data-collapsed="true" data-theme="b" data-content-theme="e">
+            <h3>4: TRT Code Checkout</h3>
+            <ul>
+                <li>This step downloads/clones the source code for the trt desktop using git</li>
+                <li>The source code is hosted by <a href="http://bitbucket.org" target="_blank">bitbucket.org</a></li>
+                <li>Start Git Gui with >> Start > All Programs > Git > Git GUI</li>
+                <li>Select "Clone Existing repository"</li>
+                <li>Source Location = <input style="width: 500px;" type="text" value="https://trt-readonly:sparks@bitbucket.org/trtwelding/trt-desktop.git"></li>
+                <li>Target Directory = <input style="width: 500px;" type="text" value="c:\zgit\trt-desktop"></li>
+                <li>Click <b>Clone</b> button</li>
+                <li>On completion you will see a "multipane window", just dismiss and close.</li>
+            </ul>
+
+
+        </div>
+
+        <div id="trt-desktop-login" data-role="collapsible"   data-collapsed="true" data-theme="b" data-content-theme="a">
+            <h3>5: Run and Login</h3>
+            <ul>
+                <li>Navigate to the c:\zgit\trt-desktop directory</li>
+                <li>To create a shortcut, click on the "TRT Desktop" link, and drag onto the Windows Start Button</li>
+                <li>Start the TRT Desktop by double clicking</li>
+                <li>After a few moments, you should see a login screen</li>
+                <li>This means that the install works, so login to play site and enjoy</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{{template "jmobile/footer.html" .}}

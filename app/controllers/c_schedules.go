@@ -48,7 +48,7 @@ func (c Schedules) WorkSchedulesTree() revel.Result {
 		return c.RenderJson(pay)
 	}
 
-	pay["schedule"], e = schedules.GetWorkSchedulesTree(app.Db)
+	pay["schedules"], e = schedules.GetWorkSchedulesTree(app.Db)
 	if e != nil {
 		pay["error"] = e.Error()
 		return c.RenderJson(pay)

@@ -40,8 +40,8 @@ type WorkScheduleView struct {
 	OrderId int ` json:"order_id" `
 	PurchaseOrder string ` json:"purchase_order" `
 
-	OrderTypeId int ` json:"order_type_id" `
-	OrderType string ` json:"order_type" `
+	JobTypeId int ` json:"job_type_id" `
+	JobType string ` json:"job_type" `
 
 	ProjectId int ` json:"project_id" `
 	ProjectRef string ` json:"project_ref" `
@@ -54,8 +54,9 @@ type WorkScheduleView struct {
 
 var WORK_SCHEDULE_VIEW = "v_work_schedules"
 var WORK_SCHEDULE_VIEW_COLS string = `
-work_sched_id, job_item_id, job_id, order_id,
-order_type_id, order_type, purchase_order,
+work_sched_id, job_item_id, job_id,
+order_id, purchase_order,
+job_type_id, job_type, job_type_color,
 project_id, project_ref,
 work_sched_year, work_sched_week, work_sched_required,
 work_sched_qty_required,
@@ -116,17 +117,20 @@ type T_Project struct {
 }
 
 type T_Job struct {
-	ProjectTypeId int ` json:"project_type_id" `
 	JobId int ` json:"job_id" `
+	JobTypeId int ` json:"job_type_id" `
+	//JobType int ` json:"job_type" `
 	OrderId int ` json:"order_id" `
 	PurchaseOrder string ` json:"purchase_order" `
-	WorkSchedule []T_WorkSched ` json:"work_schedule" `
+	WorkSchedules []*T_WorkSched ` json:"work_schedules" `
 }
 
 type T_WorkSched struct {
-	Year int
-	Week int
-	Date time.Time
+	WorkSchedId int ` json:"work_sched_id" `
+	Year int  ` json:"work_sched_year" `
+	Week int  ` json:"work_sched_week" `
+	Date time.Time  ` json:"work_sched_required" `
+	Qty int  ` json:"work_sched_qty_required" `
 }
 
 func GetWorkSchedulesTree(db gorm.DB) (*T_WorkScheduleTree, error) {
@@ -161,7 +165,7 @@ func GetWorkSchedulesTree(db gorm.DB) (*T_WorkScheduleTree, error) {
 		mods := make([]string, 0)
 		for _, mo := range mm {
 			mods = append(mods, strconv.Itoa(mo.ModelId))
-			fmt.Println("      mo=", mo, model_heads)
+			//fmt.Println("      mo=", mo, model_heads)
 		}
 		//fmt.Println(" mode=", mods)
 		sort.Strings(mods)
@@ -209,14 +213,32 @@ func GetWorkSchedulesTree(db gorm.DB) (*T_WorkScheduleTree, error) {
 
 	}
 	// loop work schedules and add to projects
+	var jobs_map map[int]*T_Job = make(map[int]*T_Job)
 	for _, sc := range scheds {
-		jo := new(T_Job)
-		jo.JobId =  sc.JobId
-		jo.ProjectTypeId = sc.OrderTypeId
-		jo.OrderId = sc.OrderId
-		jo.PurchaseOrder = sc.PurchaseOrder
-		pro := projects_map[sc.ProjectId]
-		pro.Jobs = append(pro.Jobs, jo)
+
+		jo, found := jobs_map[sc.JobId]
+		if found == false {
+			jo = new(T_Job)
+			jo.JobId = sc.JobId
+			jo.JobTypeId = sc.JobTypeId
+			//jo.JobType = sc.JobType
+			jo.OrderId = sc.OrderId
+			jo.PurchaseOrder = sc.PurchaseOrder
+			jo.WorkSchedules = make([]*T_WorkSched, 0)
+			jobs_map[sc.JobId] = jo
+
+			pro := projects_map[sc.ProjectId]
+			pro.Jobs = append(pro.Jobs, jo)
+		}
+		ws := new(T_WorkSched)
+		ws.WorkSchedId = sc.WorkSchedId
+		ws.Week = sc.WorkSchedWeek
+		ws.Year = sc.WorkSchedYear
+		ws.Date = sc.WorkSchedRequired
+		ws.Qty = sc.WorkSchedQtyRequired
+		jo.WorkSchedules = append(jo.WorkSchedules, ws)
+		//pro := projects_map[sc.ProjectId]
+		//pro.Jobs = append(pro.Jobs, jo)
 		//fmt.Println(jo)
 	}
 
@@ -239,6 +261,6 @@ func GetWorkSchedulesTree(db gorm.DB) (*T_WorkScheduleTree, error) {
 
 		tree.ModelProject = append(tree.ModelProject, mm)
 	}
-
+	fmt.Println("jone")
 	return tree, nil
 }

@@ -6,6 +6,7 @@ module:testrunner
 
 GET     /                                           Pages.Index
 GET     /login                                      Pages.Login
+GET     /install/desktop                            Pages.DesktopInstall
 
 GET     /jmobile                                    JMobile.Index
 GET     /jmobile/:page                              JMobile.Pages
@@ -88,8 +89,8 @@ GET     /ajax/jobs                                   Jobs.JobsIndex
 
 GET     /ajax/job/:job_id                            Jobs.Job
 
-GET     /ajax/work_schedules                         Jobs.WorkSchedules
-GET     /ajax/work_schedules/tree                    Jobs.WorkSchedulesTree
+GET     /ajax/work_schedules                         Schedules.WorkSchedules
+GET     /ajax/work_schedules/tree                    Schedules.WorkSchedulesTree
 
 #======================================
 # Files

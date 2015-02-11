@@ -15,6 +15,10 @@ import (
 	"github.com/daffodil/factory-planner/app/fp/projects"
 )
 
+func init(){
+	revel.InterceptFunc(checkUser, revel.BEFORE, &Accounts{})
+}
+
 type Accounts struct {
 	*revel.Controller
 }

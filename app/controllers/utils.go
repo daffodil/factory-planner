@@ -2,7 +2,13 @@ package controllers
 
 import (
 	"strings"
+	"time"
+
 	"github.com/revel/revel"
+
+	"github.com/daffodil/factory-planner/app"
+	//"github.com/daffodil/factory-planner/app/fp"
+	"github.com/daffodil/factory-planner/app/fp/accounts"
 )
 
 
@@ -18,6 +24,31 @@ func GetS(params *revel.Params, key string) string {
 	s := params.Get(key)
 	s = strings.TrimSpace(s)
 	return s
+}
+
+
+
+
+func checkUser (c *revel.Controller) revel.Result  {
+
+	if c.Session["user"] == "" {
+		p := MakePayload()
+		p["error"] = "Not Logged In"
+		return c.RenderJson(p)
+	}
+
+	return nil
+}
+
+func setContext(c *revel.Controller) revel.Result  {
+
+	var e error
+	c.RenderArgs["root"], e = accounts.GetRootAccount(app.Db)
+	if e != nil {
+
+	}
+	c.RenderArgs["now"] = time.Now()
+	return nil
 }
 
 

@@ -9,6 +9,7 @@ import (
 	"github.com/revel/revel"
 
 	"github.com/daffodil/factory-planner/app/fp/accounts"
+
 )
 
 func init() {
@@ -31,9 +32,14 @@ func init() {
 	//InitDB()
 	// register startup functions with OnAppStart
 	// ( order dependent )
+
+
+
 	revel.OnAppStart(InitDB)
 	revel.OnAppStart(InitFP)
 }
+
+
 
 var Db gorm.DB
 

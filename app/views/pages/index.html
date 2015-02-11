@@ -1,46 +1,30 @@
+
 {{set . "title" "Home"}}
 
-{{template "header.html" .}}
+{{template "jmobile/header.html" .}}
 
-<header class="hero-unit" style="background-color:#A9F16C">
-  <div class="container">
-    <div class="row">
-      <div class="hero-text">
-        <h1>Welcome to factory Planner</h1>
-        <p></p>
-      </div>
+<!-- Start of first page -->
+<div data-role="page" id="index">
+
+    <div data-role="header" XXdata-position="fixed"  data-theme="b" class="xlogo">
+        <h1 >{{.root.Company}}</h1>
     </div>
-  </div>
-</header>
 
-<div class="container">
+    <div data-role="content" class="ui-content">
+        <h1>Welcome {{.root.Ticker}} Staff site</h1>
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Browser App</h2>
-            <p>Javascript powered panel for browsers</p>
-            <p><a class="btn btn-default" href="/jpanel" role="button">Go &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Jquery Mobile</h2>
-            <p>jQuery Mobile Client</p>
-            <p><a class="btn btn-default" href="/jmobile" role="button">Go &raquo;</a></p>
-        </div>
+        <a class="ui-btn ui-icon-carat-r ui-btn-icon-right ui-btn-b" href="/jmobile" >Mobile Interface</a>
+        <a class="ui-btn  ui-icon-carat-r ui-btn-icon-right ui-btn-b" rel="external"  href="/staff" >Browser Interface</a>
+        <a class="ui-btn  ui-icon-bullets ui-btn-icon-right ui-btn-b" href="/install/desktop" >Desktop Install</a>
 
-        <div class="col-md-4">
-            <h2>Placeholder</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-    </div>
-</div>
 
-<div class="container">
-  <div class="row">
-    <div class="span6">
-      {{template "flash.html" .}}
-    </div>
-  </div>
-</div>
+    </div><!-- /content -->
 
-{{template "footer.html" .}}
+
+</div><!-- /page -->
+
+
+
+
+
+{{template "jmobile/footer.html" .}}

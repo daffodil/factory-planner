@@ -39,7 +39,7 @@ func DB_CreateDefaultJobTypes(db gorm.DB) error {
 
 	var count int
 	for _, rec := range defaults {
-		db.Model(JobType{}).Where("order_type_id = ?", rec.JobTypeId).Count(&count)
+		db.Model(JobType{}).Where("job_type_id = ?", rec.JobTypeId).Count(&count)
 		if count == 0 {
 			db.Create(rec)
 		}

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	//"strings"
+	"strconv"
 	"github.com/revel/revel"
 
 	"github.com/daffodil/factory-planner/app"
@@ -28,6 +29,7 @@ func (c Auth) StaffLogin() revel.Result {
 		pay["login_error"] = login_error.Error()
 	}
 	pay["user"] = user
+	c.Session["user"] = strconv.Itoa(user.ContactId)
 
 	if e != nil {
 		//payload.Error = e.Error()

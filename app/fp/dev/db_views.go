@@ -162,7 +162,7 @@ func init() {
 		create or replace view v_work_schedules as
 		select
 		work_schedules.work_sched_id, work_schedules.job_item_id,
-		job_items.order_type_id, order_types.order_type,
+		job_items.job_type_id, job_types.job_type, job_types.job_type_color,
 		work_schedules.work_sched_required,
 		YEAR( work_schedules.work_sched_required ) as work_sched_year,
 		WEEKOFYEAR( work_schedules.work_sched_required ) as work_sched_week,
@@ -174,7 +174,7 @@ func init() {
 		from work_schedules
 		inner join job_items on job_items.job_item_id = work_schedules.job_item_id
 		inner join projects on job_items.project_id = projects.project_id
-		inner join order_types on job_items.order_type_id = order_types.order_type_id
+		inner join job_types on job_items.job_type_id = job_types.job_type_id
 		inner join jobs on jobs.job_id = job_items.job_id
 		inner join orders on jobs.order_id = orders.order_id
 		inner join accounts on accounts.account_id = orders.account_id
