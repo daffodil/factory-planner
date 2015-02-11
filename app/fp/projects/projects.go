@@ -60,6 +60,7 @@ func GetProjects(db gorm.DB) ([]*ProjectView, error) {
 }
 
 
+
 func GetAccountProjects(db gorm.DB, account_id int) ([]*ProjectView, error) {
 
 	rows := make([]*ProjectView, 0)

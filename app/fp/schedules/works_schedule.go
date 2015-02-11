@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 	"sort"
+	"strconv"
+	"strings"
 	"github.com/jinzhu/gorm"
 
 	"github.com/daffodil/factory-planner/app/fp/projects"
@@ -93,25 +95,25 @@ type T_WorkSchedTree struct {
 	ModelProject []T_ModelProject
 }
 type T_ModelProject struct {
-	Models []T_Model
-	Projects []T_Project
+	Models []T_Model ` json:"models" `
+	Projects []*T_Project ` json:"projects" `
 }
 
 type T_Model struct {
-	ModelId int
-	Model string
-	BrandId int
-	Brand string
+	ModelId int ` json:"model_id" `
+	Model string ` json:"model" `
+	BrandId int ` json:"brand_id" `
+	Brand string ` json:"brand" `
 
 }
 
 type T_Project struct {
-	ProjectId int
-	ProjectRef string
-	Jobs []T_Order
+	ProjectId int ` json:"project_id" `
+	ProjectRef string ` json:"project_ref" `
+	Jobs []*T_Job ` json:"jobs" `
 }
 
-type T_Order struct {
+type T_Job struct {
 	ProjectTypeId int
 	JobId int
 	OrderId int
@@ -134,14 +136,15 @@ func GetWorkSchedulesTree(db gorm.DB) (*T_WorkSchedTree, error) {
 	if errm != nil {
 
 	}
-	var models_map map[int]*projects.ModelView = make(map[int]*projects.ModelView)
+	var models_map map[int]T_Model = make(map[int]T_Model)
 	for _, m := range model_rows {
 		_, ok := models_map[m.ModelId]
 		if ok == false {
-			models_map[m.ModelId] = m
+			tm := T_Model{ModelId: m.ModelId, Model: m.Model.Model, BrandId: m.BrandId, Brand: m.Brand}
+			models_map[m.ModelId] = tm
 		}
 	}
-	fmt.Println(models_map)
+	//fmt.Println(models_map)
 
 
 
@@ -150,19 +153,24 @@ func GetWorkSchedulesTree(db gorm.DB) (*T_WorkSchedTree, error) {
 
 	}
 
-	model_heads := make(map[string][]int)
+	model_heads := make(map[string][]string)
 	for pid, mm := range project_2_models_lookup {
-		fmt.Println("mm=", pid, mm)
-		mods := make([]int, 0)
+		//fmt.Println("mm=", pid, mm)
+		mods := make([]string, 0)
 		for _, mo := range mm {
-			mods = append(mods, mo.ModelId)
+			mods = append(mods, strconv.Itoa(mo.ModelId))
 			fmt.Println("      mo=", mo, model_heads)
 		}
-		fmt.Println(" mode=", mods)
-		sort.Ints(mods)
+		//fmt.Println(" mode=", mods)
+		sort.Strings(mods)
+		ki := strings.Join(mods, "_")
 		//sort.Reverse(mods)
-		fmt.Println(" mode=", mods)
-		//_, found := model_heads
+		//fmt.Println(" modsss=", mods)
+		_, found := model_heads[ki]
+		if found == false {
+			model_heads[ki] = make([]string, 0)
+		}
+		model_heads[ki] = append(model_heads[ki], pid)
 	}
 
 	//var projects_map map[int][]int = make(map[int][]int)
@@ -186,20 +194,42 @@ func GetWorkSchedulesTree(db gorm.DB) (*T_WorkSchedTree, error) {
 	}
 
 	// Make Projects Map
-	var projects_map map[int]T_Project = make(map[int]T_Project)
+	var projects_map map[int]*T_Project = make(map[int]*T_Project)
 	for _, p := range project_rows {
-		projects_map[p.ProjectId] = T_Project{ProjectId: p.ProjectId, ProjectRef: p.ProjectRef}
+		projects_map[p.ProjectId] = &T_Project{ProjectId: p.ProjectId, ProjectRef: p.ProjectRef,
+												Jobs: make([]*T_Job, 0)}
 	}
 	//fmt.Println(projects_map)
 
+	scheds, errs := GetWorkSchedules(db)
+	if errs != nil {
 
-	for _, r := range project_2_models_lookup {
+	}
+	for _, sc := range scheds {
+		jo := new(T_Job)
+		jo.JobId =  sc.JobId
+		pro := projects_map[sc.ProjectId]
+		pro.Jobs = append(pro.Jobs, jo)
+		fmt.Println(jo)
+	}
+
+	for midx, pids := range model_heads {
 		mm := T_ModelProject{}
 		mm.Models = make([]T_Model, 0)
-		mm.Projects = make([]T_Project, 0)
-		if 1 == 0 {
-			fmt.Println(r)
+		mm.Projects = make([]*T_Project, 0)
+
+		//mod_ids := strings.Split(midx, "_")
+		for _, mid := range strings.Split(midx, "_") {
+			mid_i, _ := strconv.Atoi(mid)
+			M :=  models_map[mid_i]
+			//tm := T_Model{ModelId: M.ModelId}
+			mm.Models = append(mm.Models, M)
 		}
+		for _, pi := range pids {
+			pii, _ := strconv.Atoi(pi)
+			mm.Projects = append(mm.Projects, projects_map[pii])
+		}
+
 		tree.ModelProject = append(tree.ModelProject, mm)
 	}
 
