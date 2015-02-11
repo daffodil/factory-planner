@@ -38,10 +38,10 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		db.DropTableIfExists(&accounts.Address{})
 		db.DropTableIfExists(&accounts.Contact{})
 
-		db.DropTableIfExists(&projects.ProjectType{})
+		//db.DropTableIfExists(&projects.ProjectType{})
 		db.DropTableIfExists(&orders.Order{})
 		db.DropTableIfExists(&jobs.Job{})
-		//db.DropTableIfExists(&jobs.JobType{})
+		db.DropTableIfExists(&jobs.JobType{})
 
 		db.DropTableIfExists(&schedules.WorkSchedule{})
 		db.DropTableIfExists(&parts.Part{})
@@ -80,9 +80,9 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 		db.AutoMigrate(&projects.Model{})
 		projects.DB_IndexModels(db)
 
-		db.AutoMigrate(&projects.ProjectType{})
-		projects.DB_CreateDefaultProjectTypes(db)
-		projects.DB_CreateDefaultProjectTypes(db)
+		//db.AutoMigrate(&projects.ProjectType{})
+		//projects.DB_CreateDefaultProjectTypes(db)
+		//projects.DB_CreateDefaultProjectTypes(db)
 
 		db.AutoMigrate(&projects.Project{})
 		projects.DB_IndexProjects(db)
@@ -108,9 +108,9 @@ func DB_CreateTables(db gorm.DB, drop_first bool) (interface{}, error) {
 
 
 		// jobs
-		//db.AutoMigrate(&jobs.JobType{})
-		//jobs.DB_IndexJobType(db)
-
+		db.AutoMigrate(&jobs.JobType{})
+		jobs.DB_IndexJobType(db)
+		jobs.DB_CreateDefaultJobTypes(db)
 
 		db.AutoMigrate(&jobs.Job{})
 		jobs.DB_IndexJob(db)

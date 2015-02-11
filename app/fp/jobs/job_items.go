@@ -12,7 +12,7 @@ type JobItem struct {
 	JobItemId int `json:"job_item_id" gorm:"column:job_item_id; primary_key:yes"`
 	//JobNo int `json:"job_no" sql:"type:varchar(200);not null;" `
 	JobId int `json:"job_id"  `
-	OrderTypeId int `json:"order_type_id"  `
+	JobTypeId int `json:"job_type_id"  `
 	ProjectId int `json:"project_id"  `
 	ItemDescription string `json:"item_description"  `
 	JobItemImport string `json:"job_item_import"  `
@@ -37,7 +37,7 @@ func DB_IndexJobItems(db gorm.DB) {
 
 var JOB_ITEM_VIEW string = "v_job_items"
 var JOB_ITEM_VIEW_COLS =  `
-job_item_id, job_id, project_id, item_description, item_qty
+job_item_id, job_id, project_id, project_id, item_description, item_qty
 `
 
 func GetJobItems(db gorm.DB, job_id int) ([]JobItem, error) {

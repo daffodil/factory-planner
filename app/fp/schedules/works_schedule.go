@@ -91,9 +91,11 @@ func GetWorkSchedulesByDateRange(db gorm.DB, date_start, date_end string) ([]*Wo
 
 }
 
-type T_WorkSchedTree struct {
-	ModelProject []T_ModelProject
+
+type T_WorkScheduleTree struct {
+	ModelProject []T_ModelProject  ` json:"models_projects" `
 }
+
 type T_ModelProject struct {
 	Models []T_Model ` json:"models" `
 	Projects []*T_Project ` json:"projects" `
@@ -114,11 +116,11 @@ type T_Project struct {
 }
 
 type T_Job struct {
-	ProjectTypeId int
-	JobId int
-	OrderId int
-	PurchaseOrder string
-	WorkSchedule []T_WorkSched
+	ProjectTypeId int ` json:"project_type_id" `
+	JobId int ` json:"job_id" `
+	OrderId int ` json:"order_id" `
+	PurchaseOrder string ` json:"purchase_order" `
+	WorkSchedule []T_WorkSched ` json:"work_schedule" `
 }
 
 type T_WorkSched struct {
@@ -127,9 +129,9 @@ type T_WorkSched struct {
 	Date time.Time
 }
 
-func GetWorkSchedulesTree(db gorm.DB) (*T_WorkSchedTree, error) {
+func GetWorkSchedulesTree(db gorm.DB) (*T_WorkScheduleTree, error) {
 
-	tree := new(T_WorkSchedTree)
+	tree := new(T_WorkScheduleTree)
 	tree.ModelProject = make([]T_ModelProject, 0)
 
 	model_rows, errm := projects.GetModels(db)
@@ -201,16 +203,21 @@ func GetWorkSchedulesTree(db gorm.DB) (*T_WorkSchedTree, error) {
 	}
 	//fmt.Println(projects_map)
 
+	// Get work schedule
 	scheds, errs := GetWorkSchedules(db)
 	if errs != nil {
 
 	}
+	// loop work schedules and add to projects
 	for _, sc := range scheds {
 		jo := new(T_Job)
 		jo.JobId =  sc.JobId
+		jo.ProjectTypeId = sc.OrderTypeId
+		jo.OrderId = sc.OrderId
+		jo.PurchaseOrder = sc.PurchaseOrder
 		pro := projects_map[sc.ProjectId]
 		pro.Jobs = append(pro.Jobs, jo)
-		fmt.Println(jo)
+		//fmt.Println(jo)
 	}
 
 	for midx, pids := range model_heads {
