@@ -16,7 +16,7 @@ import (
 )
 
 func init(){
-	revel.InterceptFunc(checkUser, revel.BEFORE, &Accounts{})
+	//revel.InterceptFunc(checkUser, revel.BEFORE, &Accounts{})
 }
 
 type Accounts struct {
