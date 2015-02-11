@@ -32,8 +32,8 @@
         <div data-role="content" class="ui-content">
             {# <h1>Accounts Index</h1> #}
             <ul data-role="listview">
-                {{ for a in c.accounts }}
-                <li><a rel="external" href="/staff/account/{{a.account_id}}">{{$a.ticker}}: {{$a.company}}</a></li>
+                {{ range $a := .accounts }}
+                <li><a rel="external" href="/staff/account/{{$a.account_id}}">{{$a.ticker}}: {{$a.company}}</a></li>
                 {{ end }}
             </ul>
         </div><!-- /content -->
