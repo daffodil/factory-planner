@@ -14,10 +14,10 @@
         <div data-role="navbar" data-theme="b">
             <ul>
                 {{ range $n := .nav }}
-                <li><a rel="external" href="/{{$n.Path}}"
+                <li><a rel="external" href="/jmobile/{{$n.Path}}"
                         data-icon="{{$n.Icon}}"
                         {{if $n.Path }} class="ui-btn-active"{{end}}
-                        >{{$n.Label}}</a></li>
+                        >{{$n.Path}}</a></li>
                 {{ end }}
             </ul>
         </div>

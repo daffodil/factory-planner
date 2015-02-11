@@ -15,10 +15,10 @@ type NavMobile struct {
 
 func StaffMobileNav() []NavMobile {
 	nav := make([]NavMobile, 0)
-	nav = append(nav, NavMobile{"/index", "Index", "Staff Index", "home"})
-	nav = append(nav, NavMobile{"/accounts", "Accounts", "Accounts Index", "info"})
-	nav = append(nav, NavMobile{"/parts", "Parts", "Parts Index", "grid"})
-	nav = append(nav, NavMobile{"/orders", "Orders", "Orders Index", "grid"})
+	nav = append(nav, NavMobile{"index", "Index", "Staff Index", "home"})
+	nav = append(nav, NavMobile{"accounts", "Accounts", "Accounts Index", "info"})
+	nav = append(nav, NavMobile{"projects", "Projects", "Projects Index", "grid"})
+	nav = append(nav, NavMobile{"orders", "Orders", "Orders Index", "grid"})
 	return nav
 }
 
@@ -31,7 +31,6 @@ type JMobile struct {
 func (c JMobile) Setup(path string) {
 	c.RenderArgs["path"] = path
 	c.RenderArgs["nav"] = StaffMobileNav()
-
 	c.RenderArgs["now"] = time.Now()
 
 }
