@@ -18,6 +18,7 @@ GET     /install/desktop                            Pages.DesktopInstall
 
 
 GET     /jmobile                                    JMobile.Index
+GET     /jmobile/index                              JMobile.Index
 GET     /jmobile/accounts                           JMobile.Accounts
 GET     /jmobile/account/:account_id                JMobile.Account
 
@@ -32,8 +33,8 @@ GET      /staff/planner                            Calendar.StaffPlannerPage
 GET     /ajax/auth/staff_login                      Auth.StaffLogin
 POST    /ajax/auth/staff_login                      Auth.StaffLogin
 
-
-
+GET     /jmobile/login                              Auth.Mobile
+POST    /jmobile/login                              Auth.MobileLogin
 
 
 #======================================
@@ -152,8 +153,8 @@ GET     /ajax/models                              Projects.Models
 # Static
 #======================================
 # Ignore favicon requests
-GET     /favicon.ico                                404
-
+GET     /favicon.ico                              Static.Serve("public", "favicon.ico")
+GET     /favicon.png                              Static.Serve("public", "favicon.png")
 
 GET     /css/icons.css                            Style.CssIcons
 

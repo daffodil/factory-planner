@@ -1,0 +1,39 @@
+
+{{set . "title" "Staff Login"}}
+
+{{template "jmobile/header.html" .}}
+
+
+<div data-role="page" id="index">
+
+    <div data-role="header" XXdata-position="fixed"  data-theme="b" class="xlogo">
+        <h1 >{{.title}}</h1>
+        <a rel="external" href="/login" data-icon="lock" class="ui-btn-right" data-theme="c">Staff Login</a>
+
+
+
+    </div>
+
+    <div data-role="content" class="ui-content">
+        {{ if  .login_error  }}
+
+            <p style="background-color: pink">{{.login_error}}</p>
+        {{end}}
+        <form action="/jmobile/login" method="post" data-ajax="false" >
+
+            <div data-role="fieldcontain">
+                <label for="syslogin">User:</label>
+                <input type="text" name="syslogin" id="syslogin"  value="" placeholder="Username"/>
+                <label for="secret">Password:</label>
+                <input type="text" name="secret" id="secret" value="" placeholder="Password"/>
+
+
+            </div>
+            <input type="submit" data-theme="b" value="Login">
+        </form>
+    </div>
+
+
+</div>
+
+{{template "jmobile/footer.html" .}}

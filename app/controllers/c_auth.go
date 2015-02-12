@@ -2,6 +2,7 @@ package controllers
 
 import (
 	//"strings"
+	"fmt"
 	"strconv"
 	"github.com/revel/revel"
 
@@ -40,3 +41,33 @@ func (c Auth) StaffLogin() revel.Result {
 	return c.RenderJson(pay)
 }
 
+
+// /jmobile/login
+func (c Auth) Mobile() revel.Result {
+
+	var e error
+	if e != nil {
+
+	}
+
+	return c.RenderTemplate("jmobile/login.html")
+}
+// /jmobile/login
+func (c Auth) MobileLogin() revel.Result {
+
+	//c.RenderArgs["login_error"] = ""
+
+	user, login_error, err := accounts.AuthenticateUser(app.Db, c.Params.Get("syslogin"),  c.Params.Get("secret"))
+	if err != nil {
+		fmt.Println(err)
+	}
+	if login_error != nil {
+		c.RenderArgs["login_error"] = login_error.Error()
+		fmt.Println(login_error.Error())
+	} else {
+		c.Session["user"] = strconv.Itoa(user.ContactId)
+		return c.Redirect("/jmobile")
+	}
+
+	return c.RenderTemplate("jmobile/login.html")
+}

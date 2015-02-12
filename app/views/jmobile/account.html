@@ -19,22 +19,36 @@
         <div data-role="tabs" id="account-tabs">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#account-projects" data-ajax="false" data-icon="tag"  class="ui-btn-active">Projects</a></li>
+                    <li><a href="#account-jobs" data-ajax="false" data-icon="tag"  class="ui-btn-active">Jobs - {{ len .jobs}}</a></li>
+                    <li><a href="#account-projects" data-ajax="false" data-icon="tag">Projects - {{ len .projects}}</a></li>
                     <li><a href="#account-models" data-ajax="false" data-icon="gear">Models</a></li>
-                    <li><a href="#account-contacts" data-ajax="false" data-icon="user">Contacts</a></li>
+                    <li><a href="#account-contacts" data-ajax="false" data-icon="user">Contacts - {{ len .contacts}}</a></li>
 
 
-                    <li><a href="#account-orders" data-ajax="false" data-icon="tag">Orders</a></li>
+
+                </ul>
+            </div>
+
+
+            <!--- Jobs -->
+            <div id="account-jobs" ssclass="ui-body-d ui-content">
+                <ul data-role="listview"  data-filter="true">
+                    {{ range $j := .jobs }}
+                    <li><a href="/jmobile/job/{{$j.JobId}}" data-icon="user">
+                        <h1>{{$j.JobId}}</h1>
+                        <p>{{$j.PurchaseOrder}}</p>
+                        </a></li>
+                    {{end}}
                 </ul>
             </div>
 
 
             <!---  projects -->
-            <div id="account-parts" csslass="ui-body-d ui-content">
+            <div id="account-projects" csslass="ui-body-d ui-content">
 
                 <ul data-role="listview"  data-autodividers="true" data-filter="true" data-inset="true">
                     {{ range $p := .projects }}
-                    <li data-icon="gear"><a  rel="external" href="/jmobile/part/{{$p.ProjectId}}">
+                    <li data-icon="gear"><a  rel="external" href="/jmobile/project/{{$p.ProjectId}}">
                         <h6>{{$p.ProjectRef}}</h6>
                         <p><strong>{{$p.ProjectDescription}}</strong></p>
                     </a></li>

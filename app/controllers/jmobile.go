@@ -10,6 +10,10 @@ import (
 	"github.com/daffodil/factory-planner/app/fp/projects"
 )
 
+func init(){
+	revel.InterceptFunc(checkUser, revel.BEFORE, &JMobile{})
+}
+
 type NavMobile struct {
 	Path string
 	Label string

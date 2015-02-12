@@ -32,9 +32,8 @@ func GetS(params *revel.Params, key string) string {
 func checkUser (c *revel.Controller) revel.Result  {
 
 	if c.Session["user"] == "" {
-		p := MakePayload()
-		p["error"] = "Not Logged In"
-		return c.RenderJson(p)
+		c.Session["return"] = c.Request.URL.String()
+		return c.Redirect("/jmobile/login")
 	}
 
 	return nil

@@ -38,7 +38,7 @@ type JobView struct {
 	Company string ` json:"company" `
 	Ticker string ` json:"ticker" `
 
-	//PurchaseOrder string  ` json:"purchase_order" `
+	PurchaseOrder string  ` json:"purchase_order" `
 	OrderOrdered *time.Time ` json:"order_ordered" `
 	OrderRequired *time.Time ` json:"order_required" `
 
