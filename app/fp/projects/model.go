@@ -72,6 +72,24 @@ func GetAccountModels(db gorm.DB, account_id int) ([]*ModelView, error) {
 	return rows, nil
 }
 
+// Models for the account nested by Brand
+func GetAccountModelsNested(db gorm.DB, account_id int) ( map[string][]*ModelView, error) {
+	rows := make([]*ModelView, 0)
+	db.Table(MODEL_VIEW).Select(MODEL_VIEW_COLS).Where("account_id = ?", account_id).Scan(&rows)
+
+	var brands map[string][]*ModelView = make(map[string][]*ModelView)
+	for _, m := range rows {
+		_, ok := brands[m.Brand]
+		if ok == false {
+			brands[m.Brand] = make([]*ModelView, 0)
+		}
+		brands[m.Brand] = append(brands[m.Brand], m)
+	}
+
+
+	return brands, nil
+}
+
 func GetModelById(db gorm.DB, model_id int) (*ModelView, error) {
 	var row ModelView
 	db.Table(MODEL_VIEW).Select(MODEL_VIEW_COLS).Where("model_id = ?", model_id).Scan(&row)

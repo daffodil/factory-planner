@@ -91,6 +91,15 @@ func GetAccountsIndex(db gorm.DB, search_vars fp.SearchVars) ([]AccountView, err
 
 }
 
+// returns search and view results
+func GetAccounts(db gorm.DB) ([]AccountView, error) {
+
+	var rows []AccountView
+	db.Table(ACCOUNT_VIEW).Select(ACCOUNT_VIEW_COLS).Scan(&rows)
+	return rows, nil
+
+}
+
 // Return account by ID
 func GetAccount(db gorm.DB, account_id int)(*AccountView, error) {
 

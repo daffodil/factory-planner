@@ -1,14 +1,22 @@
 # Factory Planner
 
-A simple factory planning system, written in go.
+A simple factory planning system
+- Server side is  golang
+  * revel framework
+  * gorp and myssql
+  * jmobile frontend
+  * extjs frontend
+  
 
 Currently in dev and not to be taken seriously  yet!
 
 Help Wanted
 ========================
-- a quick revel developer and/or golang reviewer 
+- go devs + revel developer and/or golang reviewer 
 - a jquery mobile coder
 - and extjs coder
+- a pyqt5 coder
+
 
 Demo
 ========================

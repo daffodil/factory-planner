@@ -1,0 +1,85 @@
+
+{{ $tab := .tab }}
+{{ $acc := .account }}
+{{set . "title" .account.Ticker}}
+
+{{template "jmobile/header.html" .}}
+
+
+<div data-role="page" id="account-{{.account.AccountId}}">
+
+
+    {{template "jmobile/top_bar.html" .}}
+
+
+
+    <div data-role="content" class="ui-content">
+        <h1>{{.account.Company}}</h1>
+
+        <div data-role="tabs" id="account-tabs">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#account-projects" data-ajax="false" data-icon="tag"  class="ui-btn-active">Projects</a></li>
+                    <li><a href="#account-models" data-ajax="false" data-icon="gear">Models</a></li>
+                    <li><a href="#account-contacts" data-ajax="false" data-icon="user">Contacts</a></li>
+
+
+                    <li><a href="#account-orders" data-ajax="false" data-icon="tag">Orders</a></li>
+                </ul>
+            </div>
+
+
+            <!---  projects -->
+            <div id="account-parts" csslass="ui-body-d ui-content">
+
+                <ul data-role="listview"  data-autodividers="true" data-filter="true" data-inset="true">
+                    {{ range $p := .projects }}
+                    <li data-icon="gear"><a  rel="external" href="/jmobile/part/{{$p.ProjectId}}">
+                        <h6>{{$p.ProjectRef}}</h6>
+                        <p><strong>{{$p.ProjectDescription}}</strong></p>
+                    </a></li>
+                    {{end}}
+                </ul>
+            </div>
+
+            <!---  Models -->
+            <div id="account-models" csslass="ui-body-d ui-content">
+                <ul data-role="listview" data-inset="true">
+                    {{ range $k, $mods := .models }}
+                    <li data-role="list-divider">{{$k}}</li>
+                        {{ range  $m := $mods }}
+                        <li><a href="/jmobile/account/{{$acc.AccountId}}/model/{{$m.ModelId}}">{{$m.Model.Model}}</a></li>
+                        {{end}}
+                    {{end}}
+                </ul>
+            </div>
+
+            <!--- Contacts -->
+            <div id="account-contacts" ssclass="ui-body-d ui-content">
+                <ul data-role="listview" data-autodividers="true" data-filter="true">
+                    {{ range $c := .contacts }}
+                    <li><a href="/jmobile/contact/{{$c.ContactId}}" data-icon="user">{{$c.Contact.Contact}}</a></li>
+                    {{end}}
+                </ul>
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+{{template "jmobile/footer.html" .}}

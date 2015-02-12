@@ -1,13 +1,14 @@
 
+{{ $tab := .tab }}
 {{set . "title" "Accounts"}}
 
 {{template "jmobile/header.html" .}}
 
-<!-- Start of first page -->
-<div data-role="page" id="index">
 
-    <div data-role="header" XXdata-position="fixed"  data-theme="b" class="xlogo">
-        <h1 >{{.title}}</h1>
+<div data-role="page" id="accounts">
+
+    <div data-role="header" data-position="fixed"  data-theme="b" class="xlogo">
+        <h1 >{{.title}} </h1>
         <a rel="external" href="/login" data-icon="lock" class="ui-btn-right" data-theme="c">Staff Login</a>
 
 
@@ -16,32 +17,31 @@
                 {{ range $n := .nav }}
                 <li><a rel="external" href="/jmobile/{{$n.Path}}"
                         data-icon="{{$n.Icon}}"
-                        {{if $n.Path }} class="ui-btn-active"{{end}}
-                        >{{$n.Path}}</a></li>
+                        {{if eq $n.Path $tab }} class="ui-btn-active"{{end}}
+                        >{{$n.Label}}</a></li>
                 {{ end }}
             </ul>
         </div>
     </div>
 
 
-    <!-- Start of first page -->
-    <div data-role="page" id="staff-accounts">
+
+
+    <div data-role="content" class="ui-content">
+
+        <ul data-role="listview" data-filter="true" data-autodividers="true">
+            {{ range $a := .accounts }}
+            <li><a rel="external" href="/jmobile/account/{{$a.AccountId}}">
+                <h2>{{$a.Ticker}}</h2><p>{{$a.Company}}</p>
+            </a></li>
+            {{ end }}
+        </ul>
+    </div>
 
 
 
-        <div data-role="content" class="ui-content">
-            {# <h1>Accounts Index</h1> #}
-            <ul data-role="listview">
-                {{ range $a := .accounts }}
-                <li><a rel="external" href="/staff/account/{{$a.account_id}}">{{$a.ticker}}: {{$a.company}}</a></li>
-                {{ end }}
-            </ul>
-        </div><!-- /content -->
-    </div><!-- /page -->
 
-
-
-</div><!-- /page -->
+</div>
 
 
 

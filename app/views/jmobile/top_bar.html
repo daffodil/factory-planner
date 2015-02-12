@@ -1,0 +1,17 @@
+{{ $tab := .tab }}
+<div data-role="header" data-position="fixed"  data-theme="b" class="xlogo">
+    <h1 >{{.title}} </h1>
+    <a rel="external" href="/login" data-icon="lock" class="ui-btn-right" data-theme="c">Staff Login</a>
+
+
+    <div data-role="navbar" data-theme="b">
+        <ul>
+            {{ range $n := .nav }}
+            <li><a rel="external" href="/jmobile/{{$n.Path}}"
+                   data-icon="{{$n.Icon}}"
+                {{if eq $n.Path $tab }} class="ui-btn-active"{{end}}
+                >{{$n.Label}}</a></li>
+            {{ end }}
+        </ul>
+    </div>
+</div>

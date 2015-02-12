@@ -1,9 +1,9 @@
 
-{{set . "title" "Home"}}
+{{set . "title" "Staff Login"}}
 
 {{template "jmobile/header.html" .}}
 
-<!-- Start of first page -->
+
 <div data-role="page" id="index">
 
     <div data-role="header" XXdata-position="fixed"  data-theme="b" class="xlogo">
@@ -23,8 +23,9 @@
         </div>
     </div>
 
+    <!-- /content -->
     <div data-role="content" class="ui-content">
-        <h1>Welcome to Staff Website</h1>
+        <h1>{{.root.Ticker}} Staff</h1>
         <div data-role="fieldcontain">
             <label for="curr_date">Curr Date:</label>
             <input type="text" name="curr_date" id="curr_date" readonly="true" value="{{date .now}}" placeholder="Date"/>
@@ -32,16 +33,9 @@
             <input type="text" name="curr_week" id="curr_week" readonly="true" value="{{week .now}} : {{year .now}}" placeholder="Week"/>
         </div>
 
-
-        <p class="lead">To use this system or a windows desktop, sett the install the desktop tools.</p>
-        <a href="/desktop-install" class="btn-large btn-success">Desktop Install Instructions</a>
-    </div><!-- /content -->
+    </div>
 
 
-</div><!-- /page -->
-
-
-
-
+</div>
 
 {{template "jmobile/footer.html" .}}

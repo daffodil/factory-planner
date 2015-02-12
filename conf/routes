@@ -4,17 +4,36 @@
 
 module:testrunner
 
+#===============================================================================
+# Public stuff
+#-------------------------------------------------------------------------------
+
+# home page
 GET     /                                           Pages.Index
+GET     /home                                       Pages.Index
+GET     /index                                      Pages.Index
+
 GET     /login                                      Pages.Login
 GET     /install/desktop                            Pages.DesktopInstall
 
+
 GET     /jmobile                                    JMobile.Index
-GET     /jmobile/:page                              JMobile.Pages
+GET     /jmobile/accounts                           JMobile.Accounts
+GET     /jmobile/account/:account_id                JMobile.Account
 
-
-#GET     /jmobile/accounts                          Accounts.JMobileIndex
 
 GET      /staff/planner                            Calendar.StaffPlannerPage
+
+#===============================================================================
+# Auth Endpoints
+#-------------------------------------------------------------------------------
+
+# Ajax login - assumed desktop as redirect is required for cookies
+GET     /ajax/auth/staff_login                      Auth.StaffLogin
+POST    /ajax/auth/staff_login                      Auth.StaffLogin
+
+
+
 
 
 #======================================
@@ -40,11 +59,10 @@ GET      /ajax/dev/db/view/:view                    Dev.DB_ViewJson
 #======================================
 # Root Stuff
 #======================================
-GET      /ajax/alive                                General.Alive
+GET     /ajax/alive                                General.Alive
 GET     /ajax/root/account                          Accounts.RootAccount
 GET     /ajax/staff                                 Accounts.RootAccountStaff
-GET     /ajax/auth/staff_login                      Auth.StaffLogin
-POST    /ajax/auth/staff_login                      Auth.StaffLogin
+
 
 #======================================
 # Accounts
